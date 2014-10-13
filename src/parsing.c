@@ -10,10 +10,11 @@
 typedef struct {
     int type;
     long num;
+    double decimal;
     int err;
 } lval;
 
-enum { LVAL_NUM, LVAL_ERR };
+enum { LVAL_ERR, LVAL_NUM, LVAL_DEC };
 enum { LERR_DIV_ZERO, LERR_BAD_OP, LERR_BAD_NUM };
 
 lval eval_op(lval x, char* op, lval y);
@@ -28,6 +29,14 @@ lval lval_num(long x)
     lval v;
     v.type = LVAL_NUM;
     v.num = x;
+    return v;
+}
+
+lval lval_dec(double x)
+{
+    lval v;
+    v.type = LVAL_DEC;
+    v.decimal = x;
     return v;
 }
 
@@ -65,7 +74,7 @@ lval eval(mpc_ast_t* t)
     if (strstr(t->tag, "decimal")) {
         errno = 0;
         long x = strtol(t->contents, NULL, 10);
-        return errno != ERANGE ? lval_num(x) : lval_err(LERR_BAD_NUM);
+        return errno != ERANGE ? lval_dec(x) : lval_err(LERR_BAD_NUM);
     }
 
     char* op = t->children[1]->contents;
@@ -87,18 +96,14 @@ lval eval(mpc_ast_t* t)
 
 int min(int x, int y)
 {
-    if (x < y)
-        return x;
-    else
-        return y;
+    if (x < y) { return x; }
+    return y;
 }
 
 int max(int x, int y)
 {
-    if (x > y)
-        return x;
-    else
-        return y;
+    if (x > y) { return x; }
+    return y;
 }
 
 lval eval_op(lval x, char* op, lval y)
