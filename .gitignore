@@ -31,3 +31,6 @@
 # Byol files
 obj
 lispy
+
+# Editor files
+*.swp

@@ -18,4 +18,4 @@ $(ODIR)/%.o: src/%.c $(DEPS)
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o prompt
+	rm -f $(ODIR)/*.o lispy
