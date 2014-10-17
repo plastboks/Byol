@@ -89,7 +89,7 @@ lval* lval_sexpr(void)
 
 lval* lval_qexpr(void)
 {
-    lval *v = malloc(sizeof(lval));
+    lval* v = malloc(sizeof(lval));
     v->type = LVAL_QEXPR;
     v->count = 0;
     v->cell = NULL;
@@ -144,13 +144,13 @@ void lval_del(lval* v)
         case LVAL_SYM:
             free(v->sym);
             break;
-        case LVAL_SEXPR:
         case LVAL_QEXPR:
+        case LVAL_SEXPR:
             for (int i = 0; i < v->count; i++) {
                 lval_del(v->cell[i]);
             }
             free(v->cell);
-            break;
+        break;
     }
     free(v);
 }
@@ -270,8 +270,8 @@ lval* builtin_head(lval* a)
 {
     /* Check error conditions */
     LASSERT(a, (a->count == 1), "Function 'head' passed to many arguments!");
-    LASSERT(a, (a->cell[0]->type != LVAL_QEXPR), "Function 'head' passed incorrect types!");
-    LASSERT(a, (a->cell[0]->count == 0), "Function 'head' passed {}!");
+    LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'head' passed incorrect type!");
+    LASSERT(a, (a->cell[0]->count != 0), "Function 'head' passed {}!");
 
     lval* v = lval_take(a, 0);
 
@@ -284,9 +284,9 @@ lval* builtin_head(lval* a)
 lval* builtin_tail(lval* a)
 {
     /* check error conditions */
-    LASSERT(a, (a->count != 1), "Function 'tail' passed to many arguments!");
-    LASSERT(a, (a->cell[0]->type != LVAL_QEXPR), "Function 'tail' passed incorrect types!");
-    LASSERT(a, (a->cell[0]->count == 0), "Function 'tail' passed {}!");
+    LASSERT(a, (a->count == 1), "Function 'tail' passed to many arguments!");
+    LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'tail' passed incorrect type!");
+    LASSERT(a, (a->cell[0]->count != 0), "Function 'tail' passed {}!");
 
     lval* v = lval_take(a, 0);
 
@@ -333,7 +333,7 @@ lval* builtin(lval* a, char* func)
     if (strcmp("tail", func) == 0) { return builtin_tail(a); }
     if (strcmp("join", func) == 0) { return builtin_join(a); }
     if (strcmp("eval", func) == 0) { return builtin_eval(a); }
-    if (strcmp("+-/*%^", func) == 0) { return builtin_op(a, func); }
+    if (strstr("+-/*%^", func)) { return builtin_op(a, func); }
 
     lval_del(a);
     return lval_err("Unknown Function!");
