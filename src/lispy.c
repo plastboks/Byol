@@ -36,6 +36,9 @@ lval* builtin_tail(lval* a);
 lval* builtin_list(lval* a);
 lval* builtin_eval(lval* a);
 lval* builtin_join(lval* a);
+lval* builtin_cons(lval* a);
+lval* builtin_len(lval* a);
+lval* builtin_init(lval* a);
 lval* builtin(lval* a, char* func);
 lval* builtin_op(lval* a, char* op);
 int min(int x, int y);
@@ -326,12 +329,57 @@ lval* builtin_join(lval* a)
     return x;
 }
 
+lval* builtin_cons(lval* a)
+{
+    return a;
+}
+
+/* get the length of an list */
+lval* builtin_len(lval* a)
+{
+    /* Check error conditions */
+    LASSERT(a, (a->count == 1), "Function 'len' passed to many arguments!");
+    LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'len' passed incorrect type!");
+    LASSERT(a, (a->cell[0]->count != 0), "Function 'len' passed {}!");
+
+    /* pop out the first element */
+    lval* v = lval_take(a, 0);
+
+    int count;
+    while(v->count > 1) {
+        lval_del(lval_pop(v, 1));
+        count++;
+    }
+
+    v->cell[0]->num = count;
+
+    return v;
+}
+
+/* pop out the last element */
+lval* builtin_init(lval* a)
+{
+    /* Check error conditions */
+    LASSERT(a, (a->count == 1), "Function 'init' passed to many arguments!");
+    LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'init' passed incorrect type!");
+    LASSERT(a, (a->cell[0]->count != 0), "Function 'init' passed {}!");
+
+    lval* v = lval_take(a ,0);
+
+    lval_del(lval_pop(v, v->count -1));
+
+    return v;
+}
+
 lval* builtin(lval* a, char* func)
 {
     if (strcmp("list", func) == 0) { return builtin_list(a); }
     if (strcmp("head", func) == 0) { return builtin_head(a); }
     if (strcmp("tail", func) == 0) { return builtin_tail(a); }
     if (strcmp("join", func) == 0) { return builtin_join(a); }
+    if (strcmp("cons", func) == 0) { return builtin_cons(a); }
+    if (strcmp("len", func) == 0) { return builtin_len(a); }
+    if (strcmp("init", func) == 0) { return builtin_init(a); }
     if (strcmp("eval", func) == 0) { return builtin_eval(a); }
     if (strstr("+-/*%^", func)) { return builtin_op(a, func); }
 
@@ -413,8 +461,8 @@ int main(int argc, char** argv)
         number   : /-?[0-9]+/ ;                                             \
         decimal  : /-?[0-9]+\\.[0-9]+/;                                     \
         symbol   : \"list\" | \"head\" | \"tail\" | \"join\" | \"eval\"     \
-                   | '+' | '-' | '*' | '/' | '%' | '^'                      \
-                   | \"min\" | \"max\";                                     \
+                   | \"cons\" | \"len\" | \"init\" | \"min\" | \"max\"      \
+                   | '+' | '-' | '*' | '/' | '%' | '^';                     \
         sexpr    : '(' <expr>* ')' ;                                        \
         qexpr    : '{' <expr>* '}' ;                                        \
         expr     : <decimal> | <number> | <symbol> | <sexpr> | <qexpr> ;    \
