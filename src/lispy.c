@@ -408,7 +408,7 @@ lval* lval_join(lval* x, lval* y)
     return x;
 }
 
-lval* builtin_head(lval* a)
+lval* builtin_head(lenv* e, lval* a,)
 {
     /* Check error conditions */
     LASSERT(a, (a->count == 1), "Function 'head' passed to many arguments!");
@@ -508,6 +508,26 @@ lval* builtin_init(lval* a)
     lval_del(lval_pop(v, v->count -1));
 
     return v;
+}
+
+lval* builtin_def(lenv* e, lval* a)
+{
+    LASSERT(a, (a->cell[0]->type == LVAL_QEXPR), "Function 'def' passed incorrect type!");
+
+    lval* syms = a->cell[0];
+
+    for (int i = 0; i < syms->count; i++) {
+        LASSERT(a, (syms->cell[i]->type == LVAL_SYM), "Function 'def' can not define non-symbol");
+    }
+
+    LASSERT(a, (syms->count == a->count - 1), "Function 'def' cannot define incorrect number of values to symbols");
+
+    for (int i = 0; i < syms->count; i++) {
+        lenv_put(e, syms->cell[i], a->cell[i+1]);
+    }
+
+    lval_del(a);
+    return lval_sexpr();
 }
 
 lval* builtin_add(lenv* e, lval* a)
@@ -621,6 +641,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "join", builtin_join);
     lenv_add_builtin(e, "len", builtin_len);
     lenv_add_builtin(e, "init", builtin_init);
+    lenv_add_builtin(e, "def", builtin_def);
 
     /* Arithmetic */
     lenv_add_builtin(e, "+", builtin_add);
