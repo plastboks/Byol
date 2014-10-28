@@ -275,6 +275,19 @@ lval* lval_call(lenv* e, lval* f, lval* a)
 
         lval* sym = lval_pop(f->formals, 0);
 
+        if (strcmp(sym->sym, "&") == 0) {
+            if (f->formals->count != 1) {
+                lval_del(a);
+                return lval_err("Function format is invalid. Symbol '&' not followed\
+                        by single symbol.");
+            }
+
+            lval* nsym = lval_pop(f->formals, 0);
+            lenv_put(f->env, nsym, builtin_list(e, a));
+            lval_del(sym);
+            lval_del(nsym);
+            break;
+        }
         lval* val = lval_pop(a, 0);
 
         lenv_put(f->env, sym, val);
@@ -284,6 +297,21 @@ lval* lval_call(lenv* e, lval* f, lval* a)
     }
 
     lval_del(a);
+
+    if (f->formals->count > 0 && strcmp(f->formals->cell[0]->sym, "&") == 0) {
+        if (f->formals->count != 2) {
+            return lval_err("Function format invalid. Symbol '&' not followed\
+                    by single symbol");
+        }
+        lval_del(lval_pop(f->formals, 0));
+
+        lval* sym = lval_pop(f->formals, 0);
+        lval* val = lval_qexpr();
+
+        lenv_put(f->env, sym, val);
+        lval_del(sym);
+        lval_del(val);
+    }
 
     if (f->formals->count == 0) {
         f->env->par = e;
@@ -896,7 +924,7 @@ int main(int argc, char** argv)
       ",
       Decimal, Number, Symbol, Sexpr, Qexpr, Expr, Lispy);
 
-    puts("Lispy Version 0.0.0.0.10");
+    puts("Lispy Version 0.0.0.0.12");
     puts("Press Ctrl+c to Exit\n");
 
     lenv* e = lenv_new();
