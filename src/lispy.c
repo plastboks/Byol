@@ -298,7 +298,9 @@ lval* lval_call(lenv* e, lval* f, lval* a)
 
     lval_del(a);
 
-    if (f->formals->count > 0 && strcmp(f->formals->cell[0]->sym, "&") == 0) {
+    if (f->formals->count > 0 &&
+        strcmp(f->formals->cell[0]->sym, "&") == 0) {
+
         if (f->formals->count != 2) {
             return lval_err("Function format invalid. Symbol '&' not followed\
                     by single symbol");
@@ -376,7 +378,8 @@ lenv* lenv_copy(lenv* e)
     return n;
 }
 
-void lenv_def(lenv* e, lval* k, lval* v) {
+void lenv_def(lenv* e, lval* k, lval* v)
+{
     /* Iterate till e has no parent */
     while (e->par) {
         e = e->par;
@@ -875,9 +878,9 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "join", builtin_join);
     lenv_add_builtin(e, "len", builtin_len);
     lenv_add_builtin(e, "init", builtin_init);
+    lenv_add_builtin(e, "\\", builtin_lambda);
     lenv_add_builtin(e, "def", builtin_def);
     lenv_add_builtin(e, "=", builtin_put);
-    lenv_add_builtin(e, "\\", builtin_lambda);
 
     /* Arithmetic */
     lenv_add_builtin(e, "+", builtin_add);
