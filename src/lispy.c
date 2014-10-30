@@ -539,7 +539,7 @@ lval* lval_eval_sexpr(lenv*e, lval* v)
     if (v->count == 0) { return v; }
 
     /* Single expression */
-    if (v->count == 1) { return lval_take(v, 0); }
+    if (v->count == 1) { return lval_eval(e, lval_take(v, 0)); }
 
     /* Ensure first element is symbol */
     lval* f = lval_pop(v, 0);
@@ -752,40 +752,13 @@ lval* builtin_var(lenv* e, lval* a, char* func)
     return lval_sexpr();
 }
 
-/*
 lval* builtin_def(lenv* e, lval* a)
 {
     return builtin_var(e, a, "def");
 }
-*/
 
 lval* builtin_put(lenv* e, lval* a) {
     return builtin_var(e, a, "=");
-}
-
-lval* builtin_def(lenv* e, lval* a)
-{
-    LASSERT_TYPE("def", a, 0, LVAL_QEXPR);
-
-    /* First argument is a list symbol */
-    lval* syms = a->cell[0];
-
-    /* All elements of list are symbols */
-    for (int i = 0; i < syms->count; i++) {
-        LASSERT(a, (syms->cell[i]->type == LVAL_SYM),
-                "Function 'def' can not define non-symbol");
-    }
-
-    LASSERT(a, (syms->count == a->count - 1),
-            "Function 'def' cannot define incorrect number of values to symbols");
-
-    /* Assign copies of values to symbols */
-    for (int i = 0; i < syms->count; i++) {
-        lenv_put(e, syms->cell[i], a->cell[i+1]);
-    }
-
-    lval_del(a);
-    return lval_sexpr();
 }
 
 lval* builtin_add(lenv* e, lval* a)
