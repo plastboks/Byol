@@ -62,6 +62,11 @@ lval* builtin_len(lenv* e, lval* a);
 lval* builtin_init(lenv* e, lval* a);
 lval* builtin_lambda(lenv* e, lval* a);
 lval* builtin_op(lenv* e, lval* a, char* op);
+lval* builtin_ord(lenv* e, lval* a, char* op);
+lval* builtin_gt(lenv* e, lval* a);
+lval* builtin_lt(lenv* e, lval* a);
+lval* builtin_ge(lenv* e, lval* a);
+lval* builtin_le(lenv* e, lval* a);
 int min(int x, int y);
 int max(int x, int y);
 void lval_println(lval* v);
@@ -831,6 +836,50 @@ lval* builtin_op(lenv* e, lval* a, char* op)
     /* Delete input expression and return result */
     lval_del(a);
     return x;
+}
+
+lval* builtin_gt(lenv* e, lval* a)
+{
+    return builtin_ord(e, a, ">");
+}
+
+lval* builtin_lt(lenv* e, lval* a)
+{
+    return builtin_ord(e, a, "<");
+}
+
+lval* bultin_ge(lenv* e, lval* a)
+{
+    return builtin_ord(e, a, "<=");
+}
+
+lval* builtin_le(lenv* e, lval* a)
+{
+    return builtin_ord(e, a, ">=");
+}
+
+lval* builtin_ord(lenv* e, lval* a, char* op)
+{
+    LASSERT_NUM(op, a, 2);
+    LASSERT_TYPE(op, a, 0, LVAL_NUM);
+    LASSERT_TYPE(op, a, 1, LVAL_NUM);
+
+    int r;
+    if (strcmp(op, ">") == 0) {
+        r = (a->cell[0]->num > a->cell[1]->num);
+    }
+    if (strcmp(op, "<") == 0) {
+        r = (a->cell[0]->num < a->cell[1]->num);
+    }
+    if (strcmp(op, ">=") == 0) {
+        r = (a->cell[0]->num >= a->cell[1]->num);
+    }
+    if (strcmp(op, "<=") == 0) {
+        r = (a->cell[0]->num <= a->cell[1]->num);
+    }
+
+    lval_del(a);
+    return lval_num(r);
 }
 
 void lenv_add_builtin(lenv* e, char* name, lbuiltin builtin)
