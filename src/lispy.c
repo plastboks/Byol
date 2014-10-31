@@ -899,6 +899,16 @@ lval* builtin_pow(lenv* e, lval* a)
     return builtin_op(e, a, "^");
 }
 
+lval* builtin_min(lenv* e, lval* a)
+{
+    return builtin_op(e, a, "min");
+}
+
+lval* builtin_max(lenv* e, lval* a)
+{
+    return builtin_op(e, a, "max");
+}
+
 lval* builtin_op(lenv* e, lval* a, char* op)
 {
     /* Ensure all arguments are numbers */
@@ -1002,6 +1012,8 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "last", builtin_last);
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
+    lenv_add_builtin(e, "min", builtin_min);
+    lenv_add_builtin(e, "max", builtin_max);
     lenv_add_builtin(e, "len", builtin_len);
     lenv_add_builtin(e, "init", builtin_init);
     lenv_add_builtin(e, "\\", builtin_lambda);
