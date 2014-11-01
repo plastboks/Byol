@@ -1441,7 +1441,7 @@ int main(int argc, char** argv)
     lenv_add_builtins(e);
 
     if (argc == 1) {
-        puts("Lispy Version 0.0.0.0.12");
+        puts("Lispy Version 0.14");
         puts("Press Ctrl+c to Exit\n");
 
         while (1) {

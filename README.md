@@ -8,7 +8,7 @@ This is just a small pet project following the fantastic tutorial @ [Build your 
 
 Status
 ======
-Currently the code is at chapter 10. `src/lispy.c` is the main and only source file used for all chapters.
+Currently the code is at chapter 14. `src/lispy.c` is the main and only source file used for all chapters.
 
 Compilation and running
 =======================
