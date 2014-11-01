@@ -59,6 +59,7 @@ lval* builtin_cons(lenv* e, lval* a);
 lval* builtin_take(lenv* e, lval* a);
 lval* builtin_drop(lenv* e, lval* a);
 lval* builtin_rev(lenv* e, lval* a);
+lval* builtin_sort(lenv* e, lval* a);
 lval* builtin_last(lenv* e, lval* a);
 lval* builtin_list(lenv* e, lval* a);
 lval* builtin_eval(lenv* e, lval* a);
@@ -760,6 +761,19 @@ lval* builtin_rev(lenv* e, lval* a)
     return x;
 }
 
+lval* builtin_sort(lenv* e, lval* a)
+{
+    /* check error conditions */
+    LASSERT_NUM("sort", a, 1);
+    LASSERT_TYPE("sort", a, 0, LVAL_QEXPR);
+    LASSERT_NOT_EMPTY("sort", a, 0);
+
+    lval* v = lval_pop(a, 0);
+
+    lval_del(a);
+    return v;
+}
+
 lval* builtin_last(lenv* e, lval* a)
 {
     /* check error conditions */
@@ -1091,6 +1105,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "take", builtin_take);
     lenv_add_builtin(e, "drop", builtin_drop);
     lenv_add_builtin(e, "rev", builtin_rev);
+    lenv_add_builtin(e, "sort", builtin_sort);
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
     lenv_add_builtin(e, "min", builtin_min);
