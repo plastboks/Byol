@@ -67,6 +67,8 @@ lval* builtin_eval(lenv* e, lval* a);
 lval* builtin_join(lenv* e, lval* a);
 lval* builtin_len(lenv* e, lval* a);
 lval* builtin_init(lenv* e, lval* a);
+lval* builtin_sum(lenv* e, lval* a);
+lval* builtin_prod(lenv* e, lval* a);
 lval* builtin_lambda(lenv* e, lval* a);
 lval* builtin_op(lenv* e, lval* a, char* op);
 lval* builtin_ord(lenv* e, lval* a, char* op);
@@ -957,6 +959,30 @@ lval* builtin_init(lenv* e, lval* a)
     return v;
 }
 
+lval* builtin_sum(lenv* e, lval* a)
+{
+    /* Check error conditions */
+    LASSERT_NUM("sum", a, 1);
+    LASSERT_TYPE("sum", a, 0, LVAL_QEXPR);
+    LASSERT_NOT_EMPTY("sum", a, 0);
+
+    lval* v = lval_pop(a, 0);
+    lval_del(a);
+    return builtin_op(e, v, "+");
+}
+
+lval* builtin_prod(lenv* e, lval* a)
+{
+    /* Check error conditions */
+    LASSERT_NUM("prod", a, 1);
+    LASSERT_TYPE("prod", a, 0, LVAL_QEXPR);
+    LASSERT_NOT_EMPTY("prod", a, 0);
+
+    lval* v = lval_pop(a, 0);
+    lval_del(a);
+    return builtin_op(e, v, "*");
+}
+
 lval* builtin_lambda(lenv* e, lval* a)
 {
     LASSERT_NUM("\\", a, 2);
@@ -1150,6 +1176,12 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin builtin)
 
 void lenv_add_builtins(lenv* e)
 {
+    /* Assignments */
+    lenv_add_builtin(e, "\\", builtin_lambda);
+    lenv_add_builtin(e, "def", builtin_def);
+    lenv_add_builtin(e, "=", builtin_put);
+
+    /* List operations */
     lenv_add_builtin(e, "list", builtin_list);
     lenv_add_builtin(e, "head", builtin_head);
     lenv_add_builtin(e, "tail", builtin_tail);
@@ -1157,17 +1189,14 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "last", builtin_last);
     lenv_add_builtin(e, "take", builtin_take);
     lenv_add_builtin(e, "drop", builtin_drop);
-    lenv_add_builtin(e, "rev", builtin_rev);
+    lenv_add_builtin(e, "reverse", builtin_rev);
     lenv_add_builtin(e, "sort", builtin_sort);
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
-    lenv_add_builtin(e, "min", builtin_min);
-    lenv_add_builtin(e, "max", builtin_max);
     lenv_add_builtin(e, "len", builtin_len);
     lenv_add_builtin(e, "init", builtin_init);
-    lenv_add_builtin(e, "\\", builtin_lambda);
-    lenv_add_builtin(e, "def", builtin_def);
-    lenv_add_builtin(e, "=", builtin_put);
+    lenv_add_builtin(e, "sum", builtin_sum);
+    lenv_add_builtin(e, "product", builtin_prod);
 
     /* Arithmetic */
     lenv_add_builtin(e, "+", builtin_add);
@@ -1176,6 +1205,8 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "/", builtin_div);
     lenv_add_builtin(e, "%", builtin_mod);
     lenv_add_builtin(e, "^", builtin_pow);
+    lenv_add_builtin(e, "min", builtin_min);
+    lenv_add_builtin(e, "max", builtin_max);
 
     /* Conditionals */
     lenv_add_builtin(e, "if", builtin_if);
