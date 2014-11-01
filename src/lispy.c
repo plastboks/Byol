@@ -252,6 +252,7 @@ lval* lval_read(mpc_ast_t* t)
         if (strcmp(t->children[i]->contents, "{") == 0) { continue; }
         if (strcmp(t->children[i]->contents, "}") == 0) { continue; }
         if (strcmp(t->children[i]->tag, "regex") == 0) { continue; }
+        if (strstr(t->children[i]->tag, "comment")) { continue; }
         x = lval_add(x, lval_read(t->children[i]));
     }
 
@@ -1205,6 +1206,7 @@ int main(int argc, char** argv)
     mpc_parser_t* Decimal  = mpc_new("decimal");
     mpc_parser_t* String   = mpc_new("string");
     mpc_parser_t* Symbol   = mpc_new("symbol");
+    mpc_parser_t* Comment  = mpc_new("comment");
     mpc_parser_t* Sexpr    = mpc_new("sexpr");
     mpc_parser_t* Qexpr    = mpc_new("qexpr");
     mpc_parser_t* Expr     = mpc_new("expr");
@@ -1212,17 +1214,19 @@ int main(int argc, char** argv)
 
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
-      "                                                                             \
-        number   : /-?[0-9]+/ ;                                                     \
-        decimal  : /-?[0-9]+\\.[0-9]+/;                                             \
-        string   : /\"(\\\\.|[^\"])*\"/ ;                                           \
-        symbol   : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;                               \
-        sexpr    : '(' <expr>* ')' ;                                                \
-        qexpr    : '{' <expr>* '}' ;                                                \
-        expr     : <number> | <decimal> | <string> | <symbol> | <sexpr> | <qexpr> ; \
-        lispy    : /^/ <expr>* /$/ ;                                                \
+      "                                                           \
+        number   : /-?[0-9]+/ ;                                   \
+        decimal  : /-?[0-9]+\\.[0-9]+/;                           \
+        string   : /\"(\\\\.|[^\"])*\"/ ;                         \
+        symbol   : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&]+/ ;             \
+        comment  : /;[^\\r\\n]*/ ;                                \
+        sexpr    : '(' <expr>* ')' ;                              \
+        qexpr    : '{' <expr>* '}' ;                              \
+        expr     : <number> | <decimal> | <string> | <comment> |  \
+                   <symbol> | <sexpr> | <qexpr> ;                 \
+        lispy    : /^/ <expr>* /$/ ;                              \
       ",
-      Number, Decimal, String, Symbol, Sexpr, Qexpr, Expr, Lispy);
+      Number, Decimal, String, Comment, Symbol, Sexpr, Qexpr, Expr, Lispy);
 
     puts("Lispy Version 0.0.0.0.12");
     puts("Press Ctrl+c to Exit\n");
@@ -1250,6 +1254,7 @@ int main(int argc, char** argv)
     }
 
     lenv_del(e);
-    mpc_cleanup(8, Number, Decimal, String, Symbol, Sexpr, Qexpr, Expr, Lispy);
+    mpc_cleanup(9, Number, Decimal, String, Comment,
+            Symbol, Sexpr, Qexpr, Expr, Lispy);
     return 0;
 }
