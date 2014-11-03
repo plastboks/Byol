@@ -1268,6 +1268,9 @@ lval* builtin_load(lenv* e, lval* a)
     LASSERT_TYPE("load", a, 0, LVAL_STR);
 
     mpc_result_t r;
+    if (!strstr(a->cell[0]->str, ".lspy")) {
+        strcat(a->cell[0]->str, ".lspy");
+    }
     if (mpc_parse_contents(a->cell[0]->str, Lispy, &r)) {
         /* Read contents */
         lval* expr = lval_read(r.output);
