@@ -37,6 +37,8 @@
 #include <histedit.h>
 #include <math.h>
 
+#include "structures.h"
+
 #define LASSERT(args, cond, fmt, ...) \
     if (!(cond)) { \
         lval* err = lval_err(fmt, ##__VA_ARGS__); \
@@ -58,48 +60,6 @@
     LASSERT(args, args->cell[index]->count != 0, \
             "Function '%s' passed {} for argument %i.",\
             builtin, index)
-
-struct lval;
-struct lenv;
-typedef struct lval lval;
-typedef struct lenv lenv;
-typedef lval*(*lbuiltin)(lenv*, lval*);
-
-enum { LVAL_ERR, LVAL_NUM, LVAL_DEC, LVAL_SYM,
-    LVAL_STR, LVAL_FUN, LVAL_SEXPR, LVAL_QEXPR,
-    LVAL_BOOL};
-
-struct lval
-{
-    int type;
-    int is_builtin;
-
-    /* Basics */
-    long num;
-    double decimal;
-    char* err;
-    char* sym;
-    char* str;
-    int bool;
-
-    /* Functions */
-    lbuiltin builtin;
-    lenv* env;
-    lval* formals;
-    lval* body;
-
-    /* Expressions */
-    int count;
-    lval** cell;
-};
-
-struct lenv
-{
-    lenv* par;
-    int count;
-    char** syms;
-    lval** vals;
-};
 
 lval* lval_eval(lenv* e, lval* v);
 lval* lval_eval_sexpr(lenv*e, lval* v);
