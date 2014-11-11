@@ -148,6 +148,13 @@ lval* lval_read_num(mpc_ast_t* t)
     return errno != ERANGE ? lval_num(x) : lval_err("invalid number");
 }
 
+lval* lval_read_dec(mpc_ast_t* t)
+{
+    errno = 0;
+    double x = strtod(t->contents, NULL);
+    return errno != ERANGE ? lval_dec(x) : lval_err("invalid number");
+}
+
 lval* lval_read_str(mpc_ast_t* t)
 {
     t->contents[strlen(t->contents) - 1] = '\0';
@@ -205,6 +212,9 @@ lval* lval_copy(lval* v)
             break;
         case LVAL_NUM:
             x->num = v->num;
+            break;
+        case LVAL_DEC:
+            x->decimal = v->decimal;
             break;
         case LVAL_BOOL:
             x->bool = v->bool;
@@ -512,6 +522,9 @@ void lval_print(lval* v)
     switch (v->type) {
         case LVAL_NUM:
             printf("%li", v->num);
+            break;
+        case LVAL_DEC:
+            printf("%f", v->decimal);
             break;
         case LVAL_ERR:
             printf("Error: %s", v->err);
@@ -1092,7 +1105,10 @@ lval* builtin_op(lenv* e, lval* a, char* op)
     /* Pop the first element */
     lval* x = lval_pop(a, 0);
 
-    if ((strcmp(op, "-") == 0) && (a->count == 0)) { x->num = -x->num; }
+    if ((strcmp(op, "-") == 0) && (a->count == 0)) { 
+        if (x->type == LVAL_NUM) x->num = -x->num;
+        if (x->type == LVAL_DEC) x->decimal = -x->decimal;
+    }
 
     while (a->count > 0) {
         lval* y = lval_pop(a, 0);
