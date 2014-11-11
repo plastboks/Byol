@@ -1210,6 +1210,13 @@ lval* builtin_print(lenv* e, lval* a)
     return lval_sexpr();
 }
 
+lval* builtin_exit(lenv* e, lval* a)
+{
+    lenv_del(e);
+    lval_del(a);
+    exit(0);
+}
+
 lval* builtin_error(lenv* e, lval* a)
 {
     LASSERT_NUM("error", a, 1);
@@ -1296,6 +1303,9 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "&&", builtin_and);
     lenv_add_builtin(e, "||", builtin_or);
     lenv_add_builtin(e, "!", builtin_not);
+
+    /* Other functions */
+    lenv_add_builtin(e, "exit", builtin_exit);
 }
 
 int min(int x, int y)
@@ -1343,7 +1353,7 @@ int main(int argc, char** argv)
 
     if (argc == 1) {
         puts("Lispy Version 0.14");
-        puts("Press Ctrl+c to Exit\n");
+        puts("Press Ctrl+c , or type 'exit 1' to exit\n");
 
         while (1) {
             char* input = readline("lispy> ") ;
