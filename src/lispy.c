@@ -1034,6 +1034,14 @@ lval* builtin_put(lenv* e, lval* a) {
     return builtin_var(e, a, "=");
 }
 
+lval* builtin_env(lenv* e, lval* a)
+{
+    for (int i = 0; i < e->count; i++) {
+        printf("%s\n", e->syms[i]);
+    }
+    return lval_pop(a, 0);
+}
+
 lval* builtin_add(lenv* e, lval* a)
 {
     return builtin_op(e, a, "+");
@@ -1263,6 +1271,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "\\", builtin_lambda);
     lenv_add_builtin(e, "def", builtin_def);
     lenv_add_builtin(e, "=", builtin_put);
+    lenv_add_builtin(e, "env", builtin_env);
 
     /* List operations */
     lenv_add_builtin(e, "list", builtin_list);

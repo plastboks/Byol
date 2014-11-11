@@ -110,6 +110,7 @@ lval* builtin_if(lenv* e, lval* a);
 lval* builtin_load(lenv* e, lval* a);
 lval* builtin_print(lenv* e, lval* a);
 lval* builtin_exit(lenv* e, lval* a);
+lval* builtin_env(lenv* e, lval* a);
 int min(int x, int y);
 int max(int x, int y);
 void lval_println(lval* v);
