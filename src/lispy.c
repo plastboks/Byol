@@ -172,6 +172,7 @@ lval* lval_read_str(mpc_ast_t* t)
 lval* lval_read(mpc_ast_t* t)
 {
     if (strstr(t->tag, "number")) { return lval_read_num(t); }
+    if (strstr(t->tag, "decimal")) { return lval_read_dec(t); }
     if (strstr(t->tag, "string")) { return lval_read_str(t); }
     if (strstr(t->tag, "symbol")) { return lval_sym(t->contents); }
 
@@ -1360,8 +1361,8 @@ int main(int argc, char** argv)
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
       "                                                           \
-        number   : /-?[0-9]+/ ;                                   \
         decimal  : /-?[0-9]+\\.[0-9]+/;                           \
+        number   : /-?[0-9]+/ ;                                   \
         string   : /\"(\\\\.|[^\"])*\"/ ;                         \
         symbol   : /[a-zA-Z0-9_+\\-*\\/\\\\=<>!&|]+/ ;            \
         comment  : /;[^\\r\\n]*/ ;                                \
@@ -1371,7 +1372,7 @@ int main(int argc, char** argv)
                    <symbol> | <sexpr> | <qexpr> ;                 \
         lispy    : /^/ <expr>* /$/ ;                              \
       ",
-      Number, Decimal, String, Comment, Symbol, Sexpr, Qexpr, Expr, Lispy);
+      Decimal, Number, String, Comment, Symbol, Sexpr, Qexpr, Expr, Lispy);
 
     lenv* e = lenv_new();
     lenv_add_builtins(e);
