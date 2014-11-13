@@ -1100,7 +1100,11 @@ lval* builtin_op(lenv* e, lval* a, char* op)
 {
     /* Ensure all arguments are numbers */
     for (int i = 0; i < a->count; i++) {
-        LASSERT_TYPE(op, a, i, LVAL_NUM);
+        if (a->cell[i]->type != LVAL_NUM && a->cell[i]->type != LVAL_DEC) {
+            lval_del(a);
+            return lval_err("Cannot operate on non-number. Integer\
+                    or Decimal number expected");
+        }
     }
 
     /* Pop the first element */
@@ -1368,7 +1372,7 @@ int main(int argc, char** argv)
         comment  : /;[^\\r\\n]*/ ;                                \
         sexpr    : '(' <expr>* ')' ;                              \
         qexpr    : '{' <expr>* '}' ;                              \
-        expr     : <number> | <decimal> | <string> | <comment> |  \
+        expr     : <decimal> | <number> | <string> | <comment> |  \
                    <symbol> | <sexpr> | <qexpr> ;                 \
         lispy    : /^/ <expr>* /$/ ;                              \
       ",
