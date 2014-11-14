@@ -31,6 +31,7 @@
  */
 
 #include "mpc.h"
+#include "colors.h"
 #include "lispy.h"
 
 lval* lval_fun(lbuiltin builtin)
@@ -1382,11 +1383,22 @@ int main(int argc, char** argv)
     lenv_add_builtins(e);
 
     if (argc == 1) {
-        puts("Lispy Version 0.14");
+        puts(BOLDMAGENTA);
+        puts("    __    _                  ");
+        puts("   / /   (_)________  __  __ ");
+        puts("  / /   / / ___/ __ \\/ / / /");
+        puts(" / /___/ (__  ) /_/ / /_/ /  ");
+        puts("/_____/_/____/ .___/\\__, /  ");
+        puts("            /_/    /____/    ");
+        puts(RESET);
+
+        puts(BOLDWHITE);
+        puts("Version 0.14");
         puts("Press Ctrl+c , or type 'exit 1' to exit\n");
+        puts(RESET);
 
         while (1) {
-            char* input = readline("lispy> ") ;
+            char* input = readline("lispy> ");
             add_history(input);
 
             mpc_result_t r;
