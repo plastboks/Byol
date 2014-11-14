@@ -1,13 +1,13 @@
-/*
+/**
  * Lispy main source file.
  *
- * @filename: lispy.h
+ * @filename: lispy.c
  *
  * @version: 0.14
  *
  * @date: 2014-11-04
  *
- * @description: Lispy main header file.
+ * @description: Lispy main source code file.
  *
  * @author: Alexander Skjolden
  *
@@ -31,6 +31,7 @@
  */
 
 #include "mpc.h"
+#include "func.h"
 #include "colors.h"
 #include "lispy.h"
 
@@ -156,6 +157,13 @@ lval* lval_read_dec(mpc_ast_t* t)
     return errno != ERANGE ? lval_dec(x) : lval_err("invalid number");
 }
 
+lval* lval_read_range(mpc_ast_t* t)
+{
+    long y = strtol(strstr(t->contents, "..") + 2, NULL, 10);
+    long x = strtol(strrev(strstr(strrev(t->contents), "..") + 2), NULL, 10);
+    return lval_err("%li + %li", x, y);
+}
+
 lval* lval_read_str(mpc_ast_t* t)
 {
     t->contents[strlen(t->contents) - 1] = '\0';
@@ -174,6 +182,7 @@ lval* lval_read(mpc_ast_t* t)
 {
     if (strstr(t->tag, "number")) { return lval_read_num(t); }
     if (strstr(t->tag, "decimal")) { return lval_read_dec(t); }
+    if (strstr(t->tag, "range")) { return lval_read_range(t); }
     if (strstr(t->tag, "string")) { return lval_read_str(t); }
     if (strstr(t->tag, "symbol")) { return lval_sym(t->contents); }
 
@@ -1353,8 +1362,9 @@ int max(int x, int y)
 
 int main(int argc, char** argv)
 {
-    Number   = mpc_new("number");
+    Range    = mpc_new("range");
     Decimal  = mpc_new("decimal");
+    Number   = mpc_new("number");
     String   = mpc_new("string");
     Symbol   = mpc_new("symbol");
     Comment  = mpc_new("comment");
@@ -1366,6 +1376,7 @@ int main(int argc, char** argv)
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
       "                                                           \
+        range    : /-?[0-9]+\\.\\.[0-9]+/;                        \
         decimal  : /-?[0-9]+\\.[0-9]+/;                           \
         number   : /-?[0-9]+/ ;                                   \
         string   : /\"(\\\\.|[^\"])*\"/ ;                         \
@@ -1373,11 +1384,12 @@ int main(int argc, char** argv)
         comment  : /;[^\\r\\n]*/ ;                                \
         sexpr    : '(' <expr>* ')' ;                              \
         qexpr    : '{' <expr>* '}' ;                              \
-        expr     : <decimal> | <number> | <string> | <comment> |  \
-                   <symbol> | <sexpr> | <qexpr> ;                 \
+        expr     : <range> | <decimal> | <number> | <string> |    \
+                   <symbol> | <comment> | <sexpr> | <qexpr> ;     \
         lispy    : /^/ <expr>* /$/ ;                              \
       ",
-      Decimal, Number, String, Comment, Symbol, Sexpr, Qexpr, Expr, Lispy);
+      Range, Decimal, Number, String, Comment,
+      Symbol, Sexpr, Qexpr, Expr, Lispy);
 
     lenv* e = lenv_new();
     lenv_add_builtins(e);
@@ -1431,7 +1443,7 @@ int main(int argc, char** argv)
     }
 
     lenv_del(e);
-    mpc_cleanup(9, Number, Decimal, String, Comment,
+    mpc_cleanup(10, Range, Decimal, Number, String, Comment,
             Symbol, Sexpr, Qexpr, Expr, Lispy);
     return 0;
 }

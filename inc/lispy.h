@@ -119,6 +119,7 @@ void lval_expr_print(lval* v, char open, char close);
 
 mpc_parser_t* Number;
 mpc_parser_t* Decimal;
+mpc_parser_t* Range;
 mpc_parser_t* String;
 mpc_parser_t* Symbol;
 mpc_parser_t* Comment;
