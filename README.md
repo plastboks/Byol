@@ -2,6 +2,8 @@ Byol
 ====
 Build your own Lisp.
 
+![Screenshot](screenshot/lispy-0.14.png)
+
 About
 =====
 This is just a small pet project following the fantastic tutorial @ [Build your own Lisp](http://www.buildyourownlisp.com)
