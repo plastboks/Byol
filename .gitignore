@@ -29,7 +29,6 @@
 *.hex
 
 # Byol files
-obj
 lispy
 
 # Editor files
