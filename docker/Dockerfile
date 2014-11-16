@@ -1,6 +1,6 @@
 FROM ubuntu:14.04
 
-MAINTAINER Alexander Skjolde alex@plastboks.net
+MAINTAINER Alexander Skjolden alex@plastboks.net
 
 RUN apt-get update
 #RUN apt-get upgrade
