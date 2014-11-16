@@ -1,0 +1,14 @@
+FROM ubuntu:14.04
+
+MAINTAINER Alexander Skjolde alex@plastboks.net
+
+RUN apt-get update
+#RUN apt-get upgrade
+RUN apt-get -y install build-essential git libreadline-dev libedit-dev
+
+VOLUME /byol/shared
+
+WORKDIR /byol
+RUN git clone https://github.com/plastboks/Byol.git shared
+WORKDIR /byol/shared
+RUN make
