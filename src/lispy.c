@@ -786,6 +786,12 @@ lval* builtin_sort(lenv* e, lval* a)
 
     lval* v = lval_pop(a, 0);
 
+    int intcmp(const void *a, const void *b)
+    {
+        const int *ia = (int *)a, *ib = (int *)b;
+        return *ia - *ib;
+    }
+
     return lval_err("Not implemented yet...");
 
     lval_del(a);
