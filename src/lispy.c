@@ -792,6 +792,8 @@ lval* builtin_sort(lenv* e, lval* a)
         return *ia - *ib;
     }
 
+    //qsort(array, array_count, sizeof(array[0]), intcmp);
+
     return lval_err("Not implemented yet...");
 
     lval_del(a);
