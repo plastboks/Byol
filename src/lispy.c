@@ -786,6 +786,8 @@ lval* builtin_sort(lenv* e, lval* a)
 
     lval* v = lval_pop(a, 0);
 
+    return lval_err("Not implemented yet...");
+
     lval_del(a);
     return v;
 }
