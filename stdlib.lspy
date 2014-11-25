@@ -2,24 +2,32 @@
 (def {true} 1)
 (def {false} 0)
 
+; Function definitions.
 (def {fun} (\ {args body} {
     def (head args) (\ (tail args) body)
 }))
 
+; Unback list for function.
 (fun {unpack f xs} {
     eval (join (list f) xs)
 })
 
+; Pack list for function.
 (fun {pack f & xs} {f xs})
+
+; Curry and Uncurry
 (def {uncurry} pack)
 (def {curry} unpack)
 
+
+; Perform Several things in Sequence.
 (fun {do & l} {
     if (== l nil)
         {nil}
         {last l}
 })
 
+; Open new scope
 (fun {let b} {
     ((\ {_} b) ())
 })
