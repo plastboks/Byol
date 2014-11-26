@@ -1404,6 +1404,13 @@ int main(int argc, char** argv)
     lenv* e = lenv_new();
     lenv_add_builtins(e);
 
+    lval* stdlib_file = lval_add(lval_sexpr(), lval_str("stdlib.lspy"));
+    lval* stdlib_load = builtin_load(e, stdlib_file);
+    if (stdlib_load->type == LVAL_ERR) {
+        lval_println(stdlib_load);
+    }
+    lval_del(stdlib_load);
+
     if (argc == 1) {
         puts(BOLDMAGENTA);
         puts("    __    _                  ");
