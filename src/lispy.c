@@ -3,7 +3,7 @@
  *
  * @filename: lispy.c
  *
- * @version: 0.14
+ * @version: 0.15
  *
  * @date: 2014-11-04
  *
@@ -1138,23 +1138,49 @@ lval* builtin_op(lenv* e, lval* a, char* op)
     while (a->count > 0) {
         lval* y = lval_pop(a, 0);
 
-        /* Operations */
-        if (strcmp(op, "+") == 0) { x->num += y->num; }
-        if (strcmp(op, "-") == 0) { x->num -= y->num; }
-        if (strcmp(op, "*") == 0) { x->num *= y->num; }
-        if (strcmp(op, "/") == 0) {
-            if (y->num == 0) {
-                lval_del(x);
-                lval_del(y);
-                x = lval_err("Division by zero!");
-                break;
+        if (x->type == LVAL_NUM && y->type == LVAL_NUM) {
+            /* Operations */
+            if (strcmp(op, "+") == 0) { x->num += y->num; }
+            if (strcmp(op, "-") == 0) { x->num -= y->num; }
+            if (strcmp(op, "*") == 0) { x->num *= y->num; }
+            if (strcmp(op, "%") == 0) { x->num = x->num % y->num; }
+            if (strcmp(op, "^") == 0) { x->num = pow(x->num, y->num); }
+            if (strcmp(op, "min") == 0) { x->num = min(x->num, y->num); }
+            if (strcmp(op, "max") == 0) { x->num = max(x->num, y->num); }
+            if (strcmp(op, "/") == 0) {
+                if (y->num == 0) {
+                    lval_del(x); lval_del(y);
+                    x = lval_err("Division by zero!");
+                    break;
+                }
+                x->num /= y->num;
             }
-            x->num /= y->num;
+        } else {
+            /* One of the operands is a notnum */
+            if (x->type == LVAL_DEC && y->type == LVAL_NUM) {
+                y->type = LVAL_DEC;
+                y->decimal = (double)(y->num);
+            } else if (x->type == LVAL_NUM && y->type == LVAL_DEC) {
+                x->type = LVAL_DEC;
+                x->decimal = (double)(x->num);
+            }
+            /* Operations */
+            if (strcmp(op, "+") == 0) { x->decimal += y->decimal; }
+            if (strcmp(op, "-") == 0) { x->decimal -= y->decimal; }
+            if (strcmp(op, "*") == 0) { x->decimal *= y->decimal; }
+            if (strcmp(op, "%") == 0) { x->decimal = fmod(x->decimal, y->decimal); }
+            if (strcmp(op, "^") == 0) { x->decimal = pow(x->decimal, y->decimal); }
+            if (strcmp(op, "min") == 0) { x->decimal = fmin(x->decimal, y->decimal); }
+            if (strcmp(op, "max") == 0) { x->decimal = fmax(x->decimal, y->decimal); }
+            if (strcmp(op, "/") == 0) {
+                if (y->decimal == 0) {
+                    lval_del(x); lval_del(y);
+                    x = lval_err("Division by zero!");
+                    break;
+                }
+                x->decimal /= y->decimal;
+            }
         }
-        if (strcmp(op, "%") == 0) { x->num = x->num % y->num; }
-        if (strcmp(op, "^") == 0) { x->num = pow(x->num, y->num); }
-        if (strcmp(op, "min") == 0) { x->num = min(x->num, y->num); }
-        if (strcmp(op, "max") == 0) { x->num = max(x->num, y->num); }
 
         /* Delete y element */
         lval_del(y);
@@ -1364,7 +1390,19 @@ int min(int x, int y)
     return y;
 }
 
+double fmin(double x, double y)
+{
+    if (x < y) { return x; }
+    return y;
+}
+
 int max(int x, int y)
+{
+    if (x > y) { return x; }
+    return y;
+}
+
+double fmax(double x, double y)
 {
     if (x > y) { return x; }
     return y;
@@ -1422,7 +1460,7 @@ int main(int argc, char** argv)
         puts(RESET);
 
         puts(BOLDWHITE);
-        puts("Version 0.14");
+        puts("Version 0.15");
         puts("Press Ctrl+c , or type 'exit 1' to exit\n");
         puts(RESET);
 
