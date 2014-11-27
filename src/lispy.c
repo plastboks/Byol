@@ -143,6 +143,22 @@ lval* lval_add(lval* v, lval* x)
     return v;
 }
 
+lval* lval_range(long x, long y)
+{
+    lval* v = NULL;
+    v = lval_qexpr();
+    if (x < y) {
+        for (int i = x; i <= y; i++) {
+            v = lval_add(v, lval_num(i));
+        }
+    } else {
+        for (int i = x; i >= y; i--) {
+            v = lval_add(v, lval_num(i));
+        }
+    }
+    return v;
+}
+
 lval* lval_read_num(mpc_ast_t* t)
 {
     errno = 0;
@@ -159,9 +175,10 @@ lval* lval_read_dec(mpc_ast_t* t)
 
 lval* lval_read_range(mpc_ast_t* t)
 {
+    errno = 0;
     long y = strtol(strstr(t->contents, "..") + 2, NULL, 10);
     long x = strtol(strrev(strstr(strrev(t->contents), "..") + 2), NULL, 10);
-    return lval_err("%li + %li", x, y);
+    return errno != ERANGE ? lval_range(x, y) : lval_err("invalid number");
 }
 
 lval* lval_read_str(mpc_ast_t* t)
