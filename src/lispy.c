@@ -32,6 +32,8 @@
 
 #include "mpc.h"
 #include "func.h"
+#include "lval.h"
+#include "lenv.h"
 #include "colors.h"
 #include "lispy.h"
 
@@ -887,6 +889,8 @@ lval* builtin_len(lenv* e, lval* a)
     return v;
 }
 
+
+
 lval* builtin_cmp(lenv* e, lval* a, char* op)
 {
     LASSERT_NUM(op, a, 2);
@@ -1415,30 +1419,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "exit", builtin_exit);
 }
 
-int min(int x, int y)
-{
-    if (x < y) { return x; }
-    return y;
-}
-
-double fmin(double x, double y)
-{
-    if (x < y) { return x; }
-    return y;
-}
-
-int max(int x, int y)
-{
-    if (x > y) { return x; }
-    return y;
-}
-
-double fmax(double x, double y)
-{
-    if (x > y) { return x; }
-    return y;
-}
-
 int main(int argc, char** argv)
 {
     Range    = mpc_new("range");
@@ -1455,7 +1435,7 @@ int main(int argc, char** argv)
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
       "                                                           \
-        range    : /-?[0-9]+\\.\\.[0-9]+/;                        \
+        range    : /-?[0-9]+\\.\\.-?[0-9]+/;                      \
         decimal  : /-?[0-9]+\\.[0-9]+/;                           \
         number   : /-?[0-9]+/ ;                                   \
         string   : /\"(\\\\.|[^\"])*\"/ ;                         \

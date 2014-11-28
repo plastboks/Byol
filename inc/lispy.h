@@ -38,28 +38,7 @@
 #include <math.h>
 
 #include "structures.h"
-
-#define LASSERT(args, cond, fmt, ...) \
-    if (!(cond)) { \
-        lval* err = lval_err(fmt, ##__VA_ARGS__); \
-        lval_del(args); \
-        return err; \
-    }
-
-#define LASSERT_TYPE(builtin, args, index, expect) \
-    LASSERT(args, args->cell[index]->type == expect, \
-            "Function '%s' passed incorrect type for argument %i. Got %s, expected %s.",\
-            builtin, index, ltype_name(args->cell[index]->type), ltype_name(expect))
-
-#define LASSERT_NUM(builtin, args, num) \
-    LASSERT(args, args->count == num, \
-            "Function '%s' passed incorrect number for arguments. Got %i, expected %i.",\
-            builtin, args->count, num)
-
-#define LASSERT_NOT_EMPTY(builtin, args, index) \
-    LASSERT(args, args->cell[index]->count != 0, \
-            "Function '%s' passed {} for argument %i.",\
-            builtin, index)
+#include "macros.h"
 
 lval* lval_eval(lenv* e, lval* v);
 lval* lval_eval_sexpr(lenv*e, lval* v);
@@ -77,42 +56,7 @@ char* ltype_name(int t);
 void lenv_put(lenv* e, lval* k, lval* v);
 void lenv_del(lenv* e);
 void lval_del(lval* v);
-lval* builtin_head(lenv* e, lval* a);
-lval* builtin_tail(lenv* e, lval* a);
-lval* builtin_cons(lenv* e, lval* a);
-lval* builtin_take(lenv* e, lval* a);
-lval* builtin_drop(lenv* e, lval* a);
-lval* builtin_rev(lenv* e, lval* a);
-lval* builtin_sort(lenv* e, lval* a);
-lval* builtin_last(lenv* e, lval* a);
-lval* builtin_list(lenv* e, lval* a);
-lval* builtin_eval(lenv* e, lval* a);
-lval* builtin_join(lenv* e, lval* a);
-lval* builtin_len(lenv* e, lval* a);
-lval* builtin_init(lenv* e, lval* a);
-lval* builtin_sum(lenv* e, lval* a);
-lval* builtin_prod(lenv* e, lval* a);
-lval* builtin_nth(lenv* e, lval* a);
-lval* builtin_lambda(lenv* e, lval* a);
-lval* builtin_op(lenv* e, lval* a, char* op);
-lval* builtin_ord(lenv* e, lval* a, char* op);
-lval* builtin_gt(lenv* e, lval* a);
-lval* builtin_lt(lenv* e, lval* a);
-lval* builtin_ge(lenv* e, lval* a);
-lval* builtin_le(lenv* e, lval* a);
-lval* builtin_cmp(lenv* e, lval* a, char* op);
-lval* builtin_eq(lenv* e, lval* a);
-lval* builtin_ne(lenv* e, lval* a);
-lval* builtin_and(lenv* e, lval* a);
-lval* builtin_or(lenv* e, lval* a);
-lval* builtin_not(lenv* e, lval* a);
-lval* builtin_if(lenv* e, lval* a);
-lval* builtin_load(lenv* e, lval* a);
-lval* builtin_print(lenv* e, lval* a);
-lval* builtin_exit(lenv* e, lval* a);
-lval* builtin_env(lenv* e, lval* a);
-int min(int x, int y);
-int max(int x, int y);
+
 void lval_println(lval* v);
 void lval_print(lval* v);
 void lval_expr_print(lval* v, char open, char close);
