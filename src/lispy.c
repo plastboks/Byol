@@ -33,6 +33,7 @@
 #include "lval.h"
 #include "lenv.h"
 #include "lispy.h"
+#include "builtins.h"
 
 lval* lval_fun(lbuiltin builtin)
 {

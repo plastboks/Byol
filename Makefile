@@ -4,7 +4,7 @@ EFLAGS=-ledit -lm
 
 ODIR=obj
 
-_OBJ = lispy.o func.o mpc.o lenv.o lval.o
+_OBJ = lispy.o func.o mpc.o lenv.o lval.o builtins.o
 OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 
 lispy: $(OBJ)
