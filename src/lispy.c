@@ -1415,30 +1415,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "exit", builtin_exit);
 }
 
-int min(int x, int y)
-{
-    if (x < y) { return x; }
-    return y;
-}
-
-double fmin(double x, double y)
-{
-    if (x < y) { return x; }
-    return y;
-}
-
-int max(int x, int y)
-{
-    if (x > y) { return x; }
-    return y;
-}
-
-double fmax(double x, double y)
-{
-    if (x > y) { return x; }
-    return y;
-}
-
 int main(int argc, char** argv)
 {
     Range    = mpc_new("range");

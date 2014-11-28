@@ -46,3 +46,28 @@ char* strrev(char *s)
 
     return s;
 }
+
+int min(int x, int y)
+{
+    if (x < y) { return x; }
+    return y;
+}
+
+double fmin(double x, double y)
+{
+    if (x < y) { return x; }
+    return y;
+}
+
+int max(int x, int y)
+{
+    if (x > y) { return x; }
+    return y;
+}
+
+double fmax(double x, double y)
+{
+    if (x > y) { return x; }
+    return y;
+}
+
