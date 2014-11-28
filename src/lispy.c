@@ -32,6 +32,8 @@
 
 #include "mpc.h"
 #include "func.h"
+#include "lval.h"
+#include "lenv.h"
 #include "colors.h"
 #include "lispy.h"
 
@@ -886,6 +888,8 @@ lval* builtin_len(lenv* e, lval* a)
 
     return v;
 }
+
+
 
 lval* builtin_cmp(lenv* e, lval* a, char* op)
 {
