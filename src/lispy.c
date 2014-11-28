@@ -1455,7 +1455,7 @@ int main(int argc, char** argv)
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
       "                                                           \
-        range    : /-?[0-9]+\\.\\.[0-9]+/;                        \
+        range    : /-?[0-9]+\\.\\.-?[0-9]+/;                      \
         decimal  : /-?[0-9]+\\.[0-9]+/;                           \
         number   : /-?[0-9]+/ ;                                   \
         string   : /\"(\\\\.|[^\"])*\"/ ;                         \
