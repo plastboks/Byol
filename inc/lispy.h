@@ -35,25 +35,10 @@
 
 #include <editline/readline.h>
 #include <histedit.h>
-#include <math.h>
 
-#include "structures.h"
 #include "macros.h"
 #include "mpc.h"
-#include "func.h"
 #include "colors.h"
-
-int lval_eq(lval* x, lval* y);
-lval* lenv_get(lenv* e, lval* k);
-lenv* lenv_new(void);
-lenv* lenv_copy(lenv* e);
-void lenv_def(lenv* e, lval* k, lval* v);
-void lenv_put(lenv* e, lval* k, lval* v);
-void lenv_del(lenv* e);
-
-void lval_println(lval* v);
-void lval_print(lval* v);
-void lval_expr_print(lval* v, char open, char close);
 
 mpc_parser_t* Number;
 mpc_parser_t* Decimal;

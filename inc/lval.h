@@ -32,6 +32,7 @@
 
 #include "structures.h"
 #include "macros.h"
+#include "lenv.h"
 #include "lispy.h"
 #include "mpc.h"
 
@@ -63,6 +64,10 @@ lval* lval_read_dec(mpc_ast_t* t);
 lval* lval_read_range(mpc_ast_t* t);
 lval* lval_read_str(mpc_ast_t* t);
 lval* lval_read(mpc_ast_t* t);
+
+lval* lenv_get(lenv* e, lval* k);
+
+int lval_eq(lval* x, lval* y);
 
 void lval_del(lval* v);
 void lval_print(lval* v);
