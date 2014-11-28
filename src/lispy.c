@@ -1160,10 +1160,17 @@ lval* builtin_op(lenv* e, lval* a, char* op)
             if (strcmp(op, "+") == 0) { x->num += y->num; }
             if (strcmp(op, "-") == 0) { x->num -= y->num; }
             if (strcmp(op, "*") == 0) { x->num *= y->num; }
-            if (strcmp(op, "%") == 0) { x->num = x->num % y->num; }
             if (strcmp(op, "^") == 0) { x->num = pow(x->num, y->num); }
             if (strcmp(op, "min") == 0) { x->num = min(x->num, y->num); }
             if (strcmp(op, "max") == 0) { x->num = max(x->num, y->num); }
+            if (strcmp(op, "%") == 0) {
+                if (y->num == 0) {
+                    lval_del(x); lval_del(y);
+                    x = lval_err("Modulus by zero!");
+                    break;
+                }
+                x->num = x->num % y->num;
+            }
             if (strcmp(op, "/") == 0) {
                 if (y->num == 0) {
                     lval_del(x); lval_del(y);
@@ -1185,10 +1192,17 @@ lval* builtin_op(lenv* e, lval* a, char* op)
             if (strcmp(op, "+") == 0) { x->decimal += y->decimal; }
             if (strcmp(op, "-") == 0) { x->decimal -= y->decimal; }
             if (strcmp(op, "*") == 0) { x->decimal *= y->decimal; }
-            if (strcmp(op, "%") == 0) { x->decimal = fmod(x->decimal, y->decimal); }
             if (strcmp(op, "^") == 0) { x->decimal = pow(x->decimal, y->decimal); }
             if (strcmp(op, "min") == 0) { x->decimal = fmin(x->decimal, y->decimal); }
             if (strcmp(op, "max") == 0) { x->decimal = fmax(x->decimal, y->decimal); }
+            if (strcmp(op, "%") == 0) {
+                if (y->decimal == 0) {
+                    lval_del(x); lval_del(y);
+                    x = lval_err("Modulus by zero!");
+                    break;
+                }
+                x->decimal = fmod(x->decimal, y->decimal);
+            }
             if (strcmp(op, "/") == 0) {
                 if (y->decimal == 0) {
                     lval_del(x); lval_del(y);
