@@ -47,6 +47,7 @@ lval* lval_err(char* fmt, ...);
 lval* lval_dec(double x);
 lval* lval_num(long x);
 lval* lval_bool(int val);
+lval* lval_builtin(lbuiltin func);
 
 lval* lval_add(lval* v, lval* x);
 lval* lval_eval(lenv* e, lval* v);
@@ -64,4 +65,9 @@ lval* lval_read_str(mpc_ast_t* t);
 lval* lval_read(mpc_ast_t* t);
 
 void lval_del(lval* v);
+void lval_print(lval* v);
+void lval_println(lval* v);
+void lval_print_str(lval* v);
+
+void lval_expr_print(lval* v, char open, char close);
 char* ltype_name(int t);
