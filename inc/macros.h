@@ -30,6 +30,7 @@
  *
  */
 
+#ifndef LASSERTS
 #define LASSERT(args, cond, fmt, ...) \
     if (!(cond)) { \
         lval* err = lval_err(fmt, ##__VA_ARGS__); \
@@ -51,3 +52,4 @@
     LASSERT(args, args->cell[index]->count != 0, \
             "Function '%s' passed {} for argument %i.",\
             builtin, index)
+#endif

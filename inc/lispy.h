@@ -39,23 +39,17 @@
 
 #include "structures.h"
 #include "macros.h"
+#include "mpc.h"
+#include "func.h"
+#include "colors.h"
 
-lval* lval_eval(lenv* e, lval* v);
-lval* lval_eval_sexpr(lenv*e, lval* v);
-lval* lval_pop(lval* v, int i);
-lval* lval_take(lval* v, int i);
-lval* lval_join(lval* x, lval* y);
-lval* lval_copy(lval* v);
-lval* lval_call(lenv* e, lval* f, lval* a);
 int lval_eq(lval* x, lval* y);
 lval* lenv_get(lenv* e, lval* k);
 lenv* lenv_new(void);
 lenv* lenv_copy(lenv* e);
 void lenv_def(lenv* e, lval* k, lval* v);
-char* ltype_name(int t);
 void lenv_put(lenv* e, lval* k, lval* v);
 void lenv_del(lenv* e);
-void lval_del(lval* v);
 
 void lval_println(lval* v);
 void lval_print(lval* v);

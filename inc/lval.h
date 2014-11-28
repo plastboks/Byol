@@ -30,7 +30,42 @@
  *
  */
 
+#include <string.h>
+#include <math.h>
+
 #include "structures.h"
+#include "func.h"
+#include "macros.h"
+#include "lispy.h"
+#include "mpc.h"
+
+lval* lval_fun(lbuiltin builtin);
+lval* lval_lambda(lval* formals, lval* body);
+
+lval* lval_qexpr(void);
+lval* lval_range(long x, long y);
+lval* lval_sexpr(void);
+lval* lval_sym(char* s);
+lval* lval_str(char* s);
+lval* lval_err(char* fmt, ...);
+lval* lval_dec(double x);
+lval* lval_num(long x);
+lval* lval_bool(int val);
+
+lval* lval_add(lval* v, lval* x);
+lval* lval_eval(lenv* e, lval* v);
+lval* lval_eval_sexpr(lenv*e, lval* v);
+lval* lval_pop(lval* v, int i);
+lval* lval_take(lval* v, int i);
+lval* lval_join(lval* x, lval* y);
+lval* lval_copy(lval* v);
+lval* lval_call(lenv* e, lval* f, lval* a);
+
+lval* lval_read_num(mpc_ast_t* t);
+lval* lval_read_dec(mpc_ast_t* t);
+lval* lval_read_range(mpc_ast_t* t);
+lval* lval_read_str(mpc_ast_t* t);
+lval* lval_read(mpc_ast_t* t);
 
 lval* builtin_head(lenv* e, lval* a);
 lval* builtin_tail(lenv* e, lval* a);
@@ -66,3 +101,17 @@ lval* builtin_load(lenv* e, lval* a);
 lval* builtin_print(lenv* e, lval* a);
 lval* builtin_exit(lenv* e, lval* a);
 lval* builtin_env(lenv* e, lval* a);
+lval* builtin_error(lenv* e, lval* a);
+lval* builtin_def(lenv* e, lval* a);
+lval* builtin_put(lenv* e, lval* a);
+lval* builtin_add(lenv* e, lval* a);
+lval* builtin_sub(lenv* e, lval* a);
+lval* builtin_mul(lenv* e, lval* a);
+lval* builtin_div(lenv* e, lval* a);
+lval* builtin_mod(lenv* e, lval* a);
+lval* builtin_pow(lenv* e, lval* a);
+lval* builtin_min(lenv* e, lval* a);
+lval* builtin_max(lenv* e, lval* a);
+
+void lval_del(lval* v);
+char* ltype_name(int t);
