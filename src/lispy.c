@@ -293,8 +293,8 @@ lval* lval_call(lenv* e, lval* f, lval* a)
         if (strcmp(sym->sym, "&") == 0) {
             if (f->formals->count != 1) {
                 lval_del(a);
-                return lval_err("Function format is invalid. Symbol '&' not followed\
-                        by single symbol.");
+                return lval_err("Function format is invalid. "
+                        "Symbol '&' not followed by single symbol.");
             }
 
             lval* nsym = lval_pop(f->formals, 0);
@@ -317,8 +317,8 @@ lval* lval_call(lenv* e, lval* f, lval* a)
         strcmp(f->formals->cell[0]->sym, "&") == 0) {
 
         if (f->formals->count != 2) {
-            return lval_err("Function format invalid. Symbol '&' not followed\
-                    by single symbol");
+            return lval_err("Function format invalid. "
+                    "Symbol '&' not followed by single symbol");
         }
         lval_del(lval_pop(f->formals, 0));
 
@@ -1139,8 +1139,8 @@ lval* builtin_op(lenv* e, lval* a, char* op)
     for (int i = 0; i < a->count; i++) {
         if (a->cell[i]->type != LVAL_NUM && a->cell[i]->type != LVAL_DEC) {
             lval_del(a);
-            return lval_err("Cannot operate on non-number. Integer\
-                    or Decimal number expected");
+            return lval_err("Cannot operate on non-number. %s or %s expected",
+                    ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
         }
     }
 
