@@ -216,19 +216,10 @@ lval* builtin_len(lenv* e, lval* a)
     LASSERT_NUM("len", a, 1);
     LASSERT_TYPE("len", a, 0, LVAL_QEXPR);
     LASSERT_NOT_EMPTY("len", a, 0);
-
-    /* pop out the first element */
-    lval* v = lval_take(a, 0);
-
-    int count;
-    while(v->count > 1) {
-        lval_del(lval_pop(v, 1));
-        count++;
-    }
-
-    v->cell[0]->num = count;
-
-    return v;
+    
+    lval* x = lval_num(a->cell[0]->count);
+    lval_del(a);
+    return x;
 }
 
 lval* builtin_cmp(lenv* e, lval* a, char* op)
