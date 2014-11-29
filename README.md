@@ -59,7 +59,7 @@ List operators include the builtins `head` `tail` `last` `cons` `take` `drop` et
 
 Variables
 ---------
-Some examples of variables declaration and use
+Some examples of variables declaration and use.
 
 
         lispy> def {x} 100
@@ -87,3 +87,69 @@ Some examples of variables declaration and use
         sum (list a b x y)
         10
 
+Functions
+---------
+Some examples of functions and function declarations.
+
+
+        lispy> def {add-together} (\ {x y} {+ x y})
+        ()
+        lispy> add-together 10 20
+        30
+        lispy> fun {add-together x y} {+ x y}
+        ()
+        lispy> add-together 10 20
+        30
+        lispy> curry + {5 6 7}
+        18
+        lispy> uncurry head 5 6 7
+        {5}
+        lispy> def {add-curried} (curry +)
+        ()
+        lispy> add-curried {5 6 7}
+        18
+        lispy> def {add-uncurried} +
+        ()
+        lispy> add-uncurried 5 6 7
+        18
+
+Conditionals
+------------
+Some example conditionals.
+
+
+        lispy> > 10 5
+        True
+        lispy> <= 88 5>
+        True
+        lispy> == 5 {}
+        False
+        lispy> != {} 56
+        True
+        lispy> == {1 2 3 {5 6}} {1   2  3   {5 6}}
+        True
+        lispy> def {x y} 100 200
+        ()
+        lispy> if (== x y) {+ x y} {- x y}
+        -100
+        lispy> (fun {length l} {if (== l {}) {0} {+ 1 (length (tail l))} })
+        ()
+        lispy> length 1..20
+        20
+        lispy> fun {rev l} {if (== l {}) {{}} {join (rev (tail l)) (head l)}}
+        ()
+        lispy> 1..20
+        {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
+        lispy> rev 1..20
+        {20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1}
+
+Strings
+-------
+
+
+        lispy> "Hello World!"
+        "Hello World!"
+        lispy> head {"hello" "world"}
+        {"hello"}
+        lispy> eval (head {"hello" "world"})
+        "hello"
