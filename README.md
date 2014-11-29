@@ -37,5 +37,7 @@ Lispy's arithmetic is like the rest of the syntax prefix notation (polish notati
 Lists
 -----
 List operators include the builtins `head` `tail` `last` `cons` `take` `drop` etc.
+
+
         `lispy> {1 2 3 4 5}`
         `lispy> {{1 2 3} {4 5}}`
