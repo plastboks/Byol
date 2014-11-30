@@ -92,3 +92,27 @@
         {nil}
         {join (list (f (fst l))) (map f (tail l))}
 })
+
+; Fold Left
+(fun {foldl f z l} {
+  if (== l nil) 
+    {z}
+    {foldl f (f z (fst l)) (tail l)}
+})
+
+(fun {sum l} {foldl + 0 l})
+(fun {product l} {foldl * 1 l})
+
+; Factorial function
+(fun {fact n} {
+    if (== n 1)
+        {n}
+        {* n (fact (- n 1))}
+})
+
+; Combinatorics
+(fun {ncr n r} {
+    if (> r n)
+        {0}
+        {/ (fact n) (* (fact r) (fact (- n r)))}
+})

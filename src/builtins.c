@@ -245,30 +245,6 @@ lval* builtin_init(lenv* e, lval* a)
     return v;
 }
 
-lval* builtin_sum(lenv* e, lval* a)
-{
-    /* Check error conditions */
-    LASSERT_NUM("sum", a, 1);
-    LASSERT_TYPE("sum", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("sum", a, 0);
-
-    lval* v = lval_pop(a, 0);
-    lval_del(a);
-    return builtin_op(e, v, "+");
-}
-
-lval* builtin_prod(lenv* e, lval* a)
-{
-    /* Check error conditions */
-    LASSERT_NUM("prod", a, 1);
-    LASSERT_TYPE("prod", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("prod", a, 0);
-
-    lval* v = lval_pop(a, 0);
-    lval_del(a);
-    return builtin_op(e, v, "*");
-}
-
 lval* builtin_lambda(lenv* e, lval* a)
 {
     LASSERT_NUM("\\", a, 2);
@@ -622,8 +598,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
     lenv_add_builtin(e, "init", builtin_init);
-    lenv_add_builtin(e, "sum", builtin_sum);
-    lenv_add_builtin(e, "product", builtin_prod);
 
     /* Arithmetic */
     lenv_add_builtin(e, "+", builtin_add);
