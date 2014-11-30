@@ -76,50 +76,6 @@ lval* builtin_cons(lenv* e, lval* a)
     return x;
 }
 
-lval* builtin_take(lenv* e, lval* a)
-{
-    /* check error conditions */
-    LASSERT_NUM("take", a, 2);
-    LASSERT_TYPE("take", a, 0, LVAL_NUM);
-    LASSERT_TYPE("take", a, 1, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("take", a, 0);
-
-    lval* c = lval_pop(a, 0);
-    lval* v = lval_pop(a, 0);
-
-    if (c->num < v->count) {
-        for (int i = v->count - 1; i >= c->num; i--) {
-            lval_del(lval_pop(v, i));
-        }
-    }
-
-    lval_del(a);
-    lval_del(c);
-    return v;
-}
-
-lval* builtin_drop(lenv* e, lval* a)
-{
-    /* check error conditions */
-    LASSERT_NUM("drop", a, 2);
-    LASSERT_TYPE("drop", a, 0, LVAL_NUM);
-    LASSERT_TYPE("drop", a, 1, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("drop", a, 0);
-
-    lval* c = lval_pop(a, 0);
-    lval* v = lval_pop(a, 0);
-
-    if (c->num > v->count) { c->num = v->count; }
-
-    for (int i = 0; i < c->num; i++) {
-        lval_del(lval_pop(v, 0));
-    }
-
-    lval_del(a);
-    lval_del(c);
-    return v;
-}
-
 lval* builtin_rev(lenv* e, lval* a)
 {
     /* check error conditions */
@@ -162,22 +118,6 @@ lval* builtin_sort(lenv* e, lval* a)
     return v;
 }
 
-lval* builtin_last(lenv* e, lval* a)
-{
-    /* check error conditions */
-    LASSERT_NUM("last", a, 1);
-    LASSERT_TYPE("last", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("last", a, 0);
-
-    lval* v = lval_take(a, 0);
-
-    while (v->count > 1) {
-        lval_del(lval_pop(v, 0));
-    }
-
-    return v;
-}
-
 lval* builtin_list(lenv* e, lval* a)
 {
     a->type = LVAL_QEXPR;
@@ -206,18 +146,6 @@ lval* builtin_join(lenv* e, lval* a)
         x = lval_join(x, lval_pop(a, 0));
     }
 
-    lval_del(a);
-    return x;
-}
-
-lval* builtin_len(lenv* e, lval* a)
-{
-    /* Check error conditions */
-    LASSERT_NUM("len", a, 1);
-    LASSERT_TYPE("len", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("len", a, 0);
-    
-    lval* x = lval_num(a->cell[0]->count);
     lval_del(a);
     return x;
 }
@@ -339,28 +267,6 @@ lval* builtin_prod(lenv* e, lval* a)
     lval* v = lval_pop(a, 0);
     lval_del(a);
     return builtin_op(e, v, "*");
-}
-
-lval* builtin_nth(lenv* e, lval* a)
-{
-    /* Check error conditions */
-    LASSERT_NUM("nth", a, 2);
-    LASSERT_TYPE("nth", a, 0, LVAL_NUM);
-    LASSERT_TYPE("nth", a, 1, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("nth", a, 0);
-
-    lval* n = lval_qexpr();
-    lval* c = lval_pop(a, 0);
-    lval* v = lval_pop(a, 0);
-
-    if (c->num < v->count) {
-        n = lval_add(n, lval_pop(v, c->num));
-    }
-
-    lval_del(v);
-    lval_del(c);
-    lval_del(a);
-    return n;
 }
 
 lval* builtin_lambda(lenv* e, lval* a)
@@ -711,18 +617,13 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "head", builtin_head);
     lenv_add_builtin(e, "tail", builtin_tail);
     lenv_add_builtin(e, "cons", builtin_cons);
-    lenv_add_builtin(e, "last", builtin_last);
-    lenv_add_builtin(e, "take", builtin_take);
-    lenv_add_builtin(e, "drop", builtin_drop);
     lenv_add_builtin(e, "reverse", builtin_rev);
     lenv_add_builtin(e, "sort", builtin_sort);
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
-    lenv_add_builtin(e, "len", builtin_len);
     lenv_add_builtin(e, "init", builtin_init);
     lenv_add_builtin(e, "sum", builtin_sum);
     lenv_add_builtin(e, "product", builtin_prod);
-    lenv_add_builtin(e, "nth", builtin_nth);
 
     /* Arithmetic */
     lenv_add_builtin(e, "+", builtin_add);
