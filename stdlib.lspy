@@ -1,4 +1,6 @@
 (def {otherwise} true)
+(def {e}  2.71828182845904523536)
+(def {pi} 3.14159265358979323846)
 
 ; Function definitions.
 (def {fun} (\ {args body} {
@@ -167,6 +169,13 @@
     if (== n 1)
         {1}
         {* n (fact (- n 1))}
+})
+
+; Square root
+(fun {sqrt a} {
+    if (< a 0)
+        {error "Imaginary number"}
+        {^ e (/ (ln a) 2)}
 })
 
 ; Combinatorics
