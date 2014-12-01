@@ -550,7 +550,7 @@ void lval_print(lval* v)
             lval_print_str(v);
             break;
         case LVAL_BOOL:
-            printf("%s", v->bool ? "True" : "False");
+            printf("%s", v->bool ? "true" : "false");
             break;
         case LVAL_SYM:
             printf("%s", v->sym);

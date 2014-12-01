@@ -76,25 +76,6 @@ lval* builtin_cons(lenv* e, lval* a)
     return x;
 }
 
-lval* builtin_rev(lenv* e, lval* a)
-{
-    /* check error conditions */
-    LASSERT_NUM("rev", a, 1);
-    LASSERT_TYPE("rev", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("rev", a, 0);
-
-    lval* x = lval_qexpr();
-    lval* v = lval_pop(a, 0);
-
-    for (int i = v->count - 1; i >= 0; i--) {
-        x = lval_add(x, lval_pop(v, i));
-    }
-
-    lval_del(a);
-    lval_del(v);
-    return x;
-}
-
 lval* builtin_sort(lenv* e, lval* a)
 {
     /* check error conditions */
@@ -574,8 +555,9 @@ void lenv_add_builtin_var(lenv* e, char* name, lval* val)
 void lenv_add_builtins(lenv* e)
 {
     /* Builtin vars */
-    lenv_add_builtin_var(e, "True", lval_bool(1));
-    lenv_add_builtin_var(e, "False", lval_bool(0));
+    lenv_add_builtin_var(e, "true", lval_bool(1));
+    lenv_add_builtin_var(e, "false", lval_bool(0));
+    lenv_add_builtin_var(e, "nil", lval_qexpr());
 
     /* String Functions */
     lenv_add_builtin(e, "load", builtin_load);
@@ -593,7 +575,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "head", builtin_head);
     lenv_add_builtin(e, "tail", builtin_tail);
     lenv_add_builtin(e, "cons", builtin_cons);
-    lenv_add_builtin(e, "reverse", builtin_rev);
     lenv_add_builtin(e, "sort", builtin_sort);
     lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
