@@ -541,7 +541,7 @@ void lval_print(lval* v)
             printf("%li", v->num);
             break;
         case LVAL_DEC:
-            printf("%f", v->decimal);
+            printf("%.*f", 5, v->decimal);
             break;
         case LVAL_ERR:
             printf("Error: %s", v->err);
