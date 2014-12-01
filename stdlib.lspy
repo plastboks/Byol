@@ -1,4 +1,4 @@
-(def {nil} {})
+(def {otherwise} true)
 
 ; Function definitions.
 (def {fun} (\ {args body} {
@@ -31,9 +31,23 @@
 })
 
 ; Logical functions
-(fun {not x} {- 1 x })
-(fun {or x y} {+ x y})
-(fun {and x y} {* x y})
+(fun {not x} {! x})
+(fun {inot x} { if (> x 0) {true} {false} })
+(fun {or x y} {|| x y})
+(fun {and x y} {&& x y})
+
+(fun {select & cs} {
+    if (== cs nil)
+        {error "No Selection Found"}
+        {if (fst (fst cs)) {snd (fst cs)} {unpack select (tail cs)}}
+})
+
+(fun {case x & cs} {
+    if (== cs nil)
+        {error "No Case Found"}
+        {if (== x (fst (fst cs))) {snd (fst cs)}} {
+            unpack case (join (list x) (tail cs))}
+})
 
 ; Miscellaneous Functions
 (fun {flip f a b} {f b a})
@@ -79,8 +93,25 @@
 ; Element of List
 (fun {elem x l} {
     if (== l nil)
-        {False}
-        {if (== x (fst l)) {True} {elem x (tail l)}}
+        {false}
+        {if (== x (fst l)) {true} {elem x (tail l)}}
+})
+
+; Find element in list of pairs {{a b}{c d}}
+(fun {lookup x l} {
+    if (== l nil)
+        {error "No Element Found"}
+        {do
+            (= {key} (fst (fst l)))
+            (= {val} (snd (fst l)))
+            (if (== key x) {val} {lookup x (tail l)})
+        }
+})
+
+(fun {zip x y} {
+    if (or (== x nil) (== y nil))
+        {nil}
+        {join (list (join (head x) (head y))) (zip (tail x) (tail y))}
 })
 
 ; Last item in List
@@ -93,11 +124,39 @@
         {join (list (f (fst l))) (map f (tail l))}
 })
 
+; Reverse List
+(fun {reverse l} {
+    if (== l nil)
+        {nil}
+        {join (reverse (tail l)) (head l)}
+})
+
 ; Fold Left
 (fun {foldl f z l} {
-  if (== l nil) 
-    {z}
-    {foldl f (f z (fst l)) (tail l)}
+    if (== l nil) 
+        {z}
+        {foldl f (f z (fst l)) (tail l)}
+})
+
+; Fold Right
+(fun {foldr f z l} {
+    if (== l nil)
+        {z}
+        {f (fst l) (foldr f z (tail l))}
+})
+
+; Take While
+(fun {take-while f l} {
+    if (inot (unpack f (head l)))
+        {nil}
+        {join (head l) (take-while f (tail l))}
+})
+
+; Drop While
+(fun {drop-while f l} {
+    if (inot (unpack f (head l)))
+        {l}
+        {drop-while f (tail l)}
 })
 
 (fun {sum l} {foldl + 0 l})
@@ -115,4 +174,29 @@
     if (> r n)
         {0}
         {/ (fact n) (* (fact r) (fact (- n r)))}
+})
+
+; Permutations
+(fun {npr n r} {
+    if (> r n)
+        {0}
+        {/ (fact n) (fact (- n r))}
+})
+
+; gcd
+(fun {gcd a b} {
+    if (== 0 (% a b))
+        {b}
+        {gcd b (% a b)}
+})
+
+; lcm
+(fun {lcm a b} {/ (* a b) (gcd a b)})
+
+; Fibonacci
+(fun {fib n} {
+    select
+        { (== n 0) 0 }
+        { (== n 1) 1 }
+        { otherwise (+ (fib (- n 1)) (fib (- n 2)))}
 })
