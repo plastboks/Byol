@@ -34,7 +34,7 @@
 
 ; Logical functions
 (fun {not x} {! x})
-(fun {inot x} { if (> x 0) {true} {false} })
+(fun {inot x} { if (<= x 0) {false} {true} })
 (fun {or x y} {|| x y})
 (fun {and x y} {&& x y})
 
@@ -110,10 +110,22 @@
         }
 })
 
+; Zip two lists together into a list of pairs
 (fun {zip x y} {
     if (or (== x nil) (== y nil))
         {nil}
         {join (list (join (head x) (head y))) (zip (tail x) (tail y))}
+})
+
+; Unzip a list of pairs into two list
+(fun {unzip l} {
+    if (== l nil)
+        {{nil nil}}
+        {do
+            (= {x} (fst l))
+            (= {xs} (unzip (tail l)))
+            (list (join (head x) (fst xs)) (join (tail x) (snd xs)))
+        }
 })
 
 ; Last item in List
@@ -124,6 +136,13 @@
     if (== l nil)
         {nil}
         {join (list (f (fst l))) (map f (tail l))}
+})
+
+; Apply Filter to List
+(fun {filter f l} {
+    if (== l nil)
+        {nil}
+        {join (if (f (fst l)) {head l} {nil}) (filter f (tail l))}
 })
 
 ; Reverse List
@@ -149,14 +168,14 @@
 
 ; Take While
 (fun {take-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {nil}
         {join (head l) (take-while f (tail l))}
 })
 
 ; Drop While
 (fun {drop-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {l}
         {drop-while f (tail l)}
 })
