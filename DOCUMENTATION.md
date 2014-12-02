@@ -1,15 +1,15 @@
 Lispy Documentation
 ===================
-* [Arithmetic](#Arithmetic)
-* [List](#Lists)
-* [Variables](#Variables)
-* [Functions](#Functions)
-* [Conditionals](#Conditionals)
-* [Strings](#Strings)
-* [Standard Libarary](#Standard-library)
-    * [Math](#Math)
-    * [Lists](#Lists)
-    * [Boolean](#Boolean)
+* [Arithmetic](#arithmetic)
+* [List](#lists)
+* [Variables](#variables)
+* [Functions](#functions)
+* [Conditionals](#conditionals)
+* [Strings](#strings)
+* [Standard Libarary](#standard-library)
+    * [Math](#math)
+    * [Lists](#lists-l)
+    * [Boolean](#boolean)
 
 Arithmetic
 ----------
