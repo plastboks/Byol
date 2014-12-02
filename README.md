@@ -160,6 +160,10 @@ Included in the standard library are some of these nice features:
 
 ### Math
 
+        lispy> e
+        2.718282
+        lispy> pi
+        3.141593
         lispy> fact 5
         120
         lispy> sqrt 9
@@ -184,5 +188,41 @@ Included in the standard library are some of these nice features:
 
         lispy> len 1..20
         20
+        lispy> nth 5 1..20
+        6
+        lispy> take 5 1..20
+        {1 2 3 4 5}
+        lispy> drop 5 1..20
+        {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
+        lispy> split 5 1..20
+        {{1 2 3 4 5} {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}}
+        lispy> elem 5 1..20
+        true
+        lispy> zip 1..5 5..10
+        {{1 5} {2 6} {3 7} {4 8} {5 9}}
+        lispy> map - 1..10
+        {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
+        lispy> reverse 1..10
+        {10 9 8 7 6 5 4 3 2 1}
 
-        
+
+### Boolean
+
+        lispy> true
+        true
+        lispy> false
+        false
+        lispy> not true
+        false
+        lispy> and true false
+        false
+        lispy> and true true
+        true
+        lispy> or true false
+        true
+        lispy> or false false
+        false
+        lispy> xor false true
+        true
+        lispy> xor true true
+        false
