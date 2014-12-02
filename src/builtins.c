@@ -181,6 +181,17 @@ lval* builtin_or(lenv* e, lval* a)
     return lval_bool(r);
 }
 
+lval* builtin_xor(lenv* e, lval* a)
+{
+    LASSERT_NUM("xor", a, 2);
+    LASSERT_TYPE("xor", a, 0, LVAL_BOOL);
+    LASSERT_TYPE("xor", a, 1, LVAL_BOOL);
+
+    int r = a->cell[0]->bool ^ a->cell[1]->bool;
+    lval_del(a);
+    return lval_bool(r);
+}
+
 lval* builtin_not(lenv* e, lval* a)
 {
     LASSERT_NUM("!", a, 1);
@@ -662,6 +673,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "&&", builtin_and);
     lenv_add_builtin(e, "||", builtin_or);
     lenv_add_builtin(e, "!", builtin_not);
+    lenv_add_builtin(e, "xor", builtin_xor);
 
     /* Other functions */
     lenv_add_builtin(e, "exit", builtin_exit);
