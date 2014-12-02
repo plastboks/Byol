@@ -153,3 +153,36 @@ Strings
         {"hello"}
         lispy> eval (head {"hello" "world"})
         "hello"
+
+Standard Library
+----------------
+Included in the standard library are some of these nice features:
+
+### Math
+
+        lispy> fact 5
+        120
+        lispy> sqrt 9
+        3.000000
+        lispy> ncr 9 3
+        84
+        lispy> npr 9 3
+        504
+        lispy> gcd 440 356
+        4
+        lispy> lcm 440 356
+        39160
+        lispy> fib 10
+        55
+        lispy> sum {1 2 3 4 5}
+        15
+        lispy> product {1 2 3 4 5}
+        120
+
+
+### Lists
+
+        lispy> len 1..20
+        20
+
+        
