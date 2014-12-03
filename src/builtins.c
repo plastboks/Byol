@@ -512,21 +512,53 @@ lval* builtin_le(lenv* e, lval* a)
 lval* builtin_ord(lenv* e, lval* a, char* op)
 {
     LASSERT_NUM(op, a, 2);
-    LASSERT_TYPE(op, a, 0, LVAL_NUM);
-    LASSERT_TYPE(op, a, 1, LVAL_NUM);
+    /* Ensure all arguments are numbers */
+    for (int i = 0; i < a->count; i++) {
+        if (a->cell[i]->type != LVAL_NUM && a->cell[i]->type != LVAL_DEC) {
+            lval_del(a);
+            return lval_err("Cannot operate on non-number. %s or %s expected",
+                    ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+        }
+    }
 
     int r;
-    if (strcmp(op, ">") == 0) {
-        r = (a->cell[0]->num > a->cell[1]->num);
-    }
-    if (strcmp(op, "<") == 0) {
-        r = (a->cell[0]->num < a->cell[1]->num);
-    }
-    if (strcmp(op, ">=") == 0) {
-        r = (a->cell[0]->num >= a->cell[1]->num);
-    }
-    if (strcmp(op, "<=") == 0) {
-        r = (a->cell[0]->num <= a->cell[1]->num);
+    lval* x = lval_pop(a, 0);
+    lval* y = lval_pop(a, 0);
+
+    if (x->type == LVAL_NUM && y->type == LVAL_NUM) {
+        if (strcmp(op, ">") == 0) {
+            r = (x->num > y->num);
+        }
+        if (strcmp(op, "<") == 0) {
+            r = (x->num < y->num);
+        }
+        if (strcmp(op, ">=") == 0) {
+            r = (x->num >= y->num);
+        }
+        if (strcmp(op, "<=") == 0) {
+            r = (x->num <= y->num);
+        }
+    } else {
+        /* One of the operands is a notnum */
+        if (x->type == LVAL_DEC && y->type == LVAL_NUM) {
+            y->type = LVAL_DEC;
+            y->decimal = (double)(y->num);
+        } else if (x->type == LVAL_NUM && y->type == LVAL_DEC) {
+            x->type = LVAL_DEC;
+            x->decimal = (double)(x->num);
+        }
+        if (strcmp(op, ">") == 0) {
+            r = (x->decimal > y->decimal);
+        }
+        if (strcmp(op, "<") == 0) {
+            r = (x->decimal < y->decimal);
+        }
+        if (strcmp(op, ">=") == 0) {
+            r = (x->decimal >= y->decimal);
+        }
+        if (strcmp(op, "<=") == 0) {
+            r = (x->decimal <= y->decimal);
+        }
     }
 
     lval_del(a);
