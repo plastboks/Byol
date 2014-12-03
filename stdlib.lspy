@@ -221,6 +221,13 @@
 ; lcm
 (fun {lcm a b} {/ (* a b) (gcd a b)})
 
+; abs
+(fun {abs a} {
+    if (< a 0)
+        {- a}
+        {a}
+})
+
 ; Fibonacci
 (fun {fib n} {
     select
