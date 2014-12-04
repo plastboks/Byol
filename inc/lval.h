@@ -36,7 +36,7 @@
 #include "lispy.h"
 #include "mpc.h"
 
-lval* lval_fun(lbuiltin builtin);
+lval* lval_fun(lbuiltin func);
 lval* lval_lambda(lval* formals, lval* body);
 
 lval* lval_qexpr(void);
@@ -48,7 +48,6 @@ lval* lval_err(char* fmt, ...);
 lval* lval_dec(double x);
 lval* lval_num(long x);
 lval* lval_bool(int val);
-lval* lval_builtin(lbuiltin func);
 
 lval* lval_add(lval* v, lval* x);
 lval* lval_eval(lenv* e, lval* v);

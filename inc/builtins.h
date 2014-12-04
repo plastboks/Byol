@@ -86,6 +86,6 @@ lval* builtin_pow(lenv* e, lval* a);
 lval* builtin_min(lenv* e, lval* a);
 lval* builtin_max(lenv* e, lval* a);
 
-void lenv_add_builtin(lenv* e, char* name, lbuiltin builtin);
+void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtin_var(lenv* e, char* name, lval* val);
 void lenv_add_builtins(lenv* e);

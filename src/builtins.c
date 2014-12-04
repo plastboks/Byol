@@ -634,10 +634,10 @@ lval* builtin_error(lenv* e, lval* a)
     return err;
 }
 
-void lenv_add_builtin(lenv* e, char* name, lbuiltin builtin)
+void lenv_add_builtin(lenv* e, char* name, lbuiltin func)
 {
     lval* k = lval_sym(name);
-    lval* v = lval_builtin(builtin);
+    lval* v = lval_fun(func);
     lenv_put(e, k ,v);
     lval_del(k);
     lval_del(v);

@@ -33,11 +33,11 @@
 #include "lval.h"
 #include "builtins.h"
 
-lval* lval_fun(lbuiltin builtin)
+lval* lval_fun(lbuiltin func)
 {
     lval* v = malloc(sizeof(lval));
     v->type = LVAL_FUN;
-    v->builtin = builtin;
+    v->builtin = func;
     return v;
 }
 
@@ -222,14 +222,6 @@ lval* lval_join(lval* x, lval* y)
 
     lval_del(y);
     return x;
-}
-
-lval* lval_builtin(lbuiltin func)
-{
-    lval* v = malloc(sizeof(lval));
-    v->type = LVAL_FUN;
-    v->builtin = func;
-    return v;
 }
 
 lval* lval_range(long x, long y)
@@ -563,7 +555,7 @@ void lval_print(lval* v)
             break;
         case LVAL_FUN:
             if (v->builtin) {
-                printf("<function>");
+                printf("<builtin function>");
             } else {
                 printf("(\\ ");
                 lval_print(v->formals);
