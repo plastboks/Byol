@@ -85,6 +85,10 @@ lval* builtin_mod(lenv* e, lval* a);
 lval* builtin_pow(lenv* e, lval* a);
 lval* builtin_min(lenv* e, lval* a);
 lval* builtin_max(lenv* e, lval* a);
+lval* builtin_xor(lenv* e, lval* a);
+lval* builtin_ln(lenv* e, lval* a);
+lval* builtin_ceil(lenv* e, lval* a);
+lval* builtin_floor(lenv* e, lval* a);
 
 void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtin_var(lenv* e, char* name, lval* val);
