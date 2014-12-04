@@ -33,6 +33,13 @@
 #include "lispy.h"
 #include "builtins.h"
 
+void completion(const char *buf, linenoiseCompletions *lc) {
+    if (buf[0] == 'h') {
+        /* put builtin functions here ... */
+        //linenoiseAddCompletion(lc,"like this");
+    }
+}
+
 int main(int argc, char** argv)
 {
     Range    = mpc_new("range");
@@ -45,6 +52,8 @@ int main(int argc, char** argv)
     Qexpr    = mpc_new("qexpr");
     Expr     = mpc_new("expr");
     Lispy    = mpc_new("lispy");
+
+    char* input; 
 
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
@@ -89,22 +98,30 @@ int main(int argc, char** argv)
         puts("Press Ctrl+c , or type 'exit 1' to exit\n");
         puts(RESET);
 
-        while (1) {
-            char* input = readline("lispy> ");
-            add_history(input);
+        linenoiseSetMultiLine(1);
+        linenoiseSetCompletionCallback(completion);
+        linenoiseHistoryLoad("history.txt");
+        
+        while((input = linenoise("lispy> ")) != NULL) {
+            if (input[0] != '\0') {
+                linenoiseHistoryAdd(input);
+                linenoiseHistorySave("history.txt");
 
-            mpc_result_t r;
-            if (mpc_parse("<stdin>", input, Lispy, &r)) {
+                mpc_result_t r;
+                if (mpc_parse("<stdin>", input, Lispy, &r)) {
 
-                lval* x = lval_eval(e, lval_read(r.output));
-                lval_println(x);
-                lval_del(x);
-                mpc_ast_delete(r.output);
-            } else {
-                mpc_err_print(r.error);
-                mpc_err_delete(r.error);
+                    lval* x = lval_eval(e, lval_read(r.output));
+                    lval_println(x);
+                    lval_del(x);
+                    mpc_ast_delete(r.output);
+                } else {
+                    mpc_err_print(r.error);
+                    mpc_err_delete(r.error);
+                }
+            } else if (!strncmp(input,"/historylen",11)) {
+                int len = atoi(input+11);
+                linenoiseHistorySetMaxLen(len);
             }
-
             free(input);
         }
     }

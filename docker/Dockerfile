@@ -4,7 +4,7 @@ MAINTAINER Alexander Skjolden alex@plastboks.net
 
 RUN apt-get update
 #RUN apt-get upgrade
-RUN apt-get -y install build-essential git libreadline-dev libedit-dev
+RUN apt-get -y install build-essential git
 
 VOLUME /byol/shared
 

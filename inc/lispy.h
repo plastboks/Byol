@@ -33,9 +33,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include <editline/readline.h>
-#include <histedit.h>
-
+#include "linenoise.h"
 #include "macros.h"
 #include "mpc.h"
 #include "colors.h"

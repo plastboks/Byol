@@ -228,6 +228,9 @@
         {a}
 })
 
+; mod
+(fun {mod a b} {% a b})
+
 ; Fibonacci
 (fun {fib n} {
     select

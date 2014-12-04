@@ -15,10 +15,6 @@ Now with a docker automated build. See [the registry](https://registry.hub.docke
 * run: `build` (need superuser)
 * run: `run` (need superuser)
 
-Status
-======
-Currently the code is at chapter 15. `src/lispy.c` is the main and only source file used for all chapters.
-
 Compilation and running
 =======================
 * run: `make`
