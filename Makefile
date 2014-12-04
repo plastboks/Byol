@@ -1,23 +1,22 @@
 CC=cc
-CFLAGS=-Wall -Iinc -std=c99
+LFLAGS=-Wall -Iinc -std=c99
 LNFLAGS=-Wall -Iinc -W -Os -g
-EFLAGS=-ledit -lm
+EFLAGS=-lm
 
 ODIR=obj
 
 _OBJ = lispy.o func.o mpc.o lenv.o lval.o builtins.o
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
 _LN = linenoise.o
-LN = $(patsubst %,$(ODIR)/%,$(_LN))
-
-lispy: $(OBJ) $(LN)
-	$(CC) -o $@ $^ $(EFLAGS)
+OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ) $(_LN))
 
 $(ODIR)/%.o: src/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+	$(CC) -c -o $@ $< $(LFLAGS)
 
 $(ODIR)/%.o: linenoise/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(LNFLAGS)
+
+lispy: $(OBJ)
+	$(CC) -o $@ $^ $(EFLAGS)
 
 # clean routine
 .PHONY: clean
