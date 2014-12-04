@@ -19,3 +19,8 @@ Compilation and running
 =======================
 * run: `make`
 * run: `./lispy`
+
+Thanks to
+=========
+* Daniel Holden for making [this](http://www.buildyourownlisp.com/) fantastic tutorial [code](https://github.com/orangeduck/BuildYourOwnLisp)
+* Salvatore Sanfilippo for making his snappy [readline alternative](https://github.com/antirez/linenoise)
