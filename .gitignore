@@ -33,3 +33,6 @@ lispy
 
 # Editor files
 *.swp
+
+# Linenoise history
+history.txt
