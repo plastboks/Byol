@@ -54,6 +54,7 @@ int main(int argc, char** argv)
     Lispy    = mpc_new("lispy");
 
     char* input; 
+    char historypath[512];
 
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
@@ -100,12 +101,13 @@ int main(int argc, char** argv)
 
         linenoiseSetMultiLine(1);
         linenoiseSetCompletionCallback(completion);
-        linenoiseHistoryLoad("history.txt");
+        sprintf(historypath, "%s/.lispy_history", getenv("HOME"));
+        linenoiseHistoryLoad(historypath);
         
         while((input = linenoise("lispy> ")) != NULL) {
             if (input[0] != '\0') {
                 linenoiseHistoryAdd(input);
-                linenoiseHistorySave("history.txt");
+                linenoiseHistorySave(historypath);
 
                 mpc_result_t r;
                 if (mpc_parse("<stdin>", input, Lispy, &r)) {
@@ -118,7 +120,7 @@ int main(int argc, char** argv)
                     mpc_err_print(r.error);
                     mpc_err_delete(r.error);
                 }
-            } else if (!strncmp(input,"/historylen",11)) {
+            } else if (!strncmp(input, "/historylen", 11)) {
                 int len = atoi(input+11);
                 linenoiseHistorySetMaxLen(len);
             }
