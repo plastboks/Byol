@@ -32,6 +32,7 @@
 
 #include <string.h>
 #include <math.h>
+#include <time.h>
 
 #include "structures.h"
 #include "func.h"
@@ -89,6 +90,7 @@ lval* builtin_xor(lenv* e, lval* a);
 lval* builtin_ln(lenv* e, lval* a);
 lval* builtin_ceil(lenv* e, lval* a);
 lval* builtin_floor(lenv* e, lval* a);
+lval* builtin_rand(lenv* e, lval* a);
 
 void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtin_var(lenv* e, char* name, lval* val);

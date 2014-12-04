@@ -489,6 +489,24 @@ lval* builtin_floor(lenv* e, lval* a)
     return lval_num(r);
 }
 
+lval* builtin_rand(lenv* e, lval* a)
+{
+    LASSERT_NUM("rand", a, 1);
+    LASSERT_TYPE("rand", a, 0, LVAL_NUM);
+
+    double r;
+    srand(time(NULL));
+
+    if (a->cell[0]->num < 1) {
+        r = 1;
+    } else {
+        r = rand() % a->cell[0]->num + (float)(rand() % 1000000) / 1000000;
+    }
+
+    lval_del(a);
+    return lval_dec(r);
+}
+
 lval* builtin_gt(lenv* e, lval* a)
 {
     return builtin_ord(e, a, ">");
@@ -638,6 +656,7 @@ void lenv_add_builtin(lenv* e, char* name, lbuiltin func)
 {
     lval* k = lval_sym(name);
     lval* v = lval_fun(func);
+    v->is_builtin = 1;
     lenv_put(e, k ,v);
     lval_del(k);
     lval_del(v);
@@ -693,6 +712,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "floor", builtin_floor);
     lenv_add_builtin(e, "min", builtin_min);
     lenv_add_builtin(e, "max", builtin_max);
+    lenv_add_builtin(e, "rand", builtin_rand);
 
     /* Conditionals */
     lenv_add_builtin(e, "if", builtin_if);
