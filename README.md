@@ -22,5 +22,5 @@ Compilation and running
 
 Thanks to
 =========
-* Daniel Holden for making [this](http://www.buildyourownlisp.com/) fantastic tutorial [code](https://github.com/orangeduck/BuildYourOwnLisp)
+* Daniel Holden for making [this](http://www.buildyourownlisp.com/) fantastic tutorial. Code [here](https://github.com/orangeduck/BuildYourOwnLisp)
 * Salvatore Sanfilippo for making his snappy [readline alternative](https://github.com/antirez/linenoise)
