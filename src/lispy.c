@@ -3,7 +3,7 @@
  *
  * @filename: lispy.c
  *
- * @version: 0.15
+ * @version: 0.16
  *
  * @date: 2014-11-04
  *
@@ -95,7 +95,7 @@ int main(int argc, char** argv)
         puts(RESET);
 
         puts(BOLDWHITE);
-        puts("Version 0.15");
+        puts("Version 0.16");
         puts("Press Ctrl+c , or type 'exit 1' to exit\n");
         puts(RESET);
 

@@ -3,7 +3,7 @@
  *
  * @filename: macros.h
  *
- * @version: 0.14
+ * @version: 0.16
  *
  * @date: 2013-11-04
  *

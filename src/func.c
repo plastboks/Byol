@@ -3,7 +3,7 @@
  *
  * @filename: func.c
  *
- * @version: 0.14
+ * @version: 0.16
  *
  * @date: 2014-11-14
  *
