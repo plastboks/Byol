@@ -211,10 +211,26 @@ Included in the standard library are some of these nice features:
         {{1 5} {2 6} {3 7} {4 8} {5 9}}
         lispy> unzip (zip 1..5 5..10)
         {{1 2 3 4 5} {5 6 7 8 9}}
+        lispy> merge 1..4 5..11
+        {1 5 2 6 3 7 4 8 9 10 11}
+
+#### Map
+
         lispy> map - 1..10
         {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
         lispy> map (\ {x} {+ x 10}) 1..10
         {11 12 13 14 15 16 17 18 19 20}
+        lispy> map (\ {x} {^ 2 x}) 0..10
+        {1 2 4 8 16 32 64 128 256 512 1024}
+        lispy> map (\ {x} {+ (* 2 (^ 4 x)) (^ -3 x)}) 0..10
+        {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
+        lispy> fun {fn x} {+ (* 2 (^ 4 x)) (^ -3 x)}
+        ()
+        lispy> map fn 0..10
+        {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
+
+#### Filter
+
         lispy> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
         {5 11 8}
         lispy> filter (\ {x} {% x 2}) 1..20
@@ -223,5 +239,3 @@ Included in the standard library are some of these nice features:
         {2 4 6 8 10 12 14 16 18 20}
         lispy> filter (\ {x} {== (% x 3) 0}) 1..20
         {3 6 9 12 15 18}
-        lispy> merge 1..4 5..11
-        {1 5 2 6 3 7 4 8 9 10 11}
