@@ -19,6 +19,8 @@
 (def {uncurry} pack)
 (def {curry} unpack)
 
+; Assigner function
+; (fun {let a = b} {def {a} b})
 
 ; Perform Several things in Sequence.
 (fun {do & l} {
@@ -37,6 +39,10 @@
 (fun {inot x} { if (<= x 0) {false} {true} })
 (fun {or x y} {|| x y})
 (fun {and x y} {&& x y})
+
+; List access
+(fun {car l} { eval (head l) })
+(fun {cdr l} { (tail l) })
 
 (fun {select & cs} {
     if (== cs nil)
@@ -125,6 +131,15 @@
             (= {x} (fst l))
             (= {xs} (unzip (tail l)))
             (list (join (head x) (fst xs)) (join (tail x) (snd xs)))
+        }
+})
+
+; Merge lists
+(fun {merge x y} {
+    if (== x nil)
+        {if (== y nil) {nil} {y} }
+        {if (== y nil) {x}
+            {join (join (head x) (head y)) (merge (tail x) (tail y))}
         }
 })
 
@@ -217,19 +232,43 @@
         {b}
         {gcd b (% a b)}
 })
-
 ; lcm
 (fun {lcm a b} {/ (* a b) (gcd a b)})
-
 ; abs
-(fun {abs a} {
-    if (< a 0)
-        {- a}
-        {a}
-})
-
+(fun {abs a} {if (< a 0) {- a} {a}})
 ; mod
 (fun {mod a b} {% a b})
+
+; Small list conditional function
+(fun {small l} { (or (== l nil) (== (len l) 1)) })
+; Left half of a list
+(fun {left-half l} {take (/ (len l) 2) l})
+; Right half of a list
+(fun {right-half l} {drop (/ (len l) 2) l})
+
+; Maximum
+(fun {maximum l} {
+    if (== (len l) 1)
+        {car l}
+        {max (car l) (maximum(cdr l))}
+})
+
+; Minimum
+(fun {minimum l} {
+    if (== (len l) 1)
+        {car l}
+        {min (car l) (minimum(cdr l))}
+})
+
+; Range
+(fun {range a b} {
+    if (== a b)
+        {list b}
+        {if (< a b)
+            {join (list a) (range (+ a 1) b)}
+            {join (list a) (range (- a 1) b)}
+        }
+})
 
 ; Fibonacci
 (fun {fib n} {
