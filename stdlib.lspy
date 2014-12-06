@@ -76,9 +76,11 @@
 
 ; Nth item in List
 (fun {nth n l} {
-    if (== n 0)
-        {fst l}
-        {nth (- n 1) (tail l)}
+    if (or (<= n (len l)) (< n 0))
+        {error "List out of bounds"}
+        {if (== n 0)
+            {fst l}
+            {nth (- n 1) (tail l)}}
 })
 
 ; Take N items
