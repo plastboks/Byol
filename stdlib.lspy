@@ -262,7 +262,7 @@
 
 ; Range
 (fun {range a b} {
-    if (== a b)
+    if (<= a b)
         {list b}
         {if (< a b)
             {join (list a) (range (+ a 1) b)}
