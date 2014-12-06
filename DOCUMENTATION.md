@@ -15,7 +15,6 @@ Arithmetic
 ----------
 Arithmetic is like the rest of the syntax prefix notation (polish notation).
 
-
         lispy> + 2 2
         4
         lispy> * 2 3
@@ -26,7 +25,6 @@ Arithmetic is like the rest of the syntax prefix notation (polish notation).
 Lists
 -----
 List operators include the builtins `head` `tail` `last` `cons` `take` `drop` etc.
-
 
         lispy> {1 2 3 4 5}
         {1 2 3 4 5}
@@ -44,7 +42,6 @@ List operators include the builtins `head` `tail` `last` `cons` `take` `drop` et
 Variables
 ---------
 Some examples of variables declaration and use.
-
 
         lispy> def {x} 100
         ()
@@ -75,7 +72,6 @@ Functions
 ---------
 Some examples of functions and function declarations.
 
-
         lispy> def {add-together} (\ {x y} {+ x y})
         ()
         lispy> add-together 10 20
@@ -100,7 +96,6 @@ Some examples of functions and function declarations.
 Conditionals
 ------------
 Some example conditionals.
-
 
         lispy> > 10 5
         True
@@ -129,7 +124,6 @@ Some example conditionals.
 
 Strings
 -------
-
 
         lispy> "Hello World!"
         "Hello World!"
@@ -167,29 +161,6 @@ Included in the standard library are some of these nice features:
         lispy> product {1 2 3 4 5}
         120
 
-
-### Lists
-
-        lispy> len 1..20
-        20
-        lispy> nth 5 1..20
-        6
-        lispy> take 5 1..20
-        {1 2 3 4 5}
-        lispy> drop 5 1..20
-        {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
-        lispy> split 5 1..20
-        {{1 2 3 4 5} {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}}
-        lispy> elem 5 1..20
-        true
-        lispy> zip 1..5 5..10
-        {{1 5} {2 6} {3 7} {4 8} {5 9}}
-        lispy> map - 1..10
-        {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
-        lispy> reverse 1..10
-        {10 9 8 7 6 5 4 3 2 1}
-
-
 ### Boolean
 
         lispy> true
@@ -210,3 +181,47 @@ Included in the standard library are some of these nice features:
         true
         lispy> xor true true
         false
+
+### Simple list operators
+
+        lispy> len 1..20
+        20
+        lispy> nth 5 1..20
+        6
+        lispy> take 5 1..20
+        {1 2 3 4 5}
+        lispy> drop 5 1..20
+        {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
+        lispy> split 5 1..20
+        {{1 2 3 4 5} {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}}
+        lispy> elem 5 1..20
+        true
+        lispy> maximum 1..20
+        20
+        lispy> minimum 1..20
+        1
+        lispy> range 1 10
+        {1 2 3 4 5 6 7 8 9 10}
+        lispy> reverse 1..10
+        {10 9 8 7 6 5 4 3 2 1}
+
+### Advanced list operators
+
+        lispy> zip 1..5 5..10
+        {{1 5} {2 6} {3 7} {4 8} {5 9}}
+        lispy> unzip (zip 1..5 5..10)
+        {{1 2 3 4 5} {5 6 7 8 9}}
+        lispy> map - 1..10
+        {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
+        lispy> map (\ {x} {+ x 10}) 1..10
+        {11 12 13 14 15 16 17 18 19 20}
+        lispy> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
+        {5 11 8}
+        lispy> filter (\ {x} {% x 2}) 1..20
+        {1 3 5 7 9 11 13 15 17 19}
+        lispy> filter (\ {x} {== (% x 2) 0}) 1..20
+        {2 4 6 8 10 12 14 16 18 20}
+        lispy> filter (\ {x} {== (% x 3) 0}) 1..20
+        {3 6 9 12 15 18}
+        lispy> merge 1..4 5..11
+        {1 5 2 6 3 7 4 8 9 10 11}
