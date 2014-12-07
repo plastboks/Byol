@@ -76,29 +76,6 @@ lval* builtin_cons(lenv* e, lval* a)
     return x;
 }
 
-lval* builtin_sort(lenv* e, lval* a)
-{
-    /* check error conditions */
-    LASSERT_NUM("sort", a, 1);
-    LASSERT_TYPE("sort", a, 0, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("sort", a, 0);
-
-    lval* v = lval_pop(a, 0);
-
-    int intcmp(const void *a, const void *b)
-    {
-        const int *ia = (int *)a, *ib = (int *)b;
-        return *ia - *ib;
-    }
-
-    //qsort(array, array_count, sizeof(array[0]), intcmp);
-
-    return lval_err("Not implemented yet...");
-
-    lval_del(a);
-    return v;
-}
-
 lval* builtin_list(lenv* e, lval* a)
 {
     a->type = LVAL_QEXPR;
@@ -699,6 +676,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "load", builtin_load);
     lenv_add_builtin(e, "error", builtin_error);
     lenv_add_builtin(e, "print", builtin_print);
+    lenv_add_builtin(e, "eval", builtin_eval);
 
     /* Assignments */
     lenv_add_builtin(e, "\\", builtin_lambda);
@@ -711,8 +689,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "head", builtin_head);
     lenv_add_builtin(e, "tail", builtin_tail);
     lenv_add_builtin(e, "cons", builtin_cons);
-    lenv_add_builtin(e, "sort", builtin_sort);
-    lenv_add_builtin(e, "eval", builtin_eval);
     lenv_add_builtin(e, "join", builtin_join);
     lenv_add_builtin(e, "init", builtin_init);
 
