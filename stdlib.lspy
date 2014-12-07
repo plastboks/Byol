@@ -40,6 +40,9 @@
 (fun {or x y} {|| x y})
 (fun {and x y} {&& x y})
 
+(fun {even n} {if (== (% n 2) 0) {true} {false}})
+(fun {odd n} {not (even n)})
+
 ; List access
 (fun {car l} { eval (head l) })
 (fun {cdr l} { (tail l) })
@@ -141,7 +144,10 @@
     if (== x nil)
         {if (== y nil) {nil} {y} }
         {if (== y nil) {x}
-            {join (join (head x) (head y)) (merge (tail x) (tail y))}
+            {join (if (< (car x) (car y))
+                    {join (head x) (head y)}
+                    {join (head y) (head x)}
+                  ) (merge (tail x) (tail y))}
         }
 })
 
@@ -248,6 +254,13 @@
 ; Right half of a list
 (fun {right-half l} {drop (/ (len l) 2) l})
 
+; Merge sort
+(fun {sort l} {
+    if (small l)
+        {l}
+        {merge (sort (left-half l)) (sort (right-half l))}
+})
+
 ; Maximum
 (fun {maximum l} {
     if (== (len l) 1)
@@ -264,12 +277,21 @@
 
 ; Range
 (fun {range a b} {
-    if (<= a b)
+    if (== a b)
         {list b}
         {if (< a b)
             {join (list a) (range (+ a 1) b)}
             {join (list a) (range (- a 1) b)}
         }
+})
+
+; Prime range checker
+(fun {prange n} {range 2 (ceil (sqrt n))})
+; Prime
+(fun {isprime n} {
+    if (== n 2) {true}
+    {if (== (filter (\ {x} {== (% n x) 0}) (prange n)) nil)
+        {true} {false} }
 })
 
 ; Fibonacci
