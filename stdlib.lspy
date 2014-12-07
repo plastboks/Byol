@@ -275,6 +275,33 @@
         {min (car l) (minimum(cdr l))}
 })
 
+; Union lists
+(fun {union la lb} {
+    if (== lb nil)
+        {la}
+        {if (elem (car lb) la)
+            {union la (tail lb)}
+            {union (join la (head lb)) (tail lb)}}
+})
+
+; Intersect lists
+(fun {intersect la lb} {
+    if (== la nil)
+        {la}
+        {if (elem (car la) lb)
+            {join (head la) (intersect (cdr la) lb)}
+            {intersect (tail la) lb}}
+})
+
+; Subtract lists
+(fun {subtract la lb} {
+    if (== la nil)
+        {nil}
+        {if (elem (car la) lb)
+            {subtract (cdr la) lb}
+            {join (head la) (subtract (cdr la) lb)}}
+})
+
 ; Range
 (fun {range a b} {
     if (== a b)
