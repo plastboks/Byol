@@ -8,8 +8,13 @@ Lispy Documentation
 * [Strings](#strings)
 * [Standard Libarary](#standard-library)
     * [Math](#math)
-    * [Lists](#lists-l)
     * [Boolean](#boolean)
+    * [Lists operations](#list-operators)
+        * [Basic](#basic)
+        * [Merge](#merge)
+        * [Map](#map)
+        * [Filter](#filter)
+
 
 Arithmetic
 ----------
@@ -24,12 +29,14 @@ Arithmetic is like the rest of the syntax prefix notation (polish notation).
 
 Lists
 -----
-List operators include the builtins `head` `tail` `last` `cons` `take` `drop` etc.
+List operators include the builtins `list` `head` `tail` `cons` `join` `init`
 
         lispy> {1 2 3 4 5}
         {1 2 3 4 5}
         lispy> {{1 2 3} {4 5}}
         {{1 2 3} {4 5}}
+        lispy> 1..10
+        {1 2 3 4 5 6 7 8 9 10}
         lispy> head (list 1 2 3 4)
         {1}
         lispy> eval (tail {tail tail {5 6 7}})
@@ -38,6 +45,10 @@ List operators include the builtins `head` `tail` `last` `cons` `take` `drop` et
         {(+ 1 2)}
         lispy> eval (head {(+ 1 2) (+ 10 20)})
         3
+        lispy> 1..20
+        {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
+        lispy> rev 1..20
+        {20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1}
 
 Variables
 ---------
@@ -99,7 +110,7 @@ Some example conditionals.
 
         lispy> > 10 5
         True
-        lispy> <= 88 5>
+        lispy> <= 88 5
         True
         lispy> == 5 {}
         False
@@ -117,10 +128,6 @@ Some example conditionals.
         20
         lispy> fun {rev l} {if (== l {}) {{}} {join (rev (tail l)) (head l)}}
         ()
-        lispy> 1..20
-        {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
-        lispy> rev 1..20
-        {20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1}
 
 Strings
 -------
@@ -160,6 +167,10 @@ Included in the standard library are some of these nice features:
         15
         lispy> product {1 2 3 4 5}
         120
+        lispy> odd 3
+        true
+        lispy> even 3
+        false
 
 ### Boolean
 
@@ -182,7 +193,9 @@ Included in the standard library are some of these nice features:
         lispy> xor true true
         false
 
-### Simple list operators
+### List operators
+
+#### Basic
 
         lispy> len 1..20
         20
@@ -202,17 +215,19 @@ Included in the standard library are some of these nice features:
         1
         lispy> range 1 10
         {1 2 3 4 5 6 7 8 9 10}
+        lispy> range 5 -4
+        {5 4 3 2 1 0 -1 -2 -3 -4}
         lispy> reverse 1..10
         {10 9 8 7 6 5 4 3 2 1}
 
-### Advanced list operators
+#### Merge
 
+        lispy> merge 1..4 5..11
+        {1 5 2 6 3 7 4 8 9 10 11}
         lispy> zip 1..5 5..10
         {{1 5} {2 6} {3 7} {4 8} {5 9}}
         lispy> unzip (zip 1..5 5..10)
         {{1 2 3 4 5} {5 6 7 8 9}}
-        lispy> merge 1..4 5..11
-        {1 5 2 6 3 7 4 8 9 10 11}
 
 #### Map
 
@@ -228,6 +243,14 @@ Included in the standard library are some of these nice features:
         ()
         lispy> map fn 0..10
         {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
+        lispy> fun {sq x} {* n n}
+        ()
+        lispy> map sq 1..10
+        {1 4 9 16 25 36 49 64 81 100}
+        lispy> sum (map sq 1..10)
+        385
+        lispy> map fact 1..5
+        {1 2 6 24 120}
 
 #### Filter
 
@@ -239,3 +262,9 @@ Included in the standard library are some of these nice features:
         {2 4 6 8 10 12 14 16 18 20}
         lispy> filter (\ {x} {== (% x 3) 0}) 1..20
         {3 6 9 12 15 18}
+        lispy> filter odd 1..20
+        {1 3 5 7 9 11 13 15 17 19}
+        lispy> filter even 1..20
+        {2 4 6 8 10 12 14 16 18 20}
+        lispy> filter prime 1..30
+        {2 3 5 7 11 13 17 19 23 29}
