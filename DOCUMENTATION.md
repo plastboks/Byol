@@ -1,5 +1,7 @@
 Lispy Documentation
 ===================
+This documentation is meant to be self explanatory using sections and code examples.
+It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
 * [Arithmetic](#arithmetic)
 * [List](#lists)
 * [Variables](#variables)
@@ -12,6 +14,7 @@ Lispy Documentation
     * [Lists operations](#list-operators)
         * [Basic](#basic)
         * [Merge](#merge)
+        * [Distributions](#distributions)
         * [Map](#map)
         * [Filter](#filter)
 
@@ -228,6 +231,15 @@ Included in the standard library are some of these nice features:
         {{1 5} {2 6} {3 7} {4 8} {5 9}}
         lispy> unzip (zip 1..5 5..10)
         {{1 2 3 4 5} {5 6 7 8 9}}
+
+#### Distributions
+
+        lispy> union 1..10 5..15
+        {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15}
+        lispy> intersect 1..10 5..15
+        {5 6 7 8 9 10}
+        lispy> subtract 1..10 5..15
+        {1 2 3 4}
 
 #### Map
 
