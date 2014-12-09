@@ -258,14 +258,14 @@
 ;======== Take and Drop ========
 ; Take While
 (fun {take-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {nil}
         {join (head l) (take-while f (tail l))}
 })
 
 ; Drop While
 (fun {drop-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {l}
         {drop-while f (tail l)}
 })
