@@ -11,6 +11,8 @@ It (the documentation) is increasing as new features are added (both trough the 
 * [Standard Libarary](#standard-library)
     * [Math](#math)
     * [Boolean](#boolean)
+    * [Lambdas](#lambdas)
+    * [Currying](#currying)
     * [Lists operations](#list-operators)
         * [Basic](#basic)
         * [Merge](#merge)
@@ -173,7 +175,7 @@ Included in the standard library are some of these nice features:
 
 ### Lambdas
 
-        (\ {x y} {+ x y}) 10 20
+        lispy> (\ {x y} {+ x y}) 10 20
         30
         lispy> def {add-together} (\ {x y} {+ x y})
         ()
@@ -213,7 +215,7 @@ Included in the standard library are some of these nice features:
 
         lispy> map (\ {x} {^ x 2}) 1..10
         {1 4 9 16 25 36 49 64 81 100}
-        lispy> filter odd (map (\ {x} {^ x 2}) 1..10) 
+        lispy> filter odd (map (\ {x} {^ x 2}) 1..10)
         {1 9 25 49 81}
         lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {^ x 2}) 1..10))>})
         {1 9 25 49}
