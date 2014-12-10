@@ -91,6 +91,10 @@ lval* builtin_ln(lenv* e, lval* a);
 lval* builtin_ceil(lenv* e, lval* a);
 lval* builtin_floor(lenv* e, lval* a);
 lval* builtin_rand(lenv* e, lval* a);
+lval* builtin_leftshift(lenv* e, lval* a);
+lval* builtin_rightshift(lenv* e, lval* a);
+lval* builtin_bitwiseand(lenv* e, lval* a);
+lval* builtin_bitwiseor(lenv* e, lval* a);
 
 void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtin_var(lenv* e, char* name, lval* val);
