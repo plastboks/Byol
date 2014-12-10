@@ -1,7 +1,7 @@
 Simple TODOS
 ============
 
-* Finish sort function
-* Write simple documentation
+* Finish standard lib sort function
 * Write inline help function
+* Implement a memory pool allocation system
 * Interpret variables when sent to (all) functions
