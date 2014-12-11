@@ -318,11 +318,6 @@ lval* builtin_mod(lenv* e, lval* a)
     return builtin_op(e, a, "%");
 }
 
-lval* builtin_pow(lenv* e, lval* a)
-{
-    return builtin_op(e, a, "^");
-}
-
 lval* builtin_min(lenv* e, lval* a)
 {
     return builtin_op(e, a, "min");
@@ -564,6 +559,22 @@ lval* builtin_bitwiseor(lenv* e, lval* a)
     return lval_num(r);
 }
 
+lval* builtin_bitwisexor(lenv* e, lval* a)
+{
+    LASSERT_NUM("^", a, 2);
+    LASSERT_TYPE("^", a, 0, LVAL_NUM);
+    LASSERT_TYPE("^", a, 1, LVAL_NUM);
+
+    int r;
+    lval* x = lval_pop(a, 0);
+    lval* y = lval_pop(a, 0);
+
+    r = x->num ^ y->num;
+    lval_del(x);
+    lval_del(y);
+    return lval_num(r);
+}
+
 lval* builtin_gt(lenv* e, lval* a)
 {
     return builtin_ord(e, a, ">");
@@ -762,7 +773,6 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "*", builtin_mul);
     lenv_add_builtin(e, "/", builtin_div);
     lenv_add_builtin(e, "%", builtin_mod);
-    lenv_add_builtin(e, "^", builtin_pow);
     lenv_add_builtin(e, "ln", builtin_ln);
     lenv_add_builtin(e, "ceil", builtin_ceil);
     lenv_add_builtin(e, "floor", builtin_floor);
@@ -775,6 +785,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, ">>", builtin_rightshift);
     lenv_add_builtin(e, "&", builtin_bitwiseand);
     lenv_add_builtin(e, "|", builtin_bitwiseor);
+    lenv_add_builtin(e, "^", builtin_bitwisexor);
 
     /* Conditionals */
     lenv_add_builtin(e, "if", builtin_if);

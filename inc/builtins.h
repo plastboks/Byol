@@ -83,7 +83,6 @@ lval* builtin_sub(lenv* e, lval* a);
 lval* builtin_mul(lenv* e, lval* a);
 lval* builtin_div(lenv* e, lval* a);
 lval* builtin_mod(lenv* e, lval* a);
-lval* builtin_pow(lenv* e, lval* a);
 lval* builtin_min(lenv* e, lval* a);
 lval* builtin_max(lenv* e, lval* a);
 lval* builtin_xor(lenv* e, lval* a);
@@ -95,6 +94,7 @@ lval* builtin_leftshift(lenv* e, lval* a);
 lval* builtin_rightshift(lenv* e, lval* a);
 lval* builtin_bitwiseand(lenv* e, lval* a);
 lval* builtin_bitwiseor(lenv* e, lval* a);
+lval* builtin_bitwisexor(lenv* e, lval* a);
 
 void lenv_add_builtin(lenv* e, char* name, lbuiltin func);
 void lenv_add_builtin_var(lenv* e, char* name, lval* val);
