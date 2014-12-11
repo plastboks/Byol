@@ -293,6 +293,55 @@ lval* builtin_env(lenv* e, lval* a)
     return lval_pop(a, 0);
 }
 
+lval* builtin_inc(lenv* e, lval* a)
+{
+    LASSERT_NUM("++", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on %s. %s or %s expected",
+                ltype_name(a->cell[0]->type),
+                ltype_name(LVAL_NUM),
+                ltype_name(LVAL_DEC));
+    }
+
+    lval* x = lval_pop(a, 0);
+
+    if (x->type == LVAL_NUM) {
+        int n = x->num + 1;
+        lval_del(x);
+        return lval_num(n);
+    } else {
+        double n = x->decimal + 1;
+        lval_del(x);
+        return lval_dec(n);
+    }
+}
+
+lval* builtin_dec(lenv* e, lval* a)
+{
+    LASSERT_NUM("--", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on %s. %s or %s expected",
+                ltype_name(a->cell[0]->type),
+                ltype_name(LVAL_NUM),
+                ltype_name(LVAL_DEC));
+    }
+
+    lval* x = lval_pop(a, 0);
+
+    if (x->type == LVAL_NUM) {
+        int n = x->num - 1;
+        lval_del(x);
+        return lval_num(n);
+    } else {
+        double n = x->decimal - 1;
+        lval_del(x);
+        return lval_dec(n);
+    }
+
+}
+
 lval* builtin_add(lenv* e, lval* a)
 {
     return builtin_op(e, a, "+");
@@ -327,6 +376,7 @@ lval* builtin_max(lenv* e, lval* a)
 {
     return builtin_op(e, a, "max");
 }
+lval* builtin_inc(lenv* e, lval* a);
 
 lval* builtin_op(lenv* e, lval* a, char* op)
 {
@@ -773,6 +823,8 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "*", builtin_mul);
     lenv_add_builtin(e, "/", builtin_div);
     lenv_add_builtin(e, "%", builtin_mod);
+    lenv_add_builtin(e, "++", builtin_inc);
+    lenv_add_builtin(e, "--", builtin_dec);
     lenv_add_builtin(e, "ln", builtin_ln);
     lenv_add_builtin(e, "ceil", builtin_ceil);
     lenv_add_builtin(e, "floor", builtin_floor);

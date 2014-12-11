@@ -78,6 +78,8 @@ lval* builtin_env(lenv* e, lval* a);
 lval* builtin_error(lenv* e, lval* a);
 lval* builtin_def(lenv* e, lval* a);
 lval* builtin_put(lenv* e, lval* a);
+lval* builtin_inc(lenv* e, lval* a);
+lval* builtin_dec(lenv* e, lval* a);
 lval* builtin_add(lenv* e, lval* a);
 lval* builtin_sub(lenv* e, lval* a);
 lval* builtin_mul(lenv* e, lval* a);
