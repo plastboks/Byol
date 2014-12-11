@@ -279,11 +279,18 @@
         {* n (fact (- n 1))}
 })
 
+; Power (exponential)
+(fun {pow b p} {
+    if (== p 0)
+        {1}
+        {* b (pow b (- p 1))}
+})
+
 ; Square root
 (fun {sqrt a} {
     if (< a 0)
         {error "Imaginary number"}
-        {^ e (/ (ln a) 2)}
+        {pow e (/ (ln a) 2)}
 })
 
 ; Combinatorics
