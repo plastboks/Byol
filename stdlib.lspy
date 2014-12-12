@@ -324,6 +324,14 @@
         { otherwise (+ (fib (- n 1)) (fib (- n 2)))}
 })
 
+(fun {fib2 n} {
+    if (== n 0)
+    {1}
+    {if (== n 1)
+        {1}
+        {+ (fib2 (- n 1)) (fib2 (- n 2)) }}
+})
+
 ; Prime
 (fun {isprime n} {
     if (== n 2) {true}
