@@ -279,13 +279,6 @@
         {* n (fact (-- n))}
 })
 
-; Power (exponential)
-(fun {pow b p} {
-    if (== p 0)
-        {1}
-        {* b (pow b (- p 1))}
-})
-
 ; Square root
 (fun {sqrt a} {
     if (< a 0)
