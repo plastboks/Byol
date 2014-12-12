@@ -367,6 +367,11 @@ lval* builtin_mod(lenv* e, lval* a)
     return builtin_op(e, a, "%");
 }
 
+lval* builtin_pow(lenv* e, lval* a)
+{
+    return builtin_op(e, a, "^");
+}
+
 lval* builtin_min(lenv* e, lval* a)
 {
     return builtin_op(e, a, "min");
@@ -825,6 +830,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "%", builtin_mod);
     lenv_add_builtin(e, "++", builtin_inc);
     lenv_add_builtin(e, "--", builtin_dec);
+    lenv_add_builtin(e, "pow", builtin_pow);
     lenv_add_builtin(e, "ln", builtin_ln);
     lenv_add_builtin(e, "ceil", builtin_ceil);
     lenv_add_builtin(e, "floor", builtin_floor);
