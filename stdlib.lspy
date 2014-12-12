@@ -62,7 +62,7 @@
 (fun {trd l} { eval (head (tail (tail l))) })
 
 ; Length
-(fun {len l} { if (== l nil) {0} {+ 1 (len (tail l))} })
+(fun {len l} { if (== l nil) {0} {++ (len (tail l))} })
 
 ; Nth item in List
 (fun {nth n l} {
@@ -70,21 +70,21 @@
         {error "List out of bounds"}
         {if (== n 0)
             {fst l}
-            {nth (- n 1) (tail l)}}
+            {nth (-- n) (tail l)}}
 })
 
 ; Take N items
 (fun {take n l} {
     if (== n 0)
         {nil}
-        {join (head l) (take (- n 1) (tail l))}
+        {join (head l) (take (-- n) (tail l))}
 })
 
 ; Drop N items
 (fun {drop n l} {
     if (== n 0)
         {l}
-        {drop (- n 1) (tail l)}
+        {drop (-- n) (tail l)}
 })
 
 ; Split at N
@@ -98,7 +98,7 @@
 })
 
 ; Last item in List
-(fun {last l} {nth (- (len l) 1) l})
+(fun {last l} {nth (-- (len l)) l})
 
 ; Reverse List
 (fun {reverse l} {
@@ -126,8 +126,8 @@
     if (== a b)
         {list b}
         {if (< a b)
-            {join (list a) (range (+ a 1) b)}
-            {join (list a) (range (- a 1) b)}
+            {join (list a) (range (++ a) b)}
+            {join (list a) (range (-- a) b)}
         }
 })
 
@@ -258,14 +258,14 @@
 ;======== Take and Drop ========
 ; Take While
 (fun {take-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {nil}
         {join (head l) (take-while f (tail l))}
 })
 
 ; Drop While
 (fun {drop-while f l} {
-    if (inot (unpack f (head l)))
+    if (not (unpack f (head l)))
         {l}
         {drop-while f (tail l)}
 })
@@ -276,14 +276,21 @@
 (fun {fact n} {
     if (== n 1)
         {1}
-        {* n (fact (- n 1))}
+        {* n (fact (-- n))}
+})
+
+; Power (exponential)
+(fun {pow b p} {
+    if (== p 0)
+        {1}
+        {* b (pow b (- p 1))}
 })
 
 ; Square root
 (fun {sqrt a} {
     if (< a 0)
         {error "Imaginary number"}
-        {^ e (/ (ln a) 2)}
+        {pow e (/ (ln a) 2)}
 })
 
 ; Combinatorics

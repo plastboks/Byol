@@ -11,6 +11,8 @@ It (the documentation) is increasing as new features are added (both trough the 
 * [Standard Libarary](#standard-library)
     * [Math](#math)
     * [Boolean](#boolean)
+    * [Lambdas](#lambdas)
+    * [Currying](#currying)
     * [Lists operations](#list-operators)
         * [Basic](#basic)
         * [Merge](#merge)
@@ -81,31 +83,6 @@ Some examples of variables declaration and use.
         {1 2 3 4}
         sum (list a b x y)
         10
-
-Functions
----------
-Some examples of functions and function declarations.
-
-        lispy> def {add-together} (\ {x y} {+ x y})
-        ()
-        lispy> add-together 10 20
-        30
-        lispy> fun {add-together x y} {+ x y}
-        ()
-        lispy> add-together 10 20
-        30
-        lispy> curry + {5 6 7}
-        18
-        lispy> uncurry head 5 6 7
-        {5}
-        lispy> def {add-curried} (curry +)
-        ()
-        lispy> add-curried {5 6 7}
-        18
-        lispy> def {add-uncurried} +
-        ()
-        lispy> add-uncurried 5 6 7
-        18
 
 Conditionals
 ------------
@@ -196,8 +173,56 @@ Included in the standard library are some of these nice features:
         lispy> xor true true
         false
 
-### List operators
+### Lambdas
 
+        lispy> (\ {x y} {+ x y}) 10 20
+        30
+        lispy> def {add-together} (\ {x y} {+ x y})
+        ()
+        lispy> add-together 10 20
+        30
+        lispy> fun {add-together x y} {+ x y}
+        ()
+        lispy> add-together 10 20
+        30
+
+### Currying
+
+        lispy> curry + {5 6 7}
+        18
+        lispy> curry * {1 2 3 4}
+        24
+        lispy> uncurry head 5 6 7
+        {5}
+        lispy> uncurry reverse 1 2 3 4 5 6 7
+        {7 6 5 4 3 2 1}
+        lispy> uncurry prod 1 2 3 4 5
+        120
+        lispy> def {factorial} (curry *)
+        ()
+        lispy> factorial 1..5
+        120
+        lispy> def {add-curried} (curry +)
+        ()
+        lispy> add-curried {5 6 7}
+        18
+        lispy> def {add-uncurried} +
+        ()
+        lispy> add-uncurried 5 6 7
+        18
+
+### Take and drop while
+
+        lispy> map (\ {x} {^ x 2}) 1..10
+        {1 4 9 16 25 36 49 64 81 100}
+        lispy> filter odd (map (\ {x} {^ x 2}) 1..10)
+        {1 9 25 49 81}
+        lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {^ x 2}) 1..10))>})
+        {1 9 25 49}
+        lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {^ x 2}) 1..10))>})
+        {81}
+
+### List operations
 #### Basic
 
         lispy> len 1..20
