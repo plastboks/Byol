@@ -1,16 +1,20 @@
 CC=cc
+TIGCC=cc
 LFLAGS=-Wall -Iinc -std=c99
 LNFLAGS=-Wall -Iinc -W -Os -g
 EFLAGS=-lm
 
 ODIR=obj
-TIDIR=ti
 
 _LSPY = lispy.o
-_OBJ = func.o mpc.o lenv.o lval.o builtins.o
 _LN = linenoise.o
-OBJ = $(patsubst %,$(ODIR)/%,$(_LSPY) $(_OBJ) $(_LN))
-OBJT = $(patsubst %,$(ODIR)/%,$(_OBJ) $(_LN))
+_TI = ti.o
+_OBJ = func.o mpc.o lenv.o lval.o builtins.o
+
+OBJ_LIB = $(patsubst %,$(ODIR)/%,$(_OBJ))
+OBJ_LN = $(patsubst %,$(ODIR)/%,$(_LN))
+OBJ_LSPY = $(patsubst %,$(ODIR)/%,$(_LSPY))
+OBJ_TI = $(patsubst %,$(ODIR)/%,$(_TI))
 
 $(ODIR)/%.o: src/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(LFLAGS)
@@ -18,14 +22,17 @@ $(ODIR)/%.o: src/%.c $(DEPS)
 $(ODIR)/%.o: linenoise/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(LNFLAGS)
 
-lispy: $(OBJ)
+$(ODIR)/%.o: port/%.c $(DEPS)
+	$(CC) -c -o $@ $< $(LFLAGS)
+
+lispy: $(OBJ_LIB) $(OBJ_LN) $(OBJ_LSPY)
 	$(CC) -o $@ $^ $(EFLAGS)
 
-ti: $(OBJT)
-	$(CC) -o $@ $^ $(EFLAGS)
+ti: $(OBJ_LIB) $(OBJ_TI)
+	$(TIGCC) -o $@ $^ $(EFLAGS)
 
 # clean routine
 .PHONY: clean
 
 clean:
-	rm -f $(ODIR)/*.o lispy
+	rm -f $(ODIR)/*.o lispy ti
