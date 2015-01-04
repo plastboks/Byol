@@ -30,6 +30,7 @@
  *
  */
 
+#include <stdio.h>
 #include <kbd.h>
 
 #define USE_TI89

@@ -1,7 +1,8 @@
 CC=cc
-TIGCC=cc
+TIGCC=tigcc
 LFLAGS=-Wall -Iinc -std=c99
 LNFLAGS=-Wall -Iinc -W -Os -g
+TIFLAGS=-Wall -Iinc -W -Os -Wwrite-strings
 EFLAGS=-lm
 
 ODIR=obj
@@ -23,13 +24,13 @@ $(ODIR)/%.o: linenoise/%.c $(DEPS)
 	$(CC) -c -o $@ $< $(LNFLAGS)
 
 $(ODIR)/%.o: port/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(LFLAGS)
+	$(TIGCC) -c -o $@ $< $(TIFLAGS)
 
 lispy: $(OBJ_LIB) $(OBJ_LN) $(OBJ_LSPY)
 	$(CC) -o $@ $^ $(EFLAGS)
 
-ti: $(OBJ_LIB) $(OBJ_TI)
-	$(TIGCC) -o $@ $^ $(EFLAGS)
+ti: $(OBJ_TI)
+	$(TIGCC) -o $@ $^
 
 # clean routine
 .PHONY: clean

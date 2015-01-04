@@ -29,8 +29,6 @@
  */
 
 #include "ti.h"
-#include "lispy.h"
-#include "builtins.h"
 
 
 int main(void)
@@ -38,4 +36,5 @@ int main(void)
     clrscr ();
     printf ("Hello world!");
     ngetchx ();
+    return 0;
 }
