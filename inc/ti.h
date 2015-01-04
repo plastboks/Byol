@@ -1,11 +1,13 @@
-/**
- * Lispy main port source file, for port to tigcc and running on Texas Instruments ti89 and ti92+
+/*
+ * Lispy texas instruments header file
  *
- * @filename: lispy.c
+ * @filename: ti.h
  *
- * @version: 0.00
+ * @version: 0.01
  *
  * @date: 2015-01-02
+ *
+ * @description: Lispy texas instruments header file
  *
  * @author: Alexander Skjolden
  *
@@ -28,14 +30,8 @@
  *
  */
 
-#include "ti.h"
-#include "lispy.h"
-#include "builtins.h"
+#include <kbd.h>
 
-
-int main(void)
-{
-    clrscr ();
-    printf ("Hello world!");
-    ngetchx ();
-}
+#define USE_TI89
+#define USE_TI92PLUS
+#define USE_V200
