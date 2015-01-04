@@ -31,10 +31,10 @@
 #include "ti.h"
 
 
-int main(void)
+void _main(void)
+
 {
     clrscr ();
     printf ("Hello world!");
     ngetchx ();
-    return 0;
 }

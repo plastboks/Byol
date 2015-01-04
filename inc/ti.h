@@ -30,9 +30,11 @@
  *
  */
 
-#include <stdio.h>
-#include <kbd.h>
+#define SAVE_SCREEN
 
 #define USE_TI89
 #define USE_TI92PLUS
 #define USE_V200
+
+#include <stdio.h>
+#include <kbd.h>
