@@ -30,9 +30,14 @@
 
 # Byol files
 lispy
+lispy.89z
+lispy.9xz
+lispy.v2z
+
 
 # Editor files
 *.swp
 
 # Linenoise history
 history.txt
+
