@@ -342,6 +342,9 @@ lval* builtin_dec(lenv* e, lval* a)
 
 }
 
+/**
+ * Arithmetic
+ */
 lval* builtin_add(lenv* e, lval* a)
 {
     return builtin_op(e, a, "+");
@@ -550,6 +553,126 @@ lval* builtin_rand(lenv* e, lval* a)
     return lval_dec(r);
 }
 
+/**
+ * Trigonometry
+ */
+lval* builtin_sin(lenv* e, lval* a)
+{
+    LASSERT_NUM("sin", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(sin(r));
+}
+
+lval* builtin_sinh(lenv* e, lval* a)
+{
+    LASSERT_NUM("sinh", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(sinh(r));
+}
+
+lval* builtin_cos(lenv* e, lval* a)
+{
+    LASSERT_NUM("cos", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(cos(r));
+}
+
+lval* builtin_cosh(lenv* e, lval* a)
+{
+    LASSERT_NUM("cosh", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(cosh(r));
+}
+
+lval* builtin_tan(lenv* e, lval* a)
+{
+    LASSERT_NUM("tan", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(tan(r));
+}
+
+lval* builtin_tanh(lenv* e, lval* a)
+{
+    LASSERT_NUM("tanh", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = a->cell[0]->num;
+    } else {
+        r = ceil(a->cell[0]->decimal);
+    }
+    lval_del(a);
+    return lval_dec(tanh(r));
+}
+
+/**
+ * Bit operations
+ */
 lval* builtin_leftshift(lenv* e, lval* a)
 {
     LASSERT_NUM("<<", a, 2);
@@ -837,6 +960,14 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "min", builtin_min);
     lenv_add_builtin(e, "max", builtin_max);
     lenv_add_builtin(e, "rand", builtin_rand);
+
+    /* Trigonometry */
+    lenv_add_builtin(e, "sin", builtin_sin);
+    lenv_add_builtin(e, "sinh", builtin_sinh);
+    lenv_add_builtin(e, "cos", builtin_cos);
+    lenv_add_builtin(e, "cosh", builtin_cosh);
+    lenv_add_builtin(e, "tan", builtin_tan);
+    lenv_add_builtin(e, "tanh", builtin_tanh);
 
     /* Bit shift */
     lenv_add_builtin(e, "<<", builtin_leftshift);
