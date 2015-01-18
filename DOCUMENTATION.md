@@ -25,12 +25,14 @@ Arithmetic
 ----------
 Arithmetic is like the rest of the syntax prefix notation (polish notation).
 
-        lispy> + 2 2
-        4
-        lispy> * 2 3
-        6
-        lispy> + 2 (* 7 6) (* 2 5)
-        54
+```lisp
+lispy> + 2 2
+4
+lispy> * 2 3
+6
+lispy> + 2 (* 7 6) (* 2 5)
+54
+```
 
 Lists
 -----
