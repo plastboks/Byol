@@ -55,6 +55,7 @@ int main(int argc, char** argv)
     Lispy    = mpc_new("lispy");
 
     char* input; 
+    char stdlib_path[512];
     char historypath[512];
 
     /* Define them with the following Language */
@@ -78,8 +79,9 @@ int main(int argc, char** argv)
     lenv* e = lenv_new();
     lenv_add_builtins(e);
 
+    sprintf(stdlib_path, "%s/%s", GLIB_PFIX, "std.lspy");
     lval* stdlib_file = lval_add(lval_sexpr(),
-                        lval_str("/usr/lib/lispy/std.lspy"));
+                        lval_str(stdlib_path));
     lval* stdlib_load = builtin_load(e, stdlib_file);
     if (stdlib_load->type == LVAL_ERR) {
         lval_println(stdlib_load);
