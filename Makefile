@@ -76,7 +76,7 @@ ti: $(OBJ_TI)
 install: 
 	@echo "=> Installing $(BIN_NAME) to $(DEST_DIR)$(INST_PFIX)/bin"
 	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(DEST_DIR)$(INST_PFIX)/bin
-	@echo "=> Copying standard lib to $(DEST_DIR)$(GLIB_PFIX)"
+	@echo "=> Copying lib files to $(DEST_DIR)$(GLIB_PFIX)"
 	@mkdir -p $(DEST_DIR)$(GLIB_PFIX)
 	@install -m 0644 $(LDIR)/* $(DEST_DIR)$(GLIB_PFIX)
 
