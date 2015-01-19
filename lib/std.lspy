@@ -193,38 +193,6 @@
 })
 
 
-;======== List Math functions ========
-(fun {sum l} {foldl + 0 l})
-(fun {product l} {foldl * 1 l})
-
-; Union lists
-(fun {union la lb} {
-    if (== lb nil)
-        {la}
-        {if (elem (car lb) la)
-            {union la (tail lb)}
-            {union (join la (head lb)) (tail lb)}}
-})
-
-; Intersect lists
-(fun {intersect la lb} {
-    if (== la nil)
-        {la}
-        {if (elem (car la) lb)
-            {join (head la) (intersect (cdr la) lb)}
-            {intersect (tail la) lb}}
-})
-
-; Subtract lists
-(fun {subtract la lb} {
-    if (== la nil)
-        {nil}
-        {if (elem (car la) lb)
-            {subtract (cdr la) lb}
-            {join (head la) (subtract (cdr la) lb)}}
-})
-
-
 ;======== Map and Filter ========
 (fun {map f l} {
     if (== l nil)
@@ -268,73 +236,4 @@
     if (not (unpack f (head l)))
         {l}
         {drop-while f (tail l)}
-})
-
-
-;======== Math functions ========
-; Factorial
-(fun {fact n} {
-    if (== n 1)
-        {1}
-        {* n (fact (-- n))}
-})
-
-; Square root
-(fun {sqrt a} {
-    if (< a 0)
-        {error "Imaginary number"}
-        {pow e (/ (ln a) 2)}
-})
-
-; Combinatorics
-(fun {ncr n r} {
-    if (> r n)
-        {0}
-        {/ (fact n) (* (fact r) (fact (- n r)))}
-})
-
-; Permutations
-(fun {npr n r} {
-    if (> r n)
-        {0}
-        {/ (fact n) (fact (- n r))}
-})
-
-; GCD
-(fun {gcd a b} {
-    if (== 0 (% a b))
-        {b}
-        {gcd b (% a b)}
-})
-
-; LCM
-(fun {lcm a b} {/ (* a b) (gcd a b)})
-
-; ABS
-(fun {abs a} {if (< a 0) {- a} {a}})
-
-; MOD
-(fun {mod a b} {% a b})
-
-; Fibonacci
-(fun {fib n} {
-    select
-        { (== n 0) 0 }
-        { (== n 1) 1 }
-        { otherwise (+ (fib (- n 1)) (fib (- n 2)))}
-})
-
-(fun {fib2 n} {
-    if (== n 0)
-    {1}
-    {if (== n 1)
-        {1}
-        {+ (fib2 (- n 1)) (fib2 (- n 2)) }}
-})
-
-; Prime
-(fun {isprime n} {
-    if (== n 2) {true}
-    {if (== (filter (\ {x} {== (% n x) 0}) (range 2 (ceil (sqrt n)))) nil)
-        {true} {false} }
 })
