@@ -32,6 +32,7 @@
 
 #include "lispy.h"
 #include "builtins.h"
+#include "version.h"
 
 void completion(const char *buf, linenoiseCompletions *lc) {
     if (buf[0] == 'h') {
@@ -77,7 +78,8 @@ int main(int argc, char** argv)
     lenv* e = lenv_new();
     lenv_add_builtins(e);
 
-    lval* stdlib_file = lval_add(lval_sexpr(), lval_str("stdlib.lspy"));
+    lval* stdlib_file = lval_add(lval_sexpr(),
+                        lval_str("/usr/lib/lispy/std.lspy"));
     lval* stdlib_load = builtin_load(e, stdlib_file);
     if (stdlib_load->type == LVAL_ERR) {
         lval_println(stdlib_load);
@@ -95,8 +97,8 @@ int main(int argc, char** argv)
         puts(RESET);
 
         puts(BOLDWHITE);
-        puts("Version 0.16");
-        puts("Press Ctrl+c , or type 'exit 1' to exit\n");
+        printf("Version: %s, build: %s\n", version, VERSION_BUILD);
+        puts("Press Ctrl+c , or type 'exit 1' to exit");
         puts(RESET);
 
         linenoiseSetMultiLine(1);
