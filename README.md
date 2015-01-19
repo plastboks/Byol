@@ -18,7 +18,8 @@ Now with a docker automated build. See [the registry](https://registry.hub.docke
 Compilation and running
 =======================
 * run: `make`
-* run: `./lispy`
+* run: `make install` (needs superuser)
+* run: `lispy`
 
 Thanks to
 =========
