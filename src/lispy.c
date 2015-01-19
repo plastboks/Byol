@@ -99,7 +99,7 @@ int main(int argc, char** argv)
         puts(RESET);
 
         puts(BOLDWHITE);
-        printf("Version: %s, build: %s\n", version, VERSION_BUILD);
+        printf("Version: %s, build: %s (%s)\n", version, VERSION_BUILD, BUILD_DATE);
         puts("Press Ctrl+c , or type 'exit 1' to exit");
         puts(RESET);
 
