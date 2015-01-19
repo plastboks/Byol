@@ -1,16 +1,49 @@
-CC=cc
-TCC=tigcc
-LFLAGS=-Wall -Iinc -std=c99
-LNFLAGS=-Wall -Iinc -W -Os -g
-TIFLAGS=-Wall -Iinc -W -Os -Wwrite-strings
-EFLAGS=-lm
+#### Project settings ####
+# Compilers
+CC ?= gcc
+TCC = tigcc
+# Compiler flags
+LFLAGS = -Wall -Iinc -std=c99
+LNFLAGS = -Wall -Iinc -W -Os -g
+TIFLAGS = -Wall -Iinc -W -Os -Wwrite-strings
+EFLAGS = -lm
+# Bin name
+BIN_PATH = bin
+BIN_NAME := lispy
+# Object directory
+ODIR = obj
+# Standard library
+LDIR = lib
+# Destination directory
+DEST_DIR = /
+# Install path
+INST_PFIX = usr
+# Library path
+GLIB_PFIX = usr/lib/$(BIN_NAME)
 
-ODIR=obj
+# Version macros
+# Comment/remove this section to remove versioning
+VERSION := $(shell git describe --tags --long --dirty --always | \
+	sed 's/v\([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)-\?.*-\([0-9]*\)-\(.*\)/\1 \2 \3 \4 \5/g')
+VERSION_MAJOR := $(word 1, $(VERSION))
+VERSION_MINOR := $(word 2, $(VERSION))
+VERSION_PATCH := $(word 3, $(VERSION))
+VERSION_REVISION := $(word 4, $(VERSION))
+VERSION_HASH := $(word 5, $(VERSION))
+VERSION_STRING := \
+	"$(VERSION_MAJOR).$(VERSION_MINOR).$(VERSION_PATCH).$(VERSION_REVISION)"
+CGFLAGS := $(CCFLAGS) \
+	-DVERSION_BUILD=\"$(VERSION_MAJOR)\"
+	#-D VERSION_MINOR=$(VERSION_MINOR) \
+	#-D VERSION_PATCH=$(VERSION_PATCH) \
+	#-D VERSION_REVISION=$(VERSION_REVISION) \
+	#-D VERSION_HASH=\"$(VERSION_HASH)\"
+
 
 _LSPY = lispy.o
 _LN = linenoise.o
 _TI = ti.o
-_OBJ = func.o mpc.o lenv.o lval.o builtins.o
+_OBJ = func.o mpc.o lenv.o lval.o builtins.o version.o
 
 OBJ_LIB = $(patsubst %,$(ODIR)/%,$(_OBJ))
 OBJ_LN = $(patsubst %,$(ODIR)/%,$(_LN))
@@ -18,21 +51,33 @@ OBJ_LSPY = $(patsubst %,$(ODIR)/%,$(_LSPY))
 OBJ_TI = $(patsubst %,$(ODIR)/%,$(_TI))
 
 $(ODIR)/%.o: src/%.c $(DEPS)
-	$(CC) -c -o $@ $< $(LFLAGS)
+	@echo "=> Compiling source file"
+	$(CC) -c -o $@ $< $(LFLAGS) $(CGFLAGS)
 
 $(ODIR)/%.o: linenoise/%.c $(DEPS)
+	@echo "=> Compiling linenoise source files"
 	$(CC) -c -o $@ $< $(LNFLAGS)
 
 $(ODIR)/%.o: port/%.c $(DEPS)
+	@echo "=> Compiling port source files"
 	$(TCC) -c -o $@ $< $(TIFLAGS)
 
-.PHONY: lispy ti clean
+.PHONY: lispy ti install clean
 
 lispy: $(OBJ_LIB) $(OBJ_LN) $(OBJ_LSPY)
-	$(CC) -o $@ $^ $(EFLAGS)
+	@echo "=> Compiling release build: $(VERSION_STRING)"
+	$(CC) -o $(BIN_PATH)/$(BIN_NAME) $^ $(EFLAGS)
 
 ti: $(OBJ_TI)
-	$(TCC) -o lispy $^
+	$(TCC) -o $(BIN_PATH)/$(BIN_NAME) $^
+
+install: 
+	@echo "=> Installing $(BIN_NAME) to $(DEST_DIR)$(INST_PFIX)/bin"
+	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(DEST_DIR)$(INST_PFIX)/bin
+	@echo "=> Copying standard lib to $(DEST_DIR)$(GLIB_PFIX)"
+	@mkdir -p $(DEST_DIR)$(GLIB_PFIX)
+	@install -m 0644 $(LDIR)/* $(DEST_DIR)$(GLIB_PFIX)
 
 clean:
-	rm -f $(ODIR)/*.o lispy lispy.89z lispy.9xz lispy.v2z
+	@echo "=> Removing binaries and o-files"
+	rm -f $(ODIR)/*.o $(BIN_PATH)/*
