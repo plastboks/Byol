@@ -859,7 +859,50 @@ lval* builtin_load(lenv* e, lval* a)
         char* err_msg = mpc_err_string(r.error);
         mpc_err_delete(r.error);
 
-        lval* err = lval_err("Could not load Library %s", err_msg);
+        lval* err = lval_err("Could not load file %s", err_msg);
+        free(err_msg);
+        lval_del(a);
+
+        return err;
+    }
+}
+
+lval* builtin_include(lenv* e, lval* a)
+{
+    LASSERT_NUM("include", a, 1);
+    LASSERT_TYPE("include", a, 0, LVAL_STR);
+
+    char stdlib_path[512];
+
+    mpc_result_t r;
+    if (!strstr(a->cell[0]->str, ".lspy")) {
+        strcat(a->cell[0]->str, ".lspy");
+    }
+
+    sprintf(stdlib_path, "%s/%s", GLIB_PFIX, a->cell[0]->str);
+
+    if (mpc_parse_contents(stdlib_path, Lispy, &r)) {
+        /* Read contents */
+        lval* expr = lval_read(r.output);
+        mpc_ast_delete(r.output);
+
+        while (expr->count) {
+            lval* x = lval_eval(e, lval_pop(expr, 0));
+            if (x->type == LVAL_ERR) {
+                lval_println(x);
+            }
+            lval_del(x);
+        }
+
+        lval_del(expr);
+        lval_del(a);
+
+        return lval_sexpr();
+    } else {
+        char* err_msg = mpc_err_string(r.error);
+        mpc_err_delete(r.error);
+
+        lval* err = lval_err("Could not load library file: %s", err_msg);
         free(err_msg);
         lval_del(a);
 
@@ -927,6 +970,7 @@ void lenv_add_builtins(lenv* e)
 
     /* String Functions */
     lenv_add_builtin(e, "load", builtin_load);
+    lenv_add_builtin(e, "include", builtin_include);
     lenv_add_builtin(e, "error", builtin_error);
     lenv_add_builtin(e, "print", builtin_print);
     lenv_add_builtin(e, "eval", builtin_eval);
