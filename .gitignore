@@ -40,6 +40,3 @@ lispy.v2z
 
 # Linenoise history
 history.txt
-
-# version file
-src/version.c

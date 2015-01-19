@@ -1,5 +1,5 @@
-/*
- * Lispy version source file
+/**
+ * Lispy version header file
  *
  * @filename: version.h
  *
@@ -7,7 +7,7 @@
  *
  * @date: 2014-11-14
  *
- * @description: Lispy version file
+ * @description: Lispy version header file
  *
  * @author: Alexander Skjolden
  *
@@ -30,5 +30,12 @@
  *
  */
 
-#include "version.h"
-const char * version = "0.16";
+/**
+ * Credits to:
+ * http://stackoverflow.com/questions/1704907/how-can-i-get-my-c-code-to-automatically-print-out-its-git-version-hash
+ */
+
+#ifndef VERSION_H
+#define VERSION_H
+extern const char * version;
+#endif
