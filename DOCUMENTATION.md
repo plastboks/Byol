@@ -4,6 +4,7 @@ This documentation is meant to be self explanatory using sections and code examp
 It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
 * [Imports](#imports)
 * [Arithmetic](#arithmetic)
+* [Bitwise operations](#bitwise_operations)
 * [List](#lists)
 * [Variables](#variables)
 * [Functions](#functions)
@@ -48,6 +49,29 @@ lispy> * 2 3
 6
 lispy> + 2 (* 7 6) (* 2 5)
 54
+lispy> / 10 2
+5
+lispy> - 9 2
+7
+lispy> -- 2
+1
+lispy> ++ 2
+3
+```
+
+Bitwise operations
+-----------
+```lisp
+lispy> & 10 9
+8
+lispy> << 10 9
+5120
+lispy> >> 10 9
+0
+lispy> | 10 9
+11
+lispy> ^ 10 9
+3
 ```
 
 Lists
@@ -166,6 +190,16 @@ lispy> pi
 3.141593
 lispy> fact 5
 120
+lispy> pow 2 10
+1024
+lispy> ceil 3.5
+4
+lispy> floor 3.5
+3
+lispy> ln 10
+2.30259
+lisyp> % 10 4
+2
 lispy> sqrt 9
 3.000000
 lispy> ncr 9 3
@@ -256,13 +290,13 @@ lispy> add-uncurried 5 6 7
 ### Take and drop while
 
 ```lisp
-lispy> map (\ {x} {^ x 2}) 1..10
+lispy> map (\ {x} {pow x 2}) 1..10
 {1 4 9 16 25 36 49 64 81 100}
-lispy> filter odd (map (\ {x} {^ x 2}) 1..10)
+lispy> filter odd (map (\ {x} {pow x 2}) 1..10)
 {1 9 25 49 81}
-lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {^ x 2}) 1..10))>})
+lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))>})
 {1 9 25 49}
-lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {^ x 2}) 1..10))>})
+lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))>})
 {81}
 ```
 
@@ -323,11 +357,11 @@ lispy> map - 1..10
 {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
 lispy> map (\ {x} {+ x 10}) 1..10
 {11 12 13 14 15 16 17 18 19 20}
-lispy> map (\ {x} {^ 2 x}) 0..10
+lispy> map (\ {x} {pow 2 x}) 0..10
 {1 2 4 8 16 32 64 128 256 512 1024}
-lispy> map (\ {x} {+ (* 2 (^ 4 x)) (^ -3 x)}) 0..10
+lispy> map (\ {x} {+ (* 2 (pow 4 x)) (pow -3 x)}) 0..10
 {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
-lispy> fun {fn x} {+ (* 2 (^ 4 x)) (^ -3 x)}
+lispy> fun {fn x} {+ (* 2 (pow 4 x)) (pow -3 x)}
 ()
 lispy> map fn 0..10
 {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
