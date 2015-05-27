@@ -4,7 +4,7 @@ This documentation is meant to be self explanatory using sections and code examp
 It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
 * [Imports](#imports)
 * [Arithmetic](#arithmetic)
-* [Bitwise operations](#bitwise_operations)
+* [Bitwise operations](#bitwise-operations)
 * [List](#lists)
 * [Variables](#variables)
 * [Functions](#functions)
