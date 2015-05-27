@@ -31,8 +31,10 @@ lispy> load "filename.lspy"
 ```
 Global files
 ```lisp
-lispy> import "std"
-lispy> import "math"
+lispy> include "std"
+()
+lispy> include "math"
+()
 ```
 
 Arithmetic
@@ -147,12 +149,14 @@ Standard Library
 ----------------
 Included in the standard library are some of these nice features:
 ```lisp
-lispy> import "std"
+lispy> include "std"
+()
 ```
 
 ### Math
 ```lisp
-lispy> import "math"
+lispy> include "math"
+()
 ```
 
 ```lisp
