@@ -19,7 +19,7 @@ Compilation and running
 =======================
 * run: `make`
 * run: `make install` (needs superuser)
-* run: `lispy`
+* run: `./bin/lispy`
 
 Thanks to
 =========

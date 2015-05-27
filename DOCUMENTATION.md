@@ -2,6 +2,7 @@ Lispy Documentation
 ===================
 This documentation is meant to be self explanatory using sections and code examples.
 It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
+* [Imports](#imports)
 * [Arithmetic](#arithmetic)
 * [List](#lists)
 * [Variables](#variables)
@@ -20,6 +21,19 @@ It (the documentation) is increasing as new features are added (both trough the 
         * [Map](#map)
         * [Filter](#filter)
 
+
+Imports
+-------
+Local files
+```lisp
+lispy> load "filename"
+lispy> load "filename.lspy"
+```
+Global files
+```lisp
+lispy> import "std"
+lispy> import "math"
+```
 
 Arithmetic
 ----------
@@ -132,8 +146,14 @@ lispy> eval (head {"hello" "world"})
 Standard Library
 ----------------
 Included in the standard library are some of these nice features:
+```lisp
+lispy> import "std"
+```
 
 ### Math
+```lisp
+lispy> import "math"
+```
 
 ```lisp
 lispy> e
