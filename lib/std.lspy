@@ -175,10 +175,10 @@
     if (== x nil)
         {if (== y nil) {nil} {y} }
         {if (== y nil) {x}
-            {join (if (< (car x) (car y))
-                    {join (head x) (head y)}
-                    {join (head y) (head x)}
-                  ) (merge (tail x) (tail y))}
+            {if (< (car x) (car y))
+                    {join (head x) (merge (tail x) y)}
+                    {join (head y) (merge x (tail y))}
+            }
         }
 })
 

@@ -1,7 +1,7 @@
 Simple TODOS
 ============
 
-* [ ] Finish standard lib sort function
+* [x] Finish standard lib sort function
 * [ ] Write inline help function
 * [ ] Implement a memory pool allocation system
 * [ ] Implement a setting system with config files and runtime setting changes
