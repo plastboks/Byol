@@ -25,13 +25,15 @@ It (the documentation) is increasing as new features are added (both trough the 
 
 Imports
 -------
-Local files
+
+* `load` (local files)
+* `include` (global files)
+
 ```lisp
 lispy> load "filename"
+()
 lispy> load "filename.lspy"
-```
-Global files
-```lisp
+()
 lispy> include "std"
 ()
 lispy> include "math"
@@ -41,6 +43,13 @@ lispy> include "math"
 Arithmetic
 ----------
 Arithmetic is like the rest of the syntax prefix notation (polish notation).
+
+* `*`
+* `/`
+* `+`
+* `-`
+* `++`
+* `--`
 
 ```lisp
 lispy> + 2 2
@@ -61,6 +70,13 @@ lispy> ++ 2
 
 Bitwise operations
 -----------
+
+* `&`
+* `<<`
+* `>>`
+* `|`
+* `&`
+
 ```lisp
 lispy> & 10 9
 8
@@ -76,15 +92,21 @@ lispy> ^ 10 9
 
 Lists
 -----
-List operators include the builtins `list` `head` `tail` `cons` `join` `init`
+
+* `list`
+* `head`
+* `tail`
+* `cons`
+* `eval`
+* `join`
+* `init`
+* `..`
 
 ```lisp
 lispy> {1 2 3 4 5}
 {1 2 3 4 5}
 lispy> {{1 2 3} {4 5}}
 {{1 2 3} {4 5}}
-lispy> 1..10
-{1 2 3 4 5 6 7 8 9 10}
 lispy> head (list 1 2 3 4)
 {1}
 lispy> eval (tail {tail tail {5 6 7}})
@@ -95,13 +117,13 @@ lispy> eval (head {(+ 1 2) (+ 10 20)})
 3
 lispy> 1..20
 {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
-lispy> rev 1..20
-{20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1}
 ```
 
 Variables
 ---------
 Some examples of variables declaration and use.
+
+* `def`
 
 ```lisp
 lispy> def {x} 100
@@ -134,6 +156,11 @@ Conditionals
 ------------
 Some example conditionals.
 
+* `>`
+* `<`
+* `==`
+* `!=`
+
 ```lisp
 lispy> > 10 5
 True
@@ -149,12 +176,6 @@ lispy> def {x y} 100 200
 ()
 lispy> if (== x y) {+ x y} {- x y}
 -100
-lispy> (fun {length l} {if (== l {}) {0} {+ 1 (length (tail l))} })
-()
-lispy> length 1..20
-20
-lispy> fun {rev l} {if (== l {}) {{}} {join (rev (tail l)) (head l)}}
-()
 ```
 
 Strings
@@ -182,6 +203,25 @@ lispy> include "std"
 lispy> include "math"
 ()
 ```
+
+* `e`
+* `pi`
+* `fact`
+* `pow`
+* `ceil`
+* `floor`
+* `ln`
+* `%`
+* `sqrt`
+* `ncr`
+* `npr`
+* `gdc`
+* `lcm`
+* `fib`
+* `sum`
+* `product`
+* `odd`
+* `even`
 
 ```lisp
 lispy> e
@@ -224,6 +264,13 @@ false
 
 ### Boolean
 
+* `true`
+* `false`
+* `not`
+* `and`
+* `or`
+* `xor`
+
 ```lisp
 lispy> true
 true
@@ -247,6 +294,8 @@ false
 
 ### Lambdas
 
+* `\`
+
 ```lisp
 lispy> (\ {x y} {+ x y}) 10 20
 30
@@ -261,6 +310,9 @@ lispy> add-together 10 20
 ```
 
 ### Currying
+
+* `curry`
+* `uncurry`
 
 ```lisp
 lispy> curry + {5 6 7}
@@ -289,6 +341,9 @@ lispy> add-uncurried 5 6 7
 
 ### Take and drop while
 
+* `take-while`
+* `drop-while`
+
 ```lisp
 lispy> map (\ {x} {pow x 2}) 1..10
 {1 4 9 16 25 36 49 64 81 100}
@@ -302,6 +357,20 @@ lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))>})
 
 ### List operations
 #### Basic
+
+* `len`
+* `nth`
+* `take`
+* `drop`
+* `split`
+* `head`
+* `tail`
+* `elem`
+* `maximum`
+* `minimum`
+* `sort`
+* `range`
+* `reverse`
 
 ```lisp
 lispy> len 1..20
@@ -320,6 +389,8 @@ lispy> maximum 1..20
 20
 lispy> minimum 1..20
 1
+lispy> sort { 3 4 9 10 1 -2 3 4 5 100 -30}
+{-30 -2 1 3 3 4 4 5 9 10 100}
 lispy> range 1 10
 {1 2 3 4 5 6 7 8 9 10}
 lispy> range 5 -4
@@ -330,9 +401,13 @@ lispy> reverse 1..10
 
 #### Merge
 
+* `merge`
+* `zip`
+* `unzip`
+
 ```lisp
 lispy> merge 1..4 5..11
-{1 5 2 6 3 7 4 8 9 10 11}
+{1 2 3 4 5 6 7 8 9 10 11}
 lispy> zip 1..5 5..10
 {{1 5} {2 6} {3 7} {4 8} {5 9}}
 lispy> unzip (zip 1..5 5..10)
@@ -340,6 +415,10 @@ lispy> unzip (zip 1..5 5..10)
 ```
 
 #### Distributions
+
+* `union`
+* `intersect`
+* `subtract`
 
 ```lisp
 lispy> union 1..10 5..15
@@ -351,6 +430,8 @@ lispy> subtract 1..10 5..15
 ```
 
 #### Map
+
+* `map`
 
 ```lisp
 lispy> map - 1..10
@@ -365,17 +446,17 @@ lispy> fun {fn x} {+ (* 2 (pow 4 x)) (pow -3 x)}
 ()
 lispy> map fn 0..10
 {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
-lispy> fun {sq x} {* n n}
-()
-lispy> map sq 1..10
+lispy> map sqrt 1..10
 {1 4 9 16 25 36 49 64 81 100}
-lispy> sum (map sq 1..10)
+lispy> sum (map sqrt 1..10)
 385
 lispy> map fact 1..5
 {1 2 6 24 120}
 ```
 
 #### Filter
+
+* `filter`
 
 ```lisp
 lispy> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
