@@ -35,9 +35,16 @@
 #include "version.h"
 
 void completion(const char *buf, linenoiseCompletions *lc) {
-    if (buf[0] == 'h') {
-        /* put builtin functions here ... */
-        //linenoiseAddCompletion(lc,"like this");
+    switch (buf[0]) {
+        case 't': linenoiseAddCompletion(lc, "true"); break;
+        case 'f': linenoiseAddCompletion(lc, "false"); break;
+        case 'n': linenoiseAddCompletion(lc, "nil"); break;
+        case 'l': linenoiseAddCompletion(lc, "load"); break;
+        case 'i': linenoiseAddCompletion(lc, "include"); break;
+        case 'd': linenoiseAddCompletion(lc, "def"); break;
+        case 'j': linenoiseAddCompletion(lc, "join"); break;
+        case 'c': linenoiseAddCompletion(lc, "cons"); break;
+        case 'e': linenoiseAddCompletion(lc, "exit 1"); break;
     }
 }
 
@@ -125,7 +132,7 @@ int main(int argc, char** argv)
                     mpc_err_delete(r.error);
                 }
             } else if (!strncmp(input, "/historylen", 11)) {
-                int len = atoi(input+11);
+                int len = atoi(input + 11);
                 linenoiseHistorySetMaxLen(len);
             }
             free(input);
