@@ -5,7 +5,6 @@ TCC = tigcc
 # Compiler flags
 LFLAGS = -Wall -Iinc -std=c99
 LNFLAGS = -Wall -Iinc -W -Os -g
-TIFLAGS = -Wall -Iinc -W -Os -Wwrite-strings
 EFLAGS = -lm
 # Bin name
 BIN_PATH = bin
@@ -44,13 +43,11 @@ CGFLAGS := $(CCFLAGS) \
 
 _LSPY = lispy.o
 _LN = linenoise.o
-_TI = ti.o
 _OBJ = func.o mpc.o lenv.o lval.o builtins.o version.o
 
 OBJ_LIB = $(patsubst %,$(ODIR)/%,$(_OBJ))
 OBJ_LN = $(patsubst %,$(ODIR)/%,$(_LN))
 OBJ_LSPY = $(patsubst %,$(ODIR)/%,$(_LSPY))
-OBJ_TI = $(patsubst %,$(ODIR)/%,$(_TI))
 
 $(ODIR)/%.o: src/%.c $(DEPS)
 	@echo "=> Compiling source file"
@@ -60,18 +57,11 @@ $(ODIR)/%.o: linenoise/%.c $(DEPS)
 	@echo "=> Compiling linenoise source files"
 	$(CC) -c -o $@ $< $(LNFLAGS)
 
-$(ODIR)/%.o: port/%.c $(DEPS)
-	@echo "=> Compiling port source files"
-	$(TCC) -c -o $@ $< $(TIFLAGS)
-
 .PHONY: lispy ti install clean
 
 lispy: $(OBJ_LIB) $(OBJ_LN) $(OBJ_LSPY)
 	@echo "=> Compiling release build: $(VERSION_STRING)"
 	$(CC) -o $(BIN_PATH)/$(BIN_NAME) $^ $(EFLAGS)
-
-ti: $(OBJ_TI)
-	$(TCC) -o $(BIN_PATH)/$(BIN_NAME) $^
 
 install: 
 	@echo "=> Installing $(BIN_NAME) to $(DEST_DIR)$(INST_PFIX)/bin"
