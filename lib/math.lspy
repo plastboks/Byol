@@ -103,6 +103,3 @@
             {subtract (cdr la) lb}
             {join (head la) (subtract (cdr la) lb)}}
 })
-
-
-

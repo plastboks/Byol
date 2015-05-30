@@ -349,9 +349,9 @@ lispy> map (\ {x} {pow x 2}) 1..10
 {1 4 9 16 25 36 49 64 81 100}
 lispy> filter odd (map (\ {x} {pow x 2}) 1..10)
 {1 9 25 49 81}
-lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))>})
+lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
 {1 9 25 49}
-lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))>})
+lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
 {81}
 ```
 
@@ -389,7 +389,7 @@ lispy> maximum 1..20
 20
 lispy> minimum 1..20
 1
-lispy> sort { 3 4 9 10 1 -2 3 4 5 100 -30}
+lispy> sort {3 4 9 10 1 -2 3 4 5 100 -30}
 {-30 -2 1 3 3 4 4 5 9 10 100}
 lispy> range 1 10
 {1 2 3 4 5 6 7 8 9 10}
