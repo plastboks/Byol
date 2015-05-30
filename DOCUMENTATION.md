@@ -117,6 +117,10 @@ lispy> eval (head {(+ 1 2) (+ 10 20)})
 3
 lispy> 1..20
 {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
+lispy> -4..-10
+{-4 -5 -6 -7 -8 -9 -10}
+lispy> 4..-10
+{4 3 2 1 0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
 ```
 
 Variables
@@ -449,9 +453,11 @@ lispy> map fn 0..10
 lispy> map sqrt 1..10
 {1 4 9 16 25 36 49 64 81 100}
 lispy> sum (map sqrt 1..10)
-385
+22.46828
 lispy> map fact 1..5
 {1 2 6 24 120}
+lispy> map isprime 1..10
+{false true true false true false true false false false}
 ```
 
 #### Filter
@@ -471,6 +477,6 @@ lispy> filter odd 1..20
 {1 3 5 7 9 11 13 15 17 19}
 lispy> filter even 1..20
 {2 4 6 8 10 12 14 16 18 20}
-lispy> filter prime 1..30
+lispy> filter isprime 1..30
 {2 3 5 7 11 13 17 19 23 29}
 ```
