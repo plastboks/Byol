@@ -1,7 +1,7 @@
 Lispy Documentation
 ===================
 This documentation is meant to be self explanatory using sections and code examples.
-It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
+It (the documentation) is increasing as new features are added (both trough the core and via the standard library (or other libraries))).
 * [Built-ins](#builtins)
     * [Imports](#imports)
     * [Arithmetic](#arithmetic)
@@ -10,7 +10,7 @@ It (the documentation) is increasing as new features are added (both trough the 
     * [Variables](#variables)
     * [Conditionals](#conditionals)
     * [Strings](#strings)
-* [Standard Libarary](#standard-library)
+* [Standard Library](#standard-library)
     * [Boolean](#boolean)
     * [Lambdas](#lambdas)
     * [Currying](#currying)
@@ -19,7 +19,7 @@ It (the documentation) is increasing as new features are added (both trough the 
         * [Merge](#merge)
         * [Map](#map)
         * [Filter](#filter)
-* [Math library](#math)
+* [Math Library](#math)
     * [Distributions](#distributions)
 
 
