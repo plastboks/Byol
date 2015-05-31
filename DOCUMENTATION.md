@@ -2,29 +2,30 @@ Lispy Documentation
 ===================
 This documentation is meant to be self explanatory using sections and code examples.
 It (the documentation) is increasing as new features are added (both trough the core and via the standard library).
-* [Imports](#imports)
-* [Arithmetic](#arithmetic)
-* [Bitwise operations](#bitwise-operations)
-* [List](#lists)
-* [Variables](#variables)
-* [Functions](#functions)
-* [Conditionals](#conditionals)
-* [Strings](#strings)
+* [Built-ins](#builtins)
+    * [Imports](#imports)
+    * [Arithmetic](#arithmetic)
+    * [Bitwise operations](#bitwise-operations)
+    * [Lists](#lists)
+    * [Variables](#variables)
+    * [Conditionals](#conditionals)
+    * [Strings](#strings)
 * [Standard Libarary](#standard-library)
-    * [Math](#math)
     * [Boolean](#boolean)
     * [Lambdas](#lambdas)
     * [Currying](#currying)
-    * [Lists operations](#list-operators)
+    * [Lists operations](#list-operations)
         * [Basic](#basic)
         * [Merge](#merge)
-        * [Distributions](#distributions)
         * [Map](#map)
         * [Filter](#filter)
+* [Math library](#math)
+    * [Distributions](#distributions)
 
 
-Imports
--------
+# Builtins
+
+## Imports
 
 * `load` (local files)
 * `include` (global files)
@@ -40,9 +41,7 @@ lispy> include "math"
 ()
 ```
 
-Arithmetic
-----------
-Arithmetic is like the rest of the syntax prefix notation (polish notation).
+## Arithmetic
 
 * `*`
 * `/`
@@ -66,16 +65,17 @@ lispy> -- 2
 1
 lispy> ++ 2
 3
+lispy> - 10 (++ 2)
+7
 ```
 
-Bitwise operations
------------
+## Bitwise operations
 
 * `&`
 * `<<`
 * `>>`
 * `|`
-* `&`
+* `^`
 
 ```lisp
 lispy> & 10 9
@@ -90,8 +90,7 @@ lispy> ^ 10 9
 3
 ```
 
-Lists
------
+## Lists
 
 * `list`
 * `head`
@@ -123,9 +122,7 @@ lispy> 4..-10
 {4 3 2 1 0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
 ```
 
-Variables
----------
-Some examples of variables declaration and use.
+## Variables
 
 * `def`
 
@@ -156,9 +153,7 @@ sum (list a b x y)
 10
 ```
 
-Conditionals
-------------
-Some example conditionals.
+## Conditionals
 
 * `>`
 * `<`
@@ -182,8 +177,7 @@ lispy> if (== x y) {+ x y} {- x y}
 -100
 ```
 
-Strings
--------
+## Strings
 
 ```lisp
 lispy> "Hello World!"
@@ -194,79 +188,14 @@ lispy> eval (head {"hello" "world"})
 "hello"
 ```
 
-Standard Library
-----------------
+## Standard Library
 Included in the standard library are some of these nice features:
 ```lisp
 lispy> include "std"
 ()
 ```
 
-### Math
-```lisp
-lispy> include "math"
-()
-```
-
-* `e`
-* `pi`
-* `fact`
-* `pow`
-* `ceil`
-* `floor`
-* `ln`
-* `%`
-* `sqrt`
-* `ncr`
-* `npr`
-* `gdc`
-* `lcm`
-* `fib`
-* `sum`
-* `product`
-* `odd`
-* `even`
-
-```lisp
-lispy> e
-2.718282
-lispy> pi
-3.141593
-lispy> fact 5
-120
-lispy> pow 2 10
-1024
-lispy> ceil 3.5
-4
-lispy> floor 3.5
-3
-lispy> ln 10
-2.30259
-lisyp> % 10 4
-2
-lispy> sqrt 9
-3.000000
-lispy> ncr 9 3
-84
-lispy> npr 9 3
-504
-lispy> gcd 440 356
-4
-lispy> lcm 440 356
-39160
-lispy> fib 10
-55
-lispy> sum {1 2 3 4 5}
-15
-lispy> product {1 2 3 4 5}
-120
-lispy> odd 3
-true
-lispy> even 3
-false
-```
-
-### Boolean
+## Boolean
 
 * `true`
 * `false`
@@ -296,7 +225,7 @@ lispy> xor true true
 false
 ```
 
-### Lambdas
+## Lambdas
 
 * `\`
 
@@ -313,7 +242,7 @@ lispy> add-together 10 20
 30
 ```
 
-### Currying
+## Currying
 
 * `curry`
 * `uncurry`
@@ -343,7 +272,7 @@ lispy> add-uncurried 5 6 7
 18
 ```
 
-### Take and drop while
+## Take and drop while
 
 * `take-while`
 * `drop-while`
@@ -418,21 +347,6 @@ lispy> unzip (zip 1..5 5..10)
 {{1 2 3 4 5} {5 6 7 8 9}}
 ```
 
-#### Distributions
-
-* `union`
-* `intersect`
-* `subtract`
-
-```lisp
-lispy> union 1..10 5..15
-{1 2 3 4 5 6 7 8 9 10 11 12 13 14 15}
-lispy> intersect 1..10 5..15
-{5 6 7 8 9 10}
-lispy> subtract 1..10 5..15
-{1 2 3 4}
-```
-
 #### Map
 
 * `map`
@@ -479,4 +393,89 @@ lispy> filter even 1..20
 {2 4 6 8 10 12 14 16 18 20}
 lispy> filter isprime 1..30
 {2 3 5 7 11 13 17 19 23 29}
+```
+
+# Math
+
+```lisp
+lispy> include "math"
+()
+```
+
+* `e`
+* `pi`
+* `fact`
+* `pow`
+* `ceil`
+* `floor`
+* `ln`
+* `%`
+* `sqrt`
+* `ncr`
+* `npr`
+* `gdc`
+* `lcm`
+* `fib`
+* `sum`
+* `product`
+* `odd`
+* `even`
+* `isprime`
+
+```lisp
+lispy> e
+2.718282
+lispy> pi
+3.141593
+lispy> fact 5
+120
+lispy> pow 2 10
+1024
+lispy> ceil 3.5
+4
+lispy> floor 3.5
+3
+lispy> ln 10
+2.30259
+lisyp> % 10 4
+2
+lispy> sqrt 9
+3.000000
+lispy> ncr 9 3
+84
+lispy> npr 9 3
+504
+lispy> gcd 440 356
+4
+lispy> lcm 440 356
+39160
+lispy> fib 10
+55
+lispy> sum {1 2 3 4 5}
+15
+lispy> product {1 2 3 4 5}
+120
+lispy> odd 3
+true
+lispy> even 3
+false
+lispy> isprime 10
+false
+lispy> isprime 7
+true
+```
+
+## Distributions
+
+* `union`
+* `intersect`
+* `subtract`
+
+```lisp
+lispy> union 1..10 5..15
+{1 2 3 4 5 6 7 8 9 10 11 12 13 14 15}
+lispy> intersect 1..10 5..15
+{5 6 7 8 9 10}
+lispy> subtract 1..10 5..15
+{1 2 3 4}
 ```
