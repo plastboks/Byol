@@ -12,7 +12,7 @@ BIN_NAME := lispy
 # Object directory
 ODIR = obj
 # Standard library
-LDIR = lib
+LDIR = src
 # Destination directory
 DEST_DIR = /
 # Install path

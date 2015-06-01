@@ -33,7 +33,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "linenoise.h"
+#include "../linenoise/linenoise.h"
 #include "macros.h"
 #include "mpc.h"
 #include "colors.h"
