@@ -44,7 +44,7 @@ void completion(const char *buf, linenoiseCompletions *lc) {
         case 'd': linenoiseAddCompletion(lc, "def"); break;
         case 'j': linenoiseAddCompletion(lc, "join"); break;
         case 'c': linenoiseAddCompletion(lc, "cons"); break;
-        case 'e': linenoiseAddCompletion(lc, "exit 1"); break;
+        case 'e': linenoiseAddCompletion(lc, "exit()"); break;
     }
 }
 
@@ -97,17 +97,17 @@ int main(int argc, char** argv)
 
     if (argc == 1) {
         puts(BOLDMAGENTA);
-        puts("    __    _                  ");
-        puts("   / /   (_)________  __  __ ");
-        puts("  / /   / / ___/ __ \\/ / / /");
-        puts(" / /___/ (__  ) /_/ / /_/ /  ");
-        puts("/_____/_/____/ .___/\\__, /  ");
-        puts("            /_/    /____/    ");
+        puts("     __    _                  ");
+        puts("    / /   (_)________  __  __ ");
+        puts("   / /   / / ___/ __ \\/ / / /");
+        puts("  / /___/ (__  ) /_/ / /_/ /  ");
+        puts(" /_____/_/____/ .___/\\__, /  ");
+        puts("             /_/    /____/    ");
         puts(RESET);
 
         puts(BOLDWHITE);
         printf("Version: %s, build: %s (%s)\n", version, VERSION_BUILD, BUILD_DATE);
-        puts("Press Ctrl+c , or type 'exit 1' to exit");
+        puts("Press Ctrl+c , or type 'exit()' to exit");
         puts(RESET);
 
         linenoiseSetMultiLine(1);
