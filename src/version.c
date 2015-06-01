@@ -31,4 +31,4 @@
  */
 
 #include "version.h"
-const char * version = "0.16";
+const char * version = "0.17";
