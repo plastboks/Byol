@@ -2,7 +2,7 @@ Byol
 ====
 Build your own Lisp.
 
-![Screenshot](screenshot/lispy-0.16.png)
+![Screenshot](screenshot/lispy-0.17.png)
 
 About
 =====
