@@ -34,7 +34,8 @@
 #include "builtins.h"
 #include "version.h"
 
-void completion(const char *buf, linenoiseCompletions *lc) {
+void completion(const char *buf, linenoiseCompletions *lc)
+{
     switch (buf[0]) {
         case 't': linenoiseAddCompletion(lc, "true"); break;
         case 'f': linenoiseAddCompletion(lc, "false"); break;
@@ -46,6 +47,12 @@ void completion(const char *buf, linenoiseCompletions *lc) {
         case 'c': linenoiseAddCompletion(lc, "cons"); break;
         case 'e': linenoiseAddCompletion(lc, "exit()"); break;
     }
+}
+
+void prompt(char* cmd)
+{
+    static unsigned int cmd_count = 1;
+    sprintf(cmd, "[%d]> ", cmd_count++);
 }
 
 int main(int argc, char** argv)
@@ -64,6 +71,8 @@ int main(int argc, char** argv)
     char* input; 
     char stdlib_path[512];
     char historypath[512];
+
+    char cmd[16];
 
     /* Define them with the following Language */
     mpca_lang(MPCA_LANG_DEFAULT,
@@ -114,8 +123,9 @@ int main(int argc, char** argv)
         linenoiseSetCompletionCallback(completion);
         sprintf(historypath, "%s/.lispy_history", getenv("HOME"));
         linenoiseHistoryLoad(historypath);
-        
-        while((input = linenoise("lispy> ")) != NULL) {
+
+        prompt(cmd);
+        while((input = linenoise(cmd)) != NULL) {
             if (input[0] != '\0') {
                 linenoiseHistoryAdd(input);
                 linenoiseHistorySave(historypath);
@@ -131,6 +141,8 @@ int main(int argc, char** argv)
                     mpc_err_print(r.error);
                     mpc_err_delete(r.error);
                 }
+                prompt(cmd);
+
             } else if (!strncmp(input, "/historylen", 11)) {
                 int len = atoi(input + 11);
                 linenoiseHistorySetMaxLen(len);
