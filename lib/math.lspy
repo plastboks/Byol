@@ -1,8 +1,10 @@
 ;-
 ;- Math lib for lispy.
 ;-
-;- version 0.01
+;- version 0.02
 ;-
+
+(def {mathlib} "0.02")
 
 ;======== Math functions ========
 ; Factorial

@@ -4,6 +4,8 @@
 ;- version 0.03
 ;-
 
+(def {stdlib} "0.03")
+
 
 ;======== Constants ========
 (def {otherwise} true)
