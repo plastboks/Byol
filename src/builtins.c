@@ -31,6 +31,7 @@
  */
 
 #include "builtins.h"
+#include "version.h"
 
 lval* builtin_head(lenv* e, lval* a)
 {
@@ -929,6 +930,13 @@ lval* builtin_exit(lenv* e, lval* a)
     exit(0);
 }
 
+lval* builtin_version(lenv* e, lval* a)
+{
+    printf("Version: %s, build: %s (%s)\n", version, VERSION_BUILD, BUILD_DATE);
+
+    return lval_pop(a, 0);
+}
+
 lval* builtin_error(lenv* e, lval* a)
 {
     LASSERT_NUM("error", a, 1);
@@ -1035,4 +1043,5 @@ void lenv_add_builtins(lenv* e)
 
     /* Other functions */
     lenv_add_builtin(e, "exit", builtin_exit);
+    lenv_add_builtin(e, "version", builtin_version);
 }
