@@ -74,6 +74,13 @@
         {true} {false} }
 })
 
+; Factors
+(fun {factors n} {
+    if (isprime n)
+        {n}
+        {filter (\ {x} {== (% n x) 0}) (filter isprime (range 1 (ceil (sqrt n))))}
+})
+
 
 ;======== List Math functions ========
 (fun {sum l} {foldl + 0 l})
