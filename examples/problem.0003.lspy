@@ -1,0 +1,11 @@
+(include "math")
+
+;- the number 600851475143 causes a list of 775147 elements. Using 6008514 instead
+
+(fun {factors n} {
+    if (isprime n)
+        {n}
+        {filter (\ {x} {== (% n x) 0}) (filter isprime (range 1 (ceil (sqrt n))))}
+})
+
+(print (factors 6008514))
