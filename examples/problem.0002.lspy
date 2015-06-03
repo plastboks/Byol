@@ -1,0 +1,15 @@
+(include "math")
+
+;- Only up to 4000
+
+; Fibonacci
+(fun {myFib n} {
+    select
+        { (== n 0) 0 }
+        { (== n 1) 1 }
+        { otherwise (+ (fib (- n 1)) (fib (- n 2)))}
+})
+
+(def {li} (map (\ {x} {myFib x}) 1..18))
+
+(print (sum (filter even li)))
