@@ -1,0 +1,21 @@
+(include "math")
+
+; palindromic numbers
+
+(fun {palindromic i} {
+    not (elem true ((map (\ 
+        {n}
+        {!= 
+            (% (/ i (pow 10 n)) 10)
+            (% (if 
+                (< (- (ceil (log (+ i 1))) n 1) 0)
+                    {/ i (/ 1.0 (pow 10 (- (- (ceil (log (+ i 1))) n 1))))}
+                    {/ i (pow 10 (- (ceil (log (+ i 1))) n 1))})
+             10)
+        }
+    )
+    (range 0 (/ (ceil (log (+ i 1))) 2))
+    )))
+})
+
+(print (filter (\ {x} {palindromic x}) 100..200))
