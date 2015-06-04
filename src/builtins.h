@@ -82,6 +82,7 @@ lval* builtin_min(lenv* e, lval* a);
 lval* builtin_max(lenv* e, lval* a);
 lval* builtin_xor(lenv* e, lval* a);
 lval* builtin_ln(lenv* e, lval* a);
+lval* builtin_log(lenv* e, lval* a);
 lval* builtin_ceil(lenv* e, lval* a);
 lval* builtin_floor(lenv* e, lval* a);
 lval* builtin_rand(lenv* e, lval* a);

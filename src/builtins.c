@@ -498,6 +498,26 @@ lval* builtin_ln(lenv* e, lval* a)
     return lval_dec(r);
 }
 
+lval* builtin_log(lenv* e, lval* a)
+{
+    LASSERT_NUM("log", a, 1);
+    if (a->cell[0]->type != LVAL_NUM && a->cell[0]->type != LVAL_DEC) {
+        lval_del(a);
+        return lval_err("Cannot operate on non-number. %s or %s expected",
+                ltype_name(LVAL_NUM), ltype_name(LVAL_DEC));
+    }
+
+    double r;
+    if (a->cell[0]->type == LVAL_NUM) {
+        r = log10(a->cell[0]->num);
+    } else {
+        r = log10(a->cell[0]->decimal);
+    }
+
+    lval_del(a);
+    return lval_dec(r);
+}
+
 lval* builtin_ceil(lenv* e, lval* a)
 {
     LASSERT_NUM("ln", a, 1);
@@ -1007,6 +1027,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin(e, "--", builtin_dec);
     lenv_add_builtin(e, "pow", builtin_pow);
     lenv_add_builtin(e, "ln", builtin_ln);
+    lenv_add_builtin(e, "log", builtin_log);
     lenv_add_builtin(e, "ceil", builtin_ceil);
     lenv_add_builtin(e, "floor", builtin_floor);
     lenv_add_builtin(e, "min", builtin_min);
