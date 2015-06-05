@@ -33,13 +33,13 @@ It (the documentation) is increasing as new features are added (both trough the 
 * `include` (global files)
 
 ```lisp
-lispy> load "filename"
+[n]> load "filename"
 ()
-lispy> load "filename.lspy"
+[n]> load "filename.lspy"
 ()
-lispy> include "std"
+[n]> include "std"
 ()
-lispy> include "math"
+[n]> include "math"
 ()
 ```
 
@@ -53,21 +53,21 @@ lispy> include "math"
 * `--`
 
 ```lisp
-lispy> + 2 2
+[n]> + 2 2
 4
-lispy> * 2 3
+[n]> * 2 3
 6
-lispy> + 2 (* 7 6) (* 2 5)
+[n]> + 2 (* 7 6) (* 2 5)
 54
-lispy> / 10 2
+[n]> / 10 2
 5
-lispy> - 9 2
+[n]> - 9 2
 7
-lispy> -- 2
+[n]> -- 2
 1
-lispy> ++ 2
+[n]> ++ 2
 3
-lispy> - 10 (++ 2)
+[n]> - 10 (++ 2)
 7
 ```
 
@@ -92,33 +92,33 @@ lispy> - 10 (++ 2)
 ```lisp
 lisyp> % 10 4
 2
-lispy> ln e
+[n]> ln e
 1.00000
-lispy> log 10
+[n]> log 10
 1.00000
-lispy> pow 2 10
+[n]> pow 2 10
 1024
-lispy> ceil 3.5
+[n]> ceil 3.5
 4
-lispy> floor 3.5
+[n]> floor 3.5
 3
-lispy> rand 5
+[n]> rand 5
 3.68000
-lispy> max 1 2 3 4
+[n]> max 1 2 3 4
 4
-lispy> min 1 2 3 4
+[n]> min 1 2 3 4
 1
-lispy> sin 30
+[n]> sin 30
 -0.98803
-lispy> arcsin 0.5
+[n]> arcsin 0.5
 1.17520
-lispy> cos 30
+[n]> cos 30
 0.15425
-lispy> arccos 0.5
+[n]> arccos 0.5
 1.54308
-lispy> tan 30
+[n]> tan 30
 -6.40533
-lispy> arctan 0.5
+[n]> arctan 0.5
 0.76159
 ```
 
@@ -131,15 +131,15 @@ lispy> arctan 0.5
 * `^`
 
 ```lisp
-lispy> & 10 9
+[n]> & 10 9
 8
-lispy> << 10 9
+[n]> << 10 9
 5120
-lispy> >> 10 9
+[n]> >> 10 9
 0
-lispy> | 10 9
+[n]> | 10 9
 11
-lispy> ^ 10 9
+[n]> ^ 10 9
 3
 ```
 
@@ -155,23 +155,23 @@ lispy> ^ 10 9
 * `..`
 
 ```lisp
-lispy> {1 2 3 4 5}
+[n]> {1 2 3 4 5}
 {1 2 3 4 5}
-lispy> {{1 2 3} {4 5}}
+[n]> {{1 2 3} {4 5}}
 {{1 2 3} {4 5}}
-lispy> head (list 1 2 3 4)
+[n]> head (list 1 2 3 4)
 {1}
-lispy> eval (tail {tail tail {5 6 7}})
+[n]> eval (tail {tail tail {5 6 7}})
 {6 7}
-lispy> head {(+ 1 2) (+ 10 20)}
+[n]> head {(+ 1 2) (+ 10 20)}
 {(+ 1 2)}
-lispy> eval (head {(+ 1 2) (+ 10 20)})
+[n]> eval (head {(+ 1 2) (+ 10 20)})
 3
-lispy> 1..20
+[n]> 1..20
 {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
-lispy> -4..-10
+[n]> -4..-10
 {-4 -5 -6 -7 -8 -9 -10}
-lispy> 4..-10
+[n]> 4..-10
 {4 3 2 1 0 -1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
 ```
 
@@ -180,27 +180,27 @@ lispy> 4..-10
 * `def`
 
 ```lisp
-lispy> def {x} 100
+[n]> def {x} 100
 ()
-lispy> def {y} 200
+[n]> def {y} 200
 ()
-lispy> x
+[n]> x
 100
-lispy> y
+[n]> y
 200
-lispy> + x y
+[n]> + x y
 300
-lispy> def {a b} 5 6
+[n]> def {a b} 5 6
 ()
-lispy> + a b
+[n]> + a b
 11
-lispy> def {arglist} {a b x y}
+[n]> def {arglist} {a b x y}
 ()
-lispy> arglist
+[n]> arglist
 {a b x y}
-lispy> def arglist 1 2 3 4
+[n]> def arglist 1 2 3 4
 ()
-lispy> list a b x y
+[n]> list a b x y
 {1 2 3 4}
 sum (list a b x y)
 10
@@ -214,30 +214,30 @@ sum (list a b x y)
 * `!=`
 
 ```lisp
-lispy> > 10 5
+[n]> > 10 5
 True
-lispy> <= 88 5
+[n]> <= 88 5
 True
-lispy> == 5 {}
+[n]> == 5 {}
 False
-lispy> != {} 56
+[n]> != {} 56
 True
-lispy> == {1 2 3 {5 6}} {1   2  3   {5 6}}
+[n]> == {1 2 3 {5 6}} {1   2  3   {5 6}}
 True
-lispy> def {x y} 100 200
+[n]> def {x y} 100 200
 ()
-lispy> if (== x y) {+ x y} {- x y}
+[n]> if (== x y) {+ x y} {- x y}
 -100
 ```
 
 ## Strings
 
 ```lisp
-lispy> "Hello World!"
+[n]> "Hello World!"
 "Hello World!"
-lispy> head {"hello" "world"}
+[n]> head {"hello" "world"}
 {"hello"}
-lispy> eval (head {"hello" "world"})
+[n]> eval (head {"hello" "world"})
 "hello"
 ```
 
@@ -247,16 +247,16 @@ lispy> eval (head {"hello" "world"})
 * `version`
 
 ```lisp
-lispy> version()
+[n]> version()
 Version: 0.17, build: 030aced-dirty (2015-06-04 18:58)
-lispy> exit()
+[n]> exit()
 ; this exits lispy
 ```
 
 # Standard Library
 Included in the standard library are some of these nice features:
 ```lisp
-lispy> include "std"
+[n]> include "std"
 ()
 ```
 
@@ -270,23 +270,23 @@ lispy> include "std"
 * `xor`
 
 ```lisp
-lispy> true
+[n]> true
 true
-lispy> false
+[n]> false
 false
-lispy> not true
+[n]> not true
 false
-lispy> and true false
+[n]> and true false
 false
-lispy> and true true
+[n]> and true true
 true
-lispy> or true false
+[n]> or true false
 true
-lispy> or false false
+[n]> or false false
 false
-lispy> xor false true
+[n]> xor false true
 true
-lispy> xor true true
+[n]> xor true true
 false
 ```
 
@@ -295,15 +295,15 @@ false
 * `\`
 
 ```lisp
-lispy> (\ {x y} {+ x y}) 10 20
+[n]> (\ {x y} {+ x y}) 10 20
 30
-lispy> def {add-together} (\ {x y} {+ x y})
+[n]> def {add-together} (\ {x y} {+ x y})
 ()
-lispy> add-together 10 20
+[n]> add-together 10 20
 30
-lispy> fun {add-together x y} {+ x y}
+[n]> fun {add-together x y} {+ x y}
 ()
-lispy> add-together 10 20
+[n]> add-together 10 20
 30
 ```
 
@@ -313,27 +313,27 @@ lispy> add-together 10 20
 * `uncurry`
 
 ```lisp
-lispy> curry + {5 6 7}
+[n]> curry + {5 6 7}
 18
-lispy> curry * {1 2 3 4}
+[n]> curry * {1 2 3 4}
 24
-lispy> uncurry head 5 6 7
+[n]> uncurry head 5 6 7
 {5}
-lispy> uncurry reverse 1 2 3 4 5 6 7
+[n]> uncurry reverse 1 2 3 4 5 6 7
 {7 6 5 4 3 2 1}
-lispy> uncurry prod 1 2 3 4 5
+[n]> uncurry prod 1 2 3 4 5
 120
-lispy> def {factorial} (curry *)
+[n]> def {factorial} (curry *)
 ()
-lispy> factorial 1..5
+[n]> factorial 1..5
 120
-lispy> def {add-curried} (curry +)
+[n]> def {add-curried} (curry +)
 ()
-lispy> add-curried {5 6 7}
+[n]> add-curried {5 6 7}
 18
-lispy> def {add-uncurried} +
+[n]> def {add-uncurried} +
 ()
-lispy> add-uncurried 5 6 7
+[n]> add-uncurried 5 6 7
 18
 ```
 
@@ -343,13 +343,13 @@ lispy> add-uncurried 5 6 7
 * `drop-while`
 
 ```lisp
-lispy> map (\ {x} {pow x 2}) 1..10
+[n]> map (\ {x} {pow x 2}) 1..10
 {1 4 9 16 25 36 49 64 81 100}
-lispy> filter odd (map (\ {x} {pow x 2}) 1..10)
+[n]> filter odd (map (\ {x} {pow x 2}) 1..10)
 {1 9 25 49 81}
-lispy> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
+[n]> take-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
 {1 9 25 49}
-lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
+[n]> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
 {81}
 ```
 
@@ -371,29 +371,29 @@ lispy> drop-while (\ {x} {< x 50}) (filter odd (map (\ {x} {pow x 2}) 1..10))
 * `reverse`
 
 ```lisp
-lispy> len 1..20
+[n]> len 1..20
 20
-lispy> nth 5 1..20
+[n]> nth 5 1..20
 6
-lispy> take 5 1..20
+[n]> take 5 1..20
 {1 2 3 4 5}
-lispy> drop 5 1..20
+[n]> drop 5 1..20
 {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}
-lispy> split 5 1..20
+[n]> split 5 1..20
 {{1 2 3 4 5} {6 7 8 9 10 11 12 13 14 15 16 17 18 19 20}}
-lispy> elem 5 1..20
+[n]> elem 5 1..20
 true
-lispy> maximum 1..20
+[n]> maximum 1..20
 20
-lispy> minimum 1..20
+[n]> minimum 1..20
 1
-lispy> sort {3 4 9 10 1 -2 3 4 5 100 -30}
+[n]> sort {3 4 9 10 1 -2 3 4 5 100 -30}
 {-30 -2 1 3 3 4 4 5 9 10 100}
-lispy> range 1 10
+[n]> range 1 10
 {1 2 3 4 5 6 7 8 9 10}
-lispy> range 5 -4
+[n]> range 5 -4
 {5 4 3 2 1 0 -1 -2 -3 -4}
-lispy> reverse 1..10
+[n]> reverse 1..10
 {10 9 8 7 6 5 4 3 2 1}
 ```
 
@@ -404,11 +404,11 @@ lispy> reverse 1..10
 * `unzip`
 
 ```lisp
-lispy> merge 1..4 5..11
+[n]> merge 1..4 5..11
 {1 2 3 4 5 6 7 8 9 10 11}
-lispy> zip 1..5 5..10
+[n]> zip 1..5 5..10
 {{1 5} {2 6} {3 7} {4 8} {5 9}}
-lispy> unzip (zip 1..5 5..10)
+[n]> unzip (zip 1..5 5..10)
 {{1 2 3 4 5} {5 6 7 8 9}}
 ```
 
@@ -417,25 +417,25 @@ lispy> unzip (zip 1..5 5..10)
 * `map`
 
 ```lisp
-lispy> map - 1..10
+[n]> map - 1..10
 {-1 -2 -3 -4 -5 -6 -7 -8 -9 -10}
-lispy> map (\ {x} {+ x 10}) 1..10
+[n]> map (\ {x} {+ x 10}) 1..10
 {11 12 13 14 15 16 17 18 19 20}
-lispy> map (\ {x} {pow 2 x}) 0..10
+[n]> map (\ {x} {pow 2 x}) 0..10
 {1 2 4 8 16 32 64 128 256 512 1024}
-lispy> map (\ {x} {+ (* 2 (pow 4 x)) (pow -3 x)}) 0..10
+[n]> map (\ {x} {+ (* 2 (pow 4 x)) (pow -3 x)}) 0..10
 {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
-lispy> fun {fn x} {+ (* 2 (pow 4 x)) (pow -3 x)}
+[n]> fun {fn x} {+ (* 2 (pow 4 x)) (pow -3 x)}
 ()
-lispy> map fn 0..10
+[n]> map fn 0..10
 {3 5 41 101 593 1805 8921 30581 137633 504605 2156201}
-lispy> map sqrt 1..10
+[n]> map sqrt 1..10
 {1 4 9 16 25 36 49 64 81 100}
-lispy> sum (map sqrt 1..10)
+[n]> sum (map sqrt 1..10)
 22.46828
-lispy> map fact 1..5
+[n]> map fact 1..5
 {1 2 6 24 120}
-lispy> map isprime 1..10
+[n]> map isprime 1..10
 {false true true false true false true false false false}
 ```
 
@@ -444,26 +444,26 @@ lispy> map isprime 1..10
 * `filter`
 
 ```lisp
-lispy> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
+[n]> filter (\ {x} {> x 2}) {5 2 11 -7 8 1}
 {5 11 8}
-lispy> filter (\ {x} {% x 2}) 1..20
+[n]> filter (\ {x} {% x 2}) 1..20
 {1 3 5 7 9 11 13 15 17 19}
-lispy> filter (\ {x} {== (% x 2) 0}) 1..20
+[n]> filter (\ {x} {== (% x 2) 0}) 1..20
 {2 4 6 8 10 12 14 16 18 20}
-lispy> filter (\ {x} {== (% x 3) 0}) 1..20
+[n]> filter (\ {x} {== (% x 3) 0}) 1..20
 {3 6 9 12 15 18}
-lispy> filter odd 1..20
+[n]> filter odd 1..20
 {1 3 5 7 9 11 13 15 17 19}
-lispy> filter even 1..20
+[n]> filter even 1..20
 {2 4 6 8 10 12 14 16 18 20}
-lispy> filter isprime 1..30
+[n]> filter isprime 1..30
 {2 3 5 7 11 13 17 19 23 29}
 ```
 
 # Extended Math Library
 
 ```lisp
-lispy> include "math"
+[n]> include "math"
 ()
 ```
 
@@ -485,39 +485,39 @@ lispy> include "math"
 * `isprime`
 
 ```lisp
-lispy> e
+[n]> e
 2.718282
-lispy> pi
+[n]> pi
 3.141593
-lispy> fact 5
+[n]> fact 5
 120
-lispy> loga 2 1024
+[n]> loga 2 1024
 10.00000
-lispy> loga 2 2048
+[n]> loga 2 2048
 11.00000
-lispy> sqrt 9
+[n]> sqrt 9
 3.000000
-lispy> ncr 9 3
+[n]> ncr 9 3
 84
-lispy> npr 9 3
+[n]> npr 9 3
 504
-lispy> gcd 440 356
+[n]> gcd 440 356
 4
-lispy> lcm 440 356
+[n]> lcm 440 356
 39160
-lispy> fib 10
+[n]> fib 10
 55
-lispy> sum {1 2 3 4 5}
+[n]> sum {1 2 3 4 5}
 15
-lispy> product {1 2 3 4 5}
+[n]> product {1 2 3 4 5}
 120
-lispy> odd 3
+[n]> odd 3
 true
-lispy> even 3
+[n]> even 3
 false
-lispy> isprime 10
+[n]> isprime 10
 false
-lispy> isprime 7
+[n]> isprime 7
 true
 ```
 
@@ -528,10 +528,10 @@ true
 * `subtract`
 
 ```lisp
-lispy> union 1..10 5..15
+[n]> union 1..10 5..15
 {1 2 3 4 5 6 7 8 9 10 11 12 13 14 15}
-lispy> intersect 1..10 5..15
+[n]> intersect 1..10 5..15
 {5 6 7 8 9 10}
-lispy> subtract 1..10 5..15
+[n]> subtract 1..10 5..15
 {1 2 3 4}
 ```
