@@ -408,7 +408,7 @@ lispy> include "math"
 * `pow`
 * `ceil`
 * `floor`
-* `ln`
+* `loga`
 * `%`
 * `sqrt`
 * `ncr`
@@ -435,8 +435,10 @@ lispy> ceil 3.5
 4
 lispy> floor 3.5
 3
-lispy> ln 10
-2.30259
+lispy> loga 2 1024
+10.00000
+lispy> loga 2 2048
+11.00000
 lisyp> % 10 4
 2
 lispy> sqrt 9

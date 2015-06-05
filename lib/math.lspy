@@ -35,6 +35,9 @@
         {/ (fact n) (fact (- n r))}
 })
 
+; logarithm
+(fun {loga b n} {/ (log n) (log b)})
+
 ; GCD
 (fun {gcd a b} {
     if (== 0 (% a b))
