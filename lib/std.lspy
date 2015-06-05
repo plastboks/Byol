@@ -9,9 +9,6 @@
 
 ;======== Constants ========
 (def {otherwise} true)
-(def {e}  2.71828182845904523536)
-(def {pi} 3.14159265358979323846)
-
 
 ;======== Basic building blocks ========
 ; Function definitions.

@@ -4,7 +4,11 @@
 ;- version 0.02
 ;-
 
-(def {mathlib} "0.02")
+(def {mathlib} "0.03")
+
+;======== Constants ========
+(def {e}  2.71828182845904523536)
+(def {pi} 3.14159265358979323846)
 
 ;======== Math functions ========
 ; Factorial
@@ -13,6 +17,9 @@
         {1}
         {* n (fact (-- n))}
 })
+
+; logarithm
+(fun {loga b n} {/ (log n) (log b)})
 
 ; Square root
 (fun {sqrt a} {
@@ -34,9 +41,6 @@
         {0}
         {/ (fact n) (fact (- n r))}
 })
-
-; logarithm
-(fun {loga b n} {/ (log n) (log b)})
 
 ; GCD
 (fun {gcd a b} {
@@ -84,6 +88,22 @@
         {filter (\ {x} {== (% n x) 0}) (filter isprime (range 1 (ceil (sqrt n))))}
 })
 
+; Palindromic
+(fun {palindromic i} {
+    not (elem true ((map (\
+        {n}
+        {!=
+            (% (/ i (pow 10 n)) 10)
+            (% (if
+                (< (- (ceil (log (+ i 1))) n 1) 0)
+                    {/ i (/ 1.0 (pow 10 (- (- (ceil (log (+ i 1))) n 1))))}
+                    {/ i (pow 10 (- (ceil (log (+ i 1))) n 1))})
+             10)
+        }
+    )
+    (range 0 (/ (ceil (log (+ i 1))) 2))
+    )))
+})
 
 ;======== List Math functions ========
 (fun {sum l} {foldl + 0 l})

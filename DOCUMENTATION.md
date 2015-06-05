@@ -471,13 +471,16 @@ true
 * `pi`
 * `fact`
 * `loga`
-* `%`
 * `sqrt`
 * `ncr`
 * `npr`
-* `gdc`
+* `gcd`
 * `lcm`
+* `abs`
+* `mod`
 * `fib`
+* `factors`
+* `palindromic`
 * `sum`
 * `product`
 * `odd`
@@ -505,8 +508,18 @@ true
 4
 [n]> lcm 440 356
 39160
+[n]> abs -5
+5
+[n]> mod 10 4
+2
 [n]> fib 10
 55
+[n]> factors 9232
+{2}
+[n]> factors 6942
+{2 3 13}
+[n]> palindromic 9009
+true
 [n]> sum {1 2 3 4 5}
 15
 [n]> product {1 2 3 4 5}
