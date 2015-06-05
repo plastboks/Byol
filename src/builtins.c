@@ -1036,11 +1036,11 @@ void lenv_add_builtins(lenv* e)
 
     /* Trigonometry */
     lenv_add_builtin(e, "sin", builtin_sin);
-    lenv_add_builtin(e, "sinh", builtin_sinh);
+    lenv_add_builtin(e, "arcsin", builtin_sinh);
     lenv_add_builtin(e, "cos", builtin_cos);
-    lenv_add_builtin(e, "cosh", builtin_cosh);
+    lenv_add_builtin(e, "arccos", builtin_cosh);
     lenv_add_builtin(e, "tan", builtin_tan);
-    lenv_add_builtin(e, "tanh", builtin_tanh);
+    lenv_add_builtin(e, "arctan", builtin_tanh);
 
     /* Bit shift */
     lenv_add_builtin(e, "<<", builtin_leftshift);

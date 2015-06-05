@@ -5,11 +5,13 @@ It (the documentation) is increasing as new features are added (both trough the 
 * [Built-ins](#builtins)
     * [Imports](#imports)
     * [Arithmetic](#arithmetic)
+    * [Math](#math)
     * [Bitwise operations](#bitwise-operations)
     * [Lists](#lists)
     * [Variables](#variables)
     * [Conditionals](#conditionals)
     * [Strings](#strings)
+    * [Other](#other)
 * [Standard Library](#standard-library)
     * [Boolean](#boolean)
     * [Lambdas](#lambdas)
@@ -19,7 +21,7 @@ It (the documentation) is increasing as new features are added (both trough the 
         * [Merge](#merge)
         * [Map](#map)
         * [Filter](#filter)
-* [Math Library](#math)
+* [Extended Math Library](#extended-math-library)
     * [Distributions](#distributions)
 
 
@@ -67,6 +69,57 @@ lispy> ++ 2
 3
 lispy> - 10 (++ 2)
 7
+```
+
+## Math
+
+* `%`
+* `ln`
+* `log`
+* `pow`
+* `ceil`
+* `floor`
+* `rand`
+* `max`
+* `min`
+* `sin`
+* `arcsin`
+* `cos`
+* `arccos`
+* `tan`
+* `arctan`
+
+```lisp
+lisyp> % 10 4
+2
+lispy> ln e
+1.00000
+lispy> log 10
+1.00000
+lispy> pow 2 10
+1024
+lispy> ceil 3.5
+4
+lispy> floor 3.5
+3
+lispy> rand 5
+3.68000
+lispy> max 1 2 3 4
+4
+lispy> min 1 2 3 4
+1
+lispy> sin 30
+-0.98803
+lispy> arcsin 0.5
+1.17520
+lispy> cos 30
+0.15425
+lispy> arccos 0.5
+1.54308
+lispy> tan 30
+-6.40533
+lispy> arctan 0.5
+0.76159
 ```
 
 ## Bitwise operations
@@ -188,7 +241,19 @@ lispy> eval (head {"hello" "world"})
 "hello"
 ```
 
-## Standard Library
+## Other
+
+* `exit`
+* `version`
+
+```lisp
+lispy> version()
+Version: 0.17, build: 030aced-dirty (2015-06-04 18:58)
+lispy> exit()
+; this exits lispy
+```
+
+# Standard Library
 Included in the standard library are some of these nice features:
 ```lisp
 lispy> include "std"
@@ -395,7 +460,7 @@ lispy> filter isprime 1..30
 {2 3 5 7 11 13 17 19 23 29}
 ```
 
-# Math Library
+# Extended Math Library
 
 ```lisp
 lispy> include "math"
@@ -405,9 +470,6 @@ lispy> include "math"
 * `e`
 * `pi`
 * `fact`
-* `pow`
-* `ceil`
-* `floor`
 * `loga`
 * `%`
 * `sqrt`
@@ -429,18 +491,10 @@ lispy> pi
 3.141593
 lispy> fact 5
 120
-lispy> pow 2 10
-1024
-lispy> ceil 3.5
-4
-lispy> floor 3.5
-3
 lispy> loga 2 1024
 10.00000
 lispy> loga 2 2048
 11.00000
-lisyp> % 10 4
-2
 lispy> sqrt 9
 3.000000
 lispy> ncr 9 3
