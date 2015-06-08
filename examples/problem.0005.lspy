@@ -1,0 +1,14 @@
+(include "math")
+
+; smallest number with dividers from 1 to 10
+
+(def {r} 1..10)
+(def {low} 2500)
+(def {high} 2600)
+
+(fun {dividers a range} 
+    {map (\ {x} {% a x}) range}
+)
+
+(print (filter (\ {x} {== 0 (sum (dividers x r))} ) (range low high)))
+
