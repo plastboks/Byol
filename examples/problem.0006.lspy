@@ -1,0 +1,5 @@
+(include "math")
+
+(def {a} (sum (map (\ {x} {pow x 2}) 1..100)))
+
+(print (- (pow a 2) a))

@@ -1,0 +1,6 @@
+(include "math")
+
+
+(def {primes} (filter (\ {x} {isprime x}) 1..1000))
+
+(print primes)
