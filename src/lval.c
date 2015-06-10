@@ -32,6 +32,7 @@
 
 #include "lval.h"
 #include "builtins.h"
+#include "config.h"
 
 lval* lval_fun(lbuiltin func)
 {
@@ -533,7 +534,7 @@ void lval_print(lval* v)
             printf("%li", v->num);
             break;
         case LVAL_DEC:
-            printf("%.*f", 5, v->decimal);
+            printf("%.*f", get_decimal(), v->decimal);
             break;
         case LVAL_ERR:
             printf("Error: %s", v->err);

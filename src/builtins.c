@@ -32,6 +32,7 @@
 
 #include "builtins.h"
 #include "version.h"
+#include "config.h"
 
 lval* builtin_head(lenv* e, lval* a)
 {
@@ -961,16 +962,22 @@ lval* builtin_set(lenv* e, lval* a)
 {
     LASSERT_NUM("set", a, 2);
     LASSERT_TYPE("set", a, 0, LVAL_STR);
+    LASSERT_TYPE("set", a, 1, LVAL_NUM);
 
     lval* key = lval_pop(a, 0);
+    lval* val = lval_pop(a, 0);
 
     if (strcmp(key->str, "pres") == 0) {
+        set_decimal(val->num);
+        lval_del(a);
 
+        return lval_sexpr();
+    } else {
+        lval* err = lval_err("Unknown setting-key '%s'", key->str);
+        lval_del(a);
+        return err;
     }
 
-    lval* err = lval_err("Unknown setting key '%s'", key->str);
-    lval_del(a);
-    return err;
 }
 
 lval* builtin_error(lenv* e, lval* a)
