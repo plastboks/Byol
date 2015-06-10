@@ -70,6 +70,7 @@ int main(int argc, char** argv)
 
     char* input; 
     char stdlib_path[512];
+    char settings_path[512];
     char historypath[512];
 
     char cmd[16];
@@ -95,14 +96,27 @@ int main(int argc, char** argv)
     lenv* e = lenv_new();
     lenv_add_builtins(e);
 
+    /**
+     * Load standard library
+     */
     sprintf(stdlib_path, "%s/%s", GLIB_PFIX, "std.lspy");
-    lval* stdlib_file = lval_add(lval_sexpr(),
-                        lval_str(stdlib_path));
+    lval* stdlib_file = lval_add(lval_sexpr(), lval_str(stdlib_path));
     lval* stdlib_load = builtin_load(e, stdlib_file);
     if (stdlib_load->type == LVAL_ERR) {
         lval_println(stdlib_load);
     }
     lval_del(stdlib_load);
+
+    /**
+     * Load user settings file
+     */
+    sprintf(settings_path, "%s/.lispy.lspy", getenv("HOME"));
+    lval* settings_file = lval_add(lval_sexpr(), lval_str(settings_path));
+    lval* settings_load = builtin_load(e, settings_file);
+    if (settings_load->type == LVAL_ERR) {
+        lval_println(settings_load);
+    }
+    lval_del(settings_load);
 
     if (argc == 1) {
         puts(BOLDMAGENTA);

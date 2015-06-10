@@ -45,6 +45,7 @@ It (the documentation) is increasing as new features are added (both trough the 
 ```
 
 ## Settings
+Settings should be stored in ~/.lispy.lspy for automatic load on startup.
 
 * `set`
     * `"dec"` (decimal precision)
