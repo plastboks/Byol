@@ -2,9 +2,9 @@ Simple TODOS
 ============
 
 * [x] Finish standard lib sort function
-* [ ] Writer better documentation between builtins and stdlib functions
+* [x] Writer better documentation between builtins and stdlib functions
 * [ ] Write inline help function
 * [ ] Implement a memory pool allocation system
-* [ ] Implement a setting system with config files and runtime setting changes
+* [x] Implement setting function in the interpretor
+* [ ] Store and read settings from file
 * [ ] Interpret variables when sent to (all) functions
-* [ ] Make function execute without arguments (exit)
