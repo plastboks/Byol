@@ -4,6 +4,7 @@ This documentation is meant to be self explanatory using sections and code examp
 It (the documentation) is increasing as new features are added (both trough the core and via the standard library (or other libraries))).
 * [Built-ins](#builtins)
     * [Imports](#imports)
+    * [Settings](#settings)
     * [Arithmetic](#arithmetic)
     * [Math](#math)
     * [Bitwise operations](#bitwise-operations)
@@ -42,6 +43,31 @@ It (the documentation) is increasing as new features are added (both trough the 
 [n]> include "math"
 ()
 ```
+
+## Settings
+
+* `set`
+    * `"dec"` (decimal precision)
+* `get`
+    * `"dec"`
+
+```lisp
+[n]> get "dec"
+5
+[n]> 4.0
+4.00000
+[n]> set "dec" 10
+()
+[n]> 4.0
+4.0000000000
+[n]> set "dec" 2
+()
+[n]> 4.0
+4.00
+[n]> get "dec"
+2
+```
+
 
 ## Arithmetic
 

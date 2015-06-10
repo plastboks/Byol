@@ -967,13 +967,36 @@ lval* builtin_set(lenv* e, lval* a)
     lval* key = lval_pop(a, 0);
     lval* val = lval_pop(a, 0);
 
-    if (strcmp(key->str, "pres") == 0) {
+    if (strcmp(key->str, "dec") == 0) {
         set_decimal(val->num);
         lval_del(a);
 
         return lval_sexpr();
     } else {
         lval* err = lval_err("Unknown setting-key '%s'", key->str);
+        lval_del(a);
+        return err;
+    }
+
+}
+
+lval* builtin_get(lenv* e, lval* a)
+{
+    LASSERT_NUM("get", a, 1);
+    LASSERT_TYPE("get", a, 0, LVAL_STR);
+
+    lval* val = lval_pop(a, 0);
+
+    if (strcmp(val->str, "dec") == 0) {
+        int dec = get_decimal();
+
+        val->type = LVAL_NUM;
+        val->num = dec;
+
+        lval_del(a);
+        return val;
+    } else {
+        lval* err = lval_err("Unknown setting-key '%s'", val->str);
         lval_del(a);
         return err;
     }
@@ -1088,5 +1111,6 @@ void lenv_add_builtins(lenv* e)
     /* Other functions */
     lenv_add_builtin(e, "exit", builtin_exit);
     lenv_add_builtin(e, "set", builtin_set);
+    lenv_add_builtin(e, "get", builtin_get);
     lenv_add_builtin(e, "version", builtin_version);
 }

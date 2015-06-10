@@ -119,4 +119,5 @@ lval* builtin_xor(lenv* e, lval* a);
 /* Other functions */
 lval* builtin_exit(lenv* e, lval* a);
 lval* builtin_set(lenv* e, lval* a);
+lval* builtin_get(lenv* e, lval* a);
 lval* builtin_version(lenv* e, lval* a);
