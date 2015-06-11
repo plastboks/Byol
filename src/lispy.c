@@ -33,6 +33,7 @@
 #include "lispy.h"
 #include "builtins.h"
 #include "version.h"
+#include "config.h"
 
 void completion(const char *buf, linenoiseCompletions *lc)
 {
@@ -53,6 +54,23 @@ void prompt(char* cmd)
 {
     static unsigned int cmd_count = 1;
     sprintf(cmd, "[%d]> ", cmd_count++);
+}
+
+void show_splash()
+{
+    puts(BOLDMAGENTA);
+    puts("     __    _                  ");
+    puts("    / /   (_)________  __  __ ");
+    puts("   / /   / / ___/ __ \\/ / / /");
+    puts("  / /___/ (__  ) /_/ / /_/ /  ");
+    puts(" /_____/_/____/ .___/\\__, /  ");
+    puts("             /_/    /____/    ");
+    puts(RESET);
+
+    puts(BOLDWHITE);
+    printf("Version: %s, build: %s (%s)\n", version, VERSION_BUILD, BUILD_DATE);
+    puts("Press Ctrl+c , or type 'exit()' to exit");
+    puts(RESET);
 }
 
 int main(int argc, char** argv)
@@ -119,19 +137,7 @@ int main(int argc, char** argv)
     lval_del(settings_load);
 
     if (argc == 1) {
-        puts(BOLDMAGENTA);
-        puts("     __    _                  ");
-        puts("    / /   (_)________  __  __ ");
-        puts("   / /   / / ___/ __ \\/ / / /");
-        puts("  / /___/ (__  ) /_/ / /_/ /  ");
-        puts(" /_____/_/____/ .___/\\__, /  ");
-        puts("             /_/    /____/    ");
-        puts(RESET);
-
-        puts(BOLDWHITE);
-        printf("Version: %s, build: %s (%s)\n", version, VERSION_BUILD, BUILD_DATE);
-        puts("Press Ctrl+c , or type 'exit()' to exit");
-        puts(RESET);
+        if (get_splash() > 0) { show_splash(); }
 
         linenoiseSetMultiLine(1);
         linenoiseSetCompletionCallback(completion);

@@ -34,9 +34,13 @@
 #define CONFIG
 typedef struct
 {
+    int splash;
     int decimal_count;
 } config;
 #endif
 
+int get_splash();
+void set_splash(int val);
+
 int get_decimal();
-void set_decimal();
+void set_decimal(int val);

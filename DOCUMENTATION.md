@@ -48,8 +48,10 @@ It (the documentation) is increasing as new features are added (both trough the 
 Settings should be stored in ~/.lispy.lspy for automatic load on startup.
 
 * `set`
+    * `"splash"` (show: 1, hide: 0)
     * `"dec"` (decimal precision)
 * `get`
+    * `"splash"`
     * `"dec"`
 
 ```lisp

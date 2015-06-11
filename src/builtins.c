@@ -967,17 +967,18 @@ lval* builtin_set(lenv* e, lval* a)
     lval* key = lval_pop(a, 0);
     lval* val = lval_pop(a, 0);
 
+    lval_del(a);
+
     if (strcmp(key->str, "dec") == 0) {
         set_decimal(val->num);
-        lval_del(a);
-
+        return lval_sexpr();
+    } else if (strcmp(key->str, "splash") == 0) {
+        set_splash(val->num);
         return lval_sexpr();
     } else {
         lval* err = lval_err("Unknown setting-key '%s'", key->str);
-        lval_del(a);
         return err;
     }
-
 }
 
 lval* builtin_get(lenv* e, lval* a)

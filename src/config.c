@@ -32,8 +32,27 @@
 
 #include "config.h"
 
-config c = {5};
+config c = {
+    1,
+    5
+};
 
+/**
+ * SPLASH
+ */
+int get_splash()
+{
+    return c.splash;
+}
+
+void set_splash(int val)
+{
+    c.splash = val;
+}
+
+/**
+ * DECIMAL
+ */
 int get_decimal()
 {
     return c.decimal_count;
