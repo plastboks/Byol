@@ -5,7 +5,7 @@ It (the documentation) is increasing as new features are added (both trough the 
 * [Built-ins](#builtins)
     * [Imports](#imports)
     * [Settings](#settings)
-    * Settings - Persistent
+    * [Settings - Persistent](#settings---persistent)
     * [Arithmetic](#arithmetic)
     * [Math](#math)
     * [Bitwise operations](#bitwise-operations)
