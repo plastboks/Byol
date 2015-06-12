@@ -5,6 +5,7 @@ It (the documentation) is increasing as new features are added (both trough the 
 * [Built-ins](#builtins)
     * [Imports](#imports)
     * [Settings](#settings)
+    * Settings - Persistent
     * [Arithmetic](#arithmetic)
     * [Math](#math)
     * [Bitwise operations](#bitwise-operations)
@@ -45,7 +46,6 @@ It (the documentation) is increasing as new features are added (both trough the 
 ```
 
 ## Settings
-Settings should be stored in ~/.lispy.lspy for automatic load on startup.
 
 * `set`
     * `"splash"` (show: 1, hide: 0)
@@ -71,6 +71,14 @@ Settings should be stored in ~/.lispy.lspy for automatic load on startup.
 2
 ```
 
+## Settings - Persistent
+
+Settings should be stored in LISPY_DEFAULT environment for automatic load on startup.
+
+```bash
+cp defaults.lspy.example ~/.defaults.lispy
+export LISPY_DEFAULT=~/.defaults.lispy
+```
 
 ## Arithmetic
 

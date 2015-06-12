@@ -128,13 +128,15 @@ int main(int argc, char** argv)
     /**
      * Load user settings file
      */
-    sprintf(settings_path, "%s/.lispy.lspy", getenv("HOME"));
-    lval* settings_file = lval_add(lval_sexpr(), lval_str(settings_path));
-    lval* settings_load = builtin_load(e, settings_file);
-    if (settings_load->type == LVAL_ERR) {
-        lval_println(settings_load);
+    if (getenv("LISPY_DEFAULT") != NULL) {
+        sprintf(settings_path, "%s", getenv("LISPY_DEFAULT"));
+        lval* settings_file = lval_add(lval_sexpr(), lval_str(settings_path));
+        lval* settings_load = builtin_load(e, settings_file);
+        if (settings_load->type == LVAL_ERR) {
+            lval_println(settings_load);
+        }
+        lval_del(settings_load);
     }
-    lval_del(settings_load);
 
     if (argc == 1) {
         if (get_splash() > 0) { show_splash(); }
