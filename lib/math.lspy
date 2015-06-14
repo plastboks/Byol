@@ -91,6 +91,13 @@
         {filter (\ {x} {== (% n x) 0}) (filter isprime (range 1 (ceil (sqrt n))))}
 })
 
+; Base - non-working version...
+(fun {base n i} {
+    if (zerop (truncate i))
+        {(cons i nil)}
+        {(true (cons (mod i n) (base n (truncate i))))}
+})
+
 ; Palindromic
 (fun {palindromic i} {
     let {

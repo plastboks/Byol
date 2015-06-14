@@ -39,7 +39,9 @@
 (fun {flip f a b} {f b a})
 (fun {ghost & xs} {eval xs})
 (fun {comp f g x} {f (g x)})
-
+(fun {zerop p} {== p 0})
+(def {cond} if)
+(def {truncate} floor)
 
 ;======== Switch / Case implementation ========
 (fun {select & cs} {
