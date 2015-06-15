@@ -238,3 +238,6 @@
         {l}
         {drop-while f (tail l)}
 })
+
+;======== String functions ========
+(fun {read s} {cons s nil})

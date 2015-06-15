@@ -66,9 +66,9 @@ lval* builtin_cons(lenv* e, lval* a)
 {
     /* check error conditions */
     LASSERT_NUM("cons", a, 2);
-    LASSERT_TYPE("cons", a, 0, LVAL_NUM);
+    //LASSERT_TYPE("cons", a, 0, LVAL_NUM);
     LASSERT_TYPE("cons", a, 1, LVAL_QEXPR);
-    LASSERT_NOT_EMPTY("cons", a, 0);
+    //LASSERT_NOT_EMPTY("cons", a, 0);
 
     lval* x = lval_qexpr();
     x = lval_add(x, lval_pop(a, 0));
@@ -1042,6 +1042,7 @@ void lenv_add_builtins(lenv* e)
     lenv_add_builtin_var(e, "true", lval_bool(1));
     lenv_add_builtin_var(e, "false", lval_bool(0));
     lenv_add_builtin_var(e, "nil", lval_qexpr());
+    lenv_add_builtin_var(e, "ok", lval_sexpr());
 
     /* String Functions */
     lenv_add_builtin(e, "load", builtin_load);
