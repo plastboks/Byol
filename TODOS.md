@@ -9,3 +9,5 @@ Simple TODOS
 * [x] Implement setting function in the interpretor
 * [x] Store and read settings from file
 * [x] Interpret variables when sent to (all) functions
+* [ ] Write fopen and fgets wrappers for reading and processing external data files
+* [ ] Implement a garbage collector
