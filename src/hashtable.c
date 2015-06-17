@@ -32,3 +32,52 @@
 
 #include "hashtable.h"
 
+struct hash_table* create_hash_table(int size)
+{
+    if (size < 1) { return NULL; }
+
+    struct hash_table* new_table;
+
+    new_table = malloc(sizeof(struct hash_table));
+    if (new_table == NULL) { return NULL; }
+
+    new_table->table = malloc(sizeof(struct list *) * size);
+    if (new_table->table == NULL) { return NULL; }
+
+    for (int i = 0; i<size; i++) {
+        new_table->table[i] = '\0';
+    }
+
+    new_table->size = size;
+
+    return new_table;
+}
+
+unsigned int hash(struct hash_table* table, char* str)
+{
+    unsigned int hashval = 0;
+
+    for (int i = 0; *str != '\0'; i++, str++) {
+        hashval += str[i];
+    }
+
+    return (hashval % table->size);
+}
+
+struct list* lookup_string(struct hash_table* table, char* str)
+{
+    struct list* new_list;
+    unsigned int val = hash(table, str);
+
+    for (new_list = table->table[val]; new_list != NULL; new_list = new_list->next) {
+        if (strcmp(str, new_list->string) == 0) {
+            return new_list;
+        }
+    }
+    return NULL;
+}
+
+int add_string(struct hash_table* table, char* str)
+{
+    return 0;
+}
