@@ -32,8 +32,3 @@
 
 #include "hashtable.h"
 
-const unsigned char data[] = "Hello world";
-size_t length =  sizeof(data);
-unsigned char hash[SHA_DIGEST_LENGTH];
-
-unsigned char *ref = SHA1(data, length, hash);

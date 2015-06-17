@@ -34,3 +34,19 @@
 #include <stdlib.h>
 #include <openssl/sha.h>
 
+struct list 
+{
+    char* string;
+    struct list* next;
+};
+
+struct hash_table
+{
+    int size;
+    struct list** table;
+};
+
+struct hash_table* create_hash_table(int size);
+unsigned int hash(struct hash_table* table, char* str);
+struct list* lookup_string(struct hash_table* table, char* str);
+int add_string(struct hash_table* table, char* str);

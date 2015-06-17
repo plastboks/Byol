@@ -43,7 +43,7 @@ CGFLAGS := $(CCFLAGS) \
 
 _LSPY = lispy.o
 _LN = linenoise.o
-_OBJ = func.o mpc.o lenv.o lval.o builtins.o version.o config.o
+_OBJ = func.o mpc.o lenv.o lval.o builtins.o version.o config.o hashtable.o
 
 OBJ_LIB = $(patsubst %,$(ODIR)/%,$(_OBJ))
 OBJ_LN = $(patsubst %,$(ODIR)/%,$(_LN))
