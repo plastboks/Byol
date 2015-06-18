@@ -79,5 +79,27 @@ struct list* lookup_string(struct hash_table* table, char* str)
 
 int add_string(struct hash_table* table, char* str)
 {
+    struct list* new_list;
+    struct list* current_list;
+    unsigned int val = hash(table, str);
+
+    new_list = malloc(sizeof(struct list));
+    if (new_list == NULL) { return -1; }
+
+    current_list = lookup_string(table, str);
+
+    new_list->string = strdup(str);
+    new_list->next = NULL;
+
+    if (table->table[val] == NULL) {
+        table->table[val] = new_list;
+    } else {
+        struct list* tmp = table->table[val];
+        while (tmp->next != NULL) {
+            tmp = tmp->next;
+            tmp->next = new_list;
+        }
+    }
+
     return 0;
 }

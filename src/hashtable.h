@@ -39,6 +39,7 @@ struct list
 {
     char* string;
     struct list* next;
+    struct list* last;
 };
 
 struct hash_table
