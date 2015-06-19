@@ -39,7 +39,6 @@ struct list
 {
     char* string;
     struct list* next;
-    struct list* last;
 };
 
 struct hash_table
@@ -50,5 +49,5 @@ struct hash_table
 
 struct hash_table* create_hash_table(int size);
 unsigned int hash(struct hash_table* table, char* str);
-struct list* lookup_string(struct hash_table* table, char* str);
+struct list* lookup_hashed_string(struct hash_table* table, unsigned int val, char* str);
 int add_string(struct hash_table* table, char* str);
