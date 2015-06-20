@@ -32,6 +32,7 @@
 
 #include "lenv.h"
 #include "lval.h"
+#include "hashtable.h"
 
 lenv* lenv_new(void)
 {

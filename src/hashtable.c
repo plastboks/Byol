@@ -53,40 +53,34 @@ struct hash_table* create_hash_table(int size)
     return new_table;
 }
 
-unsigned int hash(struct hash_table* table, char* str)
+unsigned int hash(struct hash_table* table, lval* v)
 {
     unsigned int hashval = 0;
 
-    for (int i = 0; *str != '\0'; i++, str++) {
-        hashval += str[i];
-    }
+    // find unique information and generate int
 
     return (hashval % table->size);
 }
 
-struct list* lookup_hashed_string(struct hash_table* table, unsigned int val, char* str)
+struct list* lookup_hashed_lval(struct hash_table* table, unsigned int val, lval* )
 {
     struct list* new_list;
 
-    for (new_list = table->table[val]; new_list != NULL; new_list = new_list->next) {
-        if (strcmp(str, new_list->string) == 0) {
-            return new_list;
-        }
-    }
+    // find lval
     return NULL;
 }
 
-int add_string(struct hash_table* table, char* str)
+int add_lval(struct hash_table* table, lval* v)
 {
-    unsigned int hashval = hash(table, str);
+    unsigned int hashval = hash(table, v);
 
-    if (lookup_hashed_string(table, hashval, str)) { return 2; }
+    if (lookup_hashed_lval(table, hashval, v)) { return 2; }
 
     struct list* new_list = malloc(sizeof(struct list));
 
     if (new_list == NULL) { return -1; }
 
-    new_list->string = strdup(str);
+    new_list->lval = v;
     new_list->next = table->table[hashval];
 
     table->table[hashval] = new_list;
