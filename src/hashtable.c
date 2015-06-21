@@ -62,9 +62,10 @@ unsigned int hash(struct hash_table* table, lval* v)
     return (hashval % table->size);
 }
 
-struct list* lookup_hashed_lval(struct hash_table* table, unsigned int val, lval* )
+struct list* lookup_hashed_lval(struct hash_table* table, unsigned int val, lval* v)
 {
-    struct list* new_list;
+    struct list* new_list = malloc(sizeof(struct list));
+    if (new_list == NULL) { return NULL; }
 
     // find lval
     return NULL;
