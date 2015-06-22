@@ -19,7 +19,20 @@ Compilation and running
 =======================
 * run: `make`
 * run: `make install` (needs superuser)
-* run: `./bin/lispy`
+* run: `./bin/lispy` or `lispy`
+
+Standard library
+================
+The standard library is loaded by default. The other libraries have to be loaded manually, or through the environmental settings file.
+
+Environment settings
+====================
+Settings should be stored in LISPY_DEFAULT environment for automatic load on startup.
+
+```bash
+cp defaults.lspy.example ~/.defaults.lispy
+export LISPY_DEFAULT=~/.defaults.lispy
+```
 
 Thanks to
 =========
