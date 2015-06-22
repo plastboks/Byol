@@ -51,5 +51,5 @@ struct hash_table
 
 struct hash_table* create_hash_table(int size);
 unsigned int hash(struct hash_table* table, lval* v);
-struct list* lookup_hashed_string(struct hash_table* table, unsigned int val, char* str);
+struct list* lookup_hashed_lval(struct hash_table* table, unsigned int val, lval* v);
 int add_lval(struct hash_table* table, lval* v);
