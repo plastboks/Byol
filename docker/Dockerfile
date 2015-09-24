@@ -6,9 +6,9 @@ RUN apt-get update
 #RUN apt-get upgrade
 RUN apt-get -y install build-essential git
 
-VOLUME /byol/shared
+VOLUME /lispy/shared
 
-WORKDIR /byol
-RUN git clone https://github.com/plastboks/Byol.git app
-WORKDIR /byol/app
+WORKDIR /lispy
+RUN git clone https://github.com/plastboks/Lispy.git app
+WORKDIR /lispy/app
 RUN make
