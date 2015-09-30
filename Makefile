@@ -1,7 +1,6 @@
 #### Project settings ####
 # Compilers
 CC ?= gcc
-TCC = tigcc
 # Compiler flags
 LFLAGS = -Wall -Iinc -std=c99
 LNFLAGS = -Wall -Iinc -W -Os -g
@@ -50,25 +49,31 @@ OBJ_LN = $(patsubst %,$(ODIR)/%,$(_LN))
 OBJ_LSPY = $(patsubst %,$(ODIR)/%,$(_LSPY))
 
 $(ODIR)/%.o: src/%.c $(DEPS)
-	@echo "=> Compiling source file"
+	@echo "[Lispy] cc $<"
 	$(CC) -c -o $@ $< $(LFLAGS) $(CGFLAGS)
 
 $(ODIR)/%.o: linenoise/%.c $(DEPS)
-	@echo "=> Compiling linenoise source files"
+	@echo "[Linenoise] cc $<"
 	$(CC) -c -o $@ $< $(LNFLAGS)
 
-.PHONY: lispy ti install clean
+.PHONY: lispy install uninstall clean
 
 lispy: $(OBJ_LIB) $(OBJ_LN) $(OBJ_LSPY)
 	@echo "=> Compiling release build: $(VERSION_STRING)"
 	$(CC) -o $(BIN_PATH)/$(BIN_NAME) $^ $(EFLAGS)
 
 install: 
-	@echo "=> Installing $(BIN_NAME) to $(DEST_DIR)$(INST_PFIX)/bin"
+	@echo "=> Installing $(BIN_NAME) binary to $(DEST_DIR)$(INST_PFIX)/bin"
 	@install -m 0755 $(BIN_PATH)/$(BIN_NAME) $(DEST_DIR)$(INST_PFIX)/bin
 	@echo "=> Copying lib files to $(DEST_DIR)$(GLIB_PFIX)"
 	@mkdir -p $(DEST_DIR)$(GLIB_PFIX)
 	@install -m 0644 $(LDIR)/* $(DEST_DIR)$(GLIB_PFIX)
+
+uninstall:
+	@echo "=> Removing $(BIN_NAME) binary"
+	@rm $(DEST_DIR)$(INST_PFIX)/bin/$(BIN_NAME)
+	@echo "=> Removing lib files $(DEST_DIR)$(GLIB_PFIX)"
+	@rm -r $(DEST_DIR)$(GLIB_PFIX)
 
 clean:
 	@echo "=> Removing binaries and o-files"
