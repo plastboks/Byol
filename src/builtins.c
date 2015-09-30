@@ -1112,6 +1112,7 @@ void lenv_add_builtins(lenv* e)
 
     /* Other functions */
     lenv_add_builtin(e, "exit", builtin_exit);
+    lenv_add_builtin(e, "quit", builtin_exit);
     lenv_add_builtin(e, "set", builtin_set);
     lenv_add_builtin(e, "get", builtin_get);
     lenv_add_builtin(e, "version", builtin_version);
