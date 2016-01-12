@@ -21,6 +21,17 @@ Compilation and running
 * run: `make install` (needs superuser)
 * run: `./bin/lispy` or `lispy`
 
+Movement keys (optional)
+========================
+* ctrl-a: Go to start of line.
+* ctrl-e: Go to end of line.
+* ctrl-w: Delete previous word.
+* ctrl-u: Delete whole line
+* ctrl-b: Move cursor left
+* ctrl-f: Move cursor right
+* ctrl-p: Previous history entry in-line
+* ctrl-n: Next history entry in-line
+
 Standard library
 ================
 The standard library is loaded by default. The other libraries have to be loaded manually, or through the environmental settings file.
